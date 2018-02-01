@@ -1,0 +1,15 @@
+<?php /** @var $this Emico_Tweakwise_Block_Menu */ ?>
+
+<?php if (Mage::getStoreConfig('emico_tweakwise/menu/enabled')) : ?>
+    <?php $_items = $this->getItems(); ?>
+    <?php $_count = 0; ?>
+    <?php if(count($_items)>0): ?>
+        <div class="nav-container">
+            <ul id="nav">
+                <?php foreach($_items as $_item): ?>
+                    <?php echo $_item->toHtml(); ?>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif ?>
+<?php endif;?>

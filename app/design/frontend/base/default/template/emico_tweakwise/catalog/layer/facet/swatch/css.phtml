@@ -1,0 +1,40 @@
+<?php
+/** @var $this Emico_Tweakwise_Block_Catalog_Layer_Facet_Color */ ?>
+<?php if($this->isVisible()): ?>
+    <?php $_settings = $this->getFacetSettings(); ?>
+<dt class="<?php echo $_settings->getIsCollapsible() ? 'collapsible' : ''; echo $_settings->getIsCollapsed() ? ' collapsed' : ''; ?>">
+    <?php if($_settings->getIsCollapsible()): ?>
+        <div class="arrow"></div>
+    <?php endif; ?>
+    <?php echo $this->__($_settings->getTitle()) ?>
+    </dt>
+    <dd class="<?php echo $_settings->getIsCollapsed() ? 'hidden' : ''; ?><?php echo $_settings->getNumberOfColumns() > 0 ? ' columns-' . $_settings->getNumberOfColumns() : ''; ?>">
+        <?php if($_settings->getIsInfoVisible() && $_settings->getInfoText()): ?>
+            <span class="helptext"><?php echo $this->__($_settings->getInfoText()); ?></span>
+        <?php endif; ?>
+
+        <?php $_attributes = $this->getAttributes(); ?>
+        <ol class="swatches">
+            <?php foreach ($_attributes as $_item): ?>
+                <?php $_showLink = !$_item->getIsSelected() || $this->isCheckbox(); ?>
+                <li class="<?php echo $_item->getIsSelected() ? 'active' : 'inactive'; echo $this->isMoreItem($_item) ? ' hidden' : ''; echo $this->isCheckbox() ? ' checkbox' : ''; ?>">
+                    <span class="color-holder color-<?=strtolower($this->escapeHtml($_item->getTitle()));?>">
+                        <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>" title="<?=$this->escapeHtml($_item->getTitle())?>"<?php endif; ?>><span class="color">&nbsp;</span></a>
+                    </span>
+                    <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>"<?php endif; ?> title="<?=$this->escapeHtml($_item->getTitle())?>">
+                        <?php echo $this->escapeHtml($_item->getTitle()); ?>
+                        <?php if ($_settings->getIsNumberOfResultVisible()): ?>
+                            (<?php echo $_item->getNumberOfResults() ?>)
+                        <?php endif; ?>
+                    </a>
+                </li>
+            <?php endforeach ?>
+            <?php if($this->showMoreText()): ?>
+                <li class="more-less-links">
+                    <a href="#" class="more-link"><?php echo $this->__($_settings->getExpandText()); ?></a>
+                    <a href="#" class="less-link hidden"><?php echo $this->__($_settings->getCollapseText()); ?></a>
+                </li>
+            <?php endif; ?>
+        </ol>
+    </dd>
+<?php endif; ?>

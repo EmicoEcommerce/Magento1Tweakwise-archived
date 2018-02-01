@@ -1,0 +1,44 @@
+<?php /** @var $this Emico_Tweakwise_Block_Menu_MainSection */ ?>
+<li class="level0 nav-<?php echo $this->getCounter() ?> level-top">
+    <a class="level0" href="<?php echo $this->getSectionUrl() ?>">
+        <span><?php echo $this->__($this->getTitle()); ?></span>
+    </a>
+
+    <?php $_columns = $this->getItems(); ?>
+    <?php if(count($_columns)): ?>
+        <div class="level0">
+                <span class="inner-wrapper">
+                    <span class="content-wrapper">
+                        <?php foreach($_columns as $_subsections): ?>
+                            <ul class="column">
+                                <?php foreach($_subsections as $_subsection): /** @var $_subsection Emico_Tweakwise_Block_Menu_Subsection */ ?>
+                                    <?php echo $_subsection->toHtml(); ?>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endforeach;
+                        $_banners = $this->getBanners();?>
+                        <?php if(count($_banners)): ?>
+                            <ul class="column">
+                                <?php foreach($_banners as $_banner): ?>
+                                    <span class="banner">
+                                        <?php
+
+                                        $_image = '<a href=""><img src="' . $_banner['image_url'] . '" alt="' . $_banner['title'] . '" /></a>';
+                                        if($_banner['url'])
+                                        {
+                                            echo '<a href="/' . $_banner['url'] . '">' . $_image . '</a>';
+                                        }
+                                        else
+                                        {
+                                            echo $_image;
+                                        } ?>
+                                    </span>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </span>
+                </span>
+            <span class="right-bottom"></span>
+        </div>
+    <?php endif; ?>
+</li>

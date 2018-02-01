@@ -1,0 +1,10 @@
+<script type="text/javascript">
+    searchForm.setCategory(<?=$this->getTweakwiseCategoryId();?>);
+    searchForm.initAutocompleteDelayed();
+
+    if($('search')) {
+        $('search').insert({
+            after: new Element('input', {type: 'hidden', name: 'catid', value: 'hidden', value: <?=$this->getCategoryId();?>})
+        });
+    }
+</script>

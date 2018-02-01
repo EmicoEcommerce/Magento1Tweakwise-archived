@@ -1,0 +1,16 @@
+<?php /** @var $this Emico_Tweakwise_Block_Catalog_Product_Recommendations */ ?>
+<ul class="products-grid">
+    <?php foreach ($this->getProductCollection() as $_product): ?>
+        <?php $_escapeName = $this->escapeHtml($_product->getName()); ?>
+        <li class="item">
+            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_escapeName ?>" class="product-image">
+                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(125) ?>" width="125" height="125" alt="<?php echo $_escapeName ?>" />
+            </a>
+            <h3 class="product-name">
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_escapeName ?>"><?php echo $_escapeName ?></a>
+            </h3>
+            <?php echo $this->getPriceHtml($_product, true, '-tweakwise-upsell') ?>
+            <?php echo $this->getReviewsSummaryHtml($_product) ?>
+        </li>
+    <?php endforeach; ?>
+</ul>

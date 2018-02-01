@@ -1,0 +1,17 @@
+<?php /** @var $this Emico_Tweakwise_Block_Catalog_Layer_Facet_Tree */ ?>
+<?php if($this->isVisible()): ?>
+    <?php $_settings = $this->getFacetSettings(); ?>
+    <dt class="<?php echo $_settings->getIsCollapsible() ? 'collapsible' : ''; echo $_settings->getIsCollapsed() ? ' collapsed' : ''; ?>">
+        <?php if($_settings->getIsCollapsible()): ?>
+            <div class="arrow"></div>
+        <?php endif; ?>
+        <?php echo $this->__($_settings->getTitle()) ?>
+    </dt>
+    <dd<?php echo $_settings->getIsCollapsed() ? ' class="hidden"' : ''; ?>>
+        <?php if($_settings->getIsInfoVisible() && $_settings->getInfoText()): ?>
+            <span class="helptext"><?php echo $this->__($_settings->getInfoText()); ?></span>
+        <?php endif; ?>
+
+        <?php echo $this->getChildHtml('items'); ?>
+    </dd>
+<?php endif; ?>

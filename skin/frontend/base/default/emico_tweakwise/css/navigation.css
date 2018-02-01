@@ -1,0 +1,159 @@
+div.slider {
+    margin: 10px 0;
+    height: 7px;
+    position: relative;
+
+    background: #fff;
+    -moz-box-shadow: inset 0 1px 2px 1px #ccc;
+    -webkit-box-shadow: inset 0 1px 2px 1px #ccc;
+    box-shadow: inset 0 1px 2px 1px #ccc;
+}
+
+div.slider div.handle {
+    cursor: w-resize;
+    position: absolute;
+    text-indent: -9999px;
+    width: 0;
+    height: 0;
+    margin-top: -3px;
+}
+
+.slider-min, .slider-max {
+    width: 40%;
+}
+
+.slider-max {
+    margin-left: 1%;
+}
+
+.update-link {
+    display: none;
+}
+
+div .slider .left {
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 7px solid black;
+}
+
+div .slider .right {
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 7px solid black;
+}
+
+#narrow-by-list dt.collapsible {
+    cursor: default;
+}
+
+#narrow-by-list dt, #narrow-by-list dd {
+    float: left;
+    width: 100%;
+}
+
+#narrow-by-list .active > a {
+    color: #777777;
+    text-decoration: none;
+}
+
+#narrow-by-list ol ol {
+    margin-left: 15px;
+    list-style: circle;
+}
+
+#narrow-by-list .active a:hover {
+    text-decoration: none;
+}
+
+#narrow-by-list .checkbox a{
+    padding-left: 20px;
+}
+
+#narrow-by-list .checkbox a {
+    cursor: pointer;
+    background: url(../images/verfijning-checkbox.png) 0 0 no-repeat;
+}
+
+#narrow-by-list .checkbox.inactive a {
+	background-position: 0 -19px;
+}
+
+.block-layered-nav .arrow {
+	float: left;
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 5px 4.5px 0 4.5px;
+	border-color: #000000 transparent transparent transparent;
+	margin-right: 3px;
+	margin-top: 5px;
+}
+.block-layered-nav .collapsed .arrow {
+	
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 4.5px 0 4.5px 5px;
+	border-color: transparent transparent transparent #000000;
+	margin-right: 6px;
+	margin-top: 3px;
+}
+
+.block-layered-nav .currently ol {
+    overflow: hidden;
+    position: relative;
+}
+
+.block-layered-nav .currently ol li {
+    float: left;
+    border: 1px solid #7d7d7d;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    margin: 3px;
+    padding: 2px 5px;
+}
+
+.block-layered-nav .columns-2 li {
+    float: left;
+    width: 50%;
+}
+
+.block-layered-nav .columns-3 li {
+    float: left;
+    width: 33%;
+}
+
+.block-layered-nav .columns-4 li {
+    float: left;
+    width: 25%;
+}
+
+.block-layered-nav .currently ol li:hover {
+    background-color: #b3b3b3;
+}
+
+.block-layered-nav .currently ol li a {
+    background: url('../images/btn_remove.gif') no-repeat right;
+    padding-right: 15px;
+    text-decoration: none;
+}
+.block-layered-nav .currently ol li a:hover {
+    text-decoration: none;
+}
+
+.block-layered-nav .slider-container .slider-input input {
+    width: 40%;
+}
+
+.block-layered-nav .currently .btn-remove {
+    width: auto;
+    font: inherit;
+    color: inherit;
+}
+
+@media only screen and (max-width: 770px) {
+    .block-layered-nav .arrow {
+        display: none;
+    }
+}

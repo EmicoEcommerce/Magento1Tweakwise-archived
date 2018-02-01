@@ -1,0 +1,20 @@
+.search-autocomplete .last-suggestion {
+    border-bottom: 2px solid #000;
+}
+
+.search-autocomplete .last-product {
+    border-bottom: 0px;
+}
+
+.search-autocomplete .product img {
+    float: left;
+    width: 35px;
+    height: 35px;
+}
+
+.search-autocomplete .product h2 {
+    float: left;
+    font-weight: bolder;
+    line-height: 35px;
+    margin-left: 10px;
+}

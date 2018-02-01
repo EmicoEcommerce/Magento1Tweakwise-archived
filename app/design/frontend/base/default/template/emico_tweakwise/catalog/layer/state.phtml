@@ -1,0 +1,37 @@
+<?php /** @var $this Emico_Tweakwise_Block_Catalog_Layer_State */ ?>
+<?php $_facetsBlocks = $this->getActiveFacets() ?>
+<?php if(!empty($_facetsBlocks)): ?>
+    <div class="currently">
+        <p class="block-subtitle">
+            <?php echo $this->__('Currently Shopping by:') ?>
+            <a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a>
+        </p>
+        <ol>
+            <?php foreach ($_facetsBlocks as $_facetBlock): /** @var $_facetBlock Emico_Tweakwise_Block_Catalog_Layer_Facet_Attribute */?>
+                <?php $_facet = $_facetBlock->getFacet(); ?>
+                <?php if($_facet->isMultipleSelect()): ?>
+                    <?php foreach($_facet->getActiveAttributes() as $_attribute): /** @var $_attribute Emico_Tweakwise_Model_Bus_Type_Attribute */?>
+                        <li>
+                            <a href="<?php echo $_facetBlock->getFacetUrl($_attribute) ?>" title="<?php echo $this->__('Remove This Item') ?>"  class="btn-remove">
+                                <?php if($_facet->getFacetSettings()->isPrice()): ?>
+                                    <?php $_valueName = Mage::helper('core')->formatPrice($_attribute->getTitle()); ?>
+                                <?php else: ?>
+                                    <?php $_valueName = $this->__($this->stripTags($_attribute->getTitle())); ?>
+                                <?php endif; ?>
+                                <span class="label"><?php echo $this->stripTags(ucfirst($_facetBlock->getFacetSettings()->getTitle())); ?>:</span> <span class="value"><?php echo $this->stripTags($_valueName) ?></span>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <?php $_activeAttribute = $_facet->getActiveAttribute(); ?>
+                    <li>
+                        <a href="<?php echo $_facetBlock->getFacetUrl($_activeAttribute) ?>" title="<?php echo $this->__('Remove This Item') ?>" id="filter-remove-<?php echo $_activeAttribute->getId(); ?>" class="btn-remove">
+                            <?php echo $this->__('Remove This Item') ?>
+                        </a>
+                        <span class="label"><?php echo $this->stripTags(ucfirst($_facetBlock->getFacetSettings()->getTitle())); ?>:</span> <span class="value"><?php echo $this->stripTags($_facetBlock->getItemTitle($_activeAttribute)) ?></span>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+<?php endif; ?>

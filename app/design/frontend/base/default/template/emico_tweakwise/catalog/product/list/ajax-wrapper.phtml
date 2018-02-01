@@ -1,0 +1,32 @@
+<?php
+/**
+ * @copyright (c) Emico B.V. 2016
+ */
+/** @var Mage_Core_Block_Template $this */
+/** @var Emico_Tweakwise_Helper_Data $_helper */
+$_helper = $this->helper('emico_tweakwise');
+$_wrapperId = $_helper->getRecommendationWrapperBlockId($this);
+$_recommendationParams = array_filter([
+    'rule' => $this->getRuleId(),
+    'product' => $this->getProduct() ? $this->getProduct()->getSku() : null,
+    'block' => $this->getNameInLayout(),
+]);
+
+if ($this->getData('disable_request_handles')) {
+    $_recommendationParams['template'] = $this->getData('original_template');
+} else {
+    $_recommendationParams['handles'] = implode(',', $this->getLayout()->getUpdate()->getHandles());
+}
+
+$_recommendationParams['hash'] = $_helper->getRecommendationAjaxParamHash($_recommendationParams);
+
+?>
+<div id="<?=$_wrapperId?>" class="tweakwise-ajax-wrapper"></div>
+<script type="text/javascript">
+    document.observe('dom:loaded', function(){
+        new TweakwiseRecommendations(
+            '<?=$this->getUrl('emico_tweakwise/recommendation/index', ['_query' => $_recommendationParams])?>',
+            '<?=$_wrapperId?>'
+        );
+    });
+</script>

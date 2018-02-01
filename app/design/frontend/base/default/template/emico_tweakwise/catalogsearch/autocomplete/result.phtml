@@ -1,0 +1,27 @@
+<?php
+/** @var $this Emico_Tweakwise_Block_CatalogSearch_Autocomplete */
+$_helper = $this->helper('catalog/output'); /** @var $_helper Mage_Catalog_Helper_Output */
+$_suggestions = $this->getSuggestions();
+$_suggestionCount = count($_suggestions);
+$_products = $this->getProducts();
+$_productCount = count($_products);
+$_counter = 0;
+?>
+<ul class="autocomplete-result">
+    <li style="display:none"></li>
+    <?php foreach($_suggestions as $_suggestion): ?>
+        <li class="suggestion<?php echo ($_counter == 0) ? ' first-suggestion' : ''; ?><?php echo ($_counter == $_suggestionCount - 1) ? ' last-suggestion' : ''; ?> <?php echo (++$_counter)%2?'odd':'even'; ?>"><?php echo $_suggestion->getTitle(); ?></li>
+    <?php endforeach; ?>
+    <?php foreach($_products as $_product): ?>
+        <?php if ($_counter == $_suggestionCount):?>
+            <li class="label-recommended"><?php echo $this->__('Recommended products');?> :</li>
+        <?php endif; ?>
+        <li class="product<?php echo ($_counter == $_suggestionCount) ? ' first-product' : ''; ?><?php echo ($_counter  == $_productCount + $_suggestionCount - 1) ? ' last-product' : ''; ?> <?php echo (++$_counter)%2?'odd':'even'; ?>">
+            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+                <?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
+                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(35); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+                <span class="product-name"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></span>
+            </a>
+        </li>
+    <?php endforeach; ?>
+</ul>

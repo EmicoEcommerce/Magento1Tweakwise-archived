@@ -1,0 +1,439 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <emico_tweakwise translate="label" module="emico_tweakwise">
+            <tab>catalog</tab>
+            <label>Tweakwise</label>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <global translate="label" module="emico_tweakwise">
+                    <label>Global</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <server_url translate="label" module="emico_tweakwise">
+                            <label>Server url</label>
+                            <comment>Default: http://navigator-bus.tweakwise.com/</comment>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-url required-entry</validate>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </server_url>
+                    </fields>
+                </global>
+                <navigation translate="label" module="emico_tweakwise">
+                    <label>Layered navigation</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label" module="emico_tweakwise">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>When disabled default magento navigation will be used</comment>
+                        </enabled>
+
+                        <enabled_ajax translate="label" module="emico_tweakwise">
+                            <label>Ajax enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Enable ajax loading on filter changes</comment>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </enabled_ajax>
+
+                        <magento_color_swatches translate="label" module="emico_tweakwise">
+                            <label>Use Magento (image) color swatches</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Use default Magento (image) color swatches instead of the CSS implementation.</comment>
+                        </magento_color_swatches>
+
+
+                        <only_active_categories translate="label" module="emico_tweakwise">
+                            <label>Show only active categories</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Show only active categories in tree.</comment>
+                        </only_active_categories>
+
+                        <hide_one_option_facet translate="label" module="emico_tweakwise">
+                            <label>Hide facets with only one option</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Show only active categories in tree.</comment>
+                        </hide_one_option_facet>
+
+                        <category_as_link translate="label" module="emico_tweakwise">
+                            <label>Category as link</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </category_as_link>
+                        <category_tree_start_depth>
+                            <label>Tree facet start depth</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>41</sort_order>
+                            <validate>validate-digits</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>First level of categories to show in tree facet. Where 0 is the store root category.</comment>
+                            <depends>
+                                <category_as_link>1</category_as_link>
+                            </depends>
+                        </category_tree_start_depth>
+                        <max_tree_levels>
+                            <label>The maximum number of levels</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>42</sort_order>
+                            <validate>validate-digits</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>The maximum number of levels that will be rendered. Counting from the deepest active category.</comment>
+                            <depends>
+                                <category_as_link>1</category_as_link>
+                            </depends>
+                        </max_tree_levels>
+
+                        <search_same_as_category translate="label" module="emico_tweakwise">
+                            <label>Search page category settings same as category pages</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Category filters as link to category or categories will be filtered in a get parameter. This will disable the tree option for categories.</comment>
+                        </search_same_as_category>
+                        <category_as_link_search translate="label" module="emico_tweakwise">
+                            <label>Search page categorie as link</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>51</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Category filters as link to category or categories will be filtered in a get parameter. This will disable the tree option for categories.</comment>
+                            <depends>
+                                <search_same_as_category>0</search_same_as_category>
+                            </depends>
+                        </category_as_link_search>
+                        <category_tree_start_depth_search>
+                            <label>Search page tree facet start depth</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>52</sort_order>
+                            <validate>validate-digits</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>First level of categories to show in tree facet. Where 0 is the store root category.</comment>
+                            <depends>
+                                <category_as_link_search>1</category_as_link_search>
+                                <search_same_as_category>0</search_same_as_category>
+                            </depends>
+                        </category_tree_start_depth_search>
+                        <max_tree_levels_search>
+                            <label>Search page the maximum number of levels</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>53</sort_order>
+                            <validate>validate-digits</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>The maximum number of levels that will be rendered. Counting from the deepest active category.</comment>
+                            <depends>
+                                <category_as_link_search>1</category_as_link_search>
+                                <search_same_as_category>0</search_same_as_category>
+                            </depends>
+                        </max_tree_levels_search>
+                    </fields>
+                </navigation>
+                <autocomplete translate="label" module="emico_tweakwise">
+                    <label>Search Autocomplete</label>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label" module="emico_tweakwise">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>When disabled default Magento autocomplete is used</comment>
+                        </enabled>
+                        <products translate="label" module="emico_tweakwise">
+                            <label>Add products</label>
+                            <comment>Add products to search result</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Show products in autocomplete search results</comment>
+                        </products>
+                        <suggestions translate="label" module="emico_tweakwise">
+                            <label>Add suggestions</label>
+                            <comment>Add suggestions to search result</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Show search suggestions in autocomplete search results</comment>
+                        </suggestions>
+                        <in_category translate="label" module="emico_tweakwise">
+                            <label>Stay in category</label>
+                            <comment>Only show search results for current category</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Filter autocomplete search results to current category</comment>
+                        </in_category>
+                        <max_result translate="label" module="emico_tweakwise">
+                            <label>Max results</label>
+                            <comment>Maximum number of results to show, 0 to disable</comment>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-digits</validate>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Maximum number of results to show in auto complete.</comment>
+                        </max_result>
+                    </fields>
+                </autocomplete>
+                <dynamicsearch translate="label" module="emico_tweakwise">
+                    <label>Dynamicsearch</label>
+                    <sort_order>35</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label" module="emico_tweakwise">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>When disabled autocomplete will be used.</comment>
+                        </enabled>
+                    </fields>
+                </dynamicsearch>
+                <directdata translate="label" module="emico_tweakwise">
+                    <label>Directdata</label>
+                    <sort_order>37</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label" module="emico_tweakwise">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>When enabled, the Tweakwise response will be used for category page.</comment>
+                        </enabled>
+                    </fields>
+                </directdata>
+                <menu translate="label" module="emico_tweakwise">
+                    <label>Menu</label>
+                    <comment>Replace Magento menu with Tweakwise menu</comment>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label" module="emico_tweakwise">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>True to replace Magento menu with TW menu</comment>
+                        </enabled>
+                        <banner_location>
+                            <label>Banner locatie</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Location of the banners, for example: location of a CDN of relative path to media dir.</comment>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </banner_location>
+                    </fields>
+                </menu>
+                <search translate="label" module="emico_tweakwise">
+                    <label>Search</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label" module="emico_tweakwise">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>True to replace Magento search results with tweakwise search results. (this is not the autocomplete search results)</comment>
+                        </enabled>
+                        <template translate="label" module="emico_tweakwise">
+                            <label>Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>emico_tweakwise/system_config_source_template</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Tweakwise layer filter template to use for search results.</comment>
+                        </template>
+                    </fields>
+                </search>
+                <product translate="label" module="emico_tweakwise">
+                    <label>Product detail pagina</label>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <template translate="label" module="emico_tweakwise">
+                            <label>Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>emico_tweakwise/system_config_source_template</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Tweakwise layer filter template to use for product pages when layered search is shown.</comment>
+                        </template>
+                    </fields>
+                </product>
+                <recommendations translate="label" module="emico_tweakwise">
+                    <label>Product recommencations</label>
+                    <sort_order>70</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label" module="emico_tweakwise">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>When disabled default magento upsell will be used</comment>
+                        </enabled>
+                        <ajax>
+                            <label>Ajax</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Load featured and upsell products with ajax call. Useful when using FPC and personalisation</comment>
+                        </ajax>
+                        <product_upsell_template translate="label" module="emico_tweakwise">
+                            <label>Default upsell product template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>emico_tweakwise/system_config_source_recommendationProduct</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Tweakwise template to be used for upsell products. Only used if no template is selected with product attribute.</comment>
+                        </product_upsell_template>
+                        <product_related_template translate="label" module="emico_tweakwise">
+                            <label>Default related product template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>emico_tweakwise/system_config_source_recommendationProduct</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Tweakwise template to be used for related products. Only used if no template is selected with product attribute.</comment>
+                        </product_related_template>
+                        <crosssell_template translate="label" module="emico_tweakwise">
+                            <label>Cross sell product template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>emico_tweakwise/system_config_source_recommendationFeatured</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Leave empty to disable cross sell products block.</comment>
+                        </crosssell_template>
+                        <category_template translate="label" module="emico_tweakwise">
+                            <label>Default featured product category template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>emico_tweakwise/system_config_source_recommendationFeatured</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Tweakwise template to be used for featured products on category pages. Only used if no template is selected with category attribute.</comment>
+                        </category_template>
+                    </fields>
+                </recommendations>
+            </groups>
+        </emico_tweakwise>
+    </sections>
+</config>

@@ -1,0 +1,16 @@
+<?php
+/** @var $this Emico_Tweakwise_Block_Catalog_Layer_View */
+?>
+<?php $_stateHtml = $this->getChildHtml('state'); ?>
+<?php $_facetsHtml = $this->getChildHtml('facets'); ?>
+<?php if($_stateHtml || $_facetsHtml): ?>
+<div class="block block-layered-nav">
+    <div class="block-title">
+        <strong><span><?php echo $this->__('Shop By') ?></span></strong>
+    </div>
+    <div class="block-content">
+        <?php echo $_stateHtml ?>
+        <?php echo $_facetsHtml ?>
+    </div>
+</div>
+<?php endif; ?>

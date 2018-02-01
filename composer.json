@@ -1,0 +1,23 @@
+{
+    "name": "emico/magento1-tweakwise",
+    "type": "magento-module",
+    "license": "OSL-3.0",
+    "description": "Magento 1 tweakwise frontend support",
+    "authors": [
+        {
+            "name":"Emico",
+            "email":"info@emico.nl"
+        }
+    ],
+    "extra": {
+        "map": [
+            ["app/code/community/Emico/Tweakwise", "app/code/community/Emico/Tweakwise"],
+            ["app/etc/modules/Emico_Tweakwise.xml", "app/etc/modules/Emico_Tweakwise.xml"],
+            ["app/design/frontend/base/default/layout/emico_tweakwise.xml", "app/design/frontend/base/default/layout/emico_tweakwise.xml"],
+            ["app/design/frontend/rwd/default/layout/emico_tweakwise.xml", "app/design/frontend/rwd/default/layout/emico_tweakwise.xml"],
+            ["app/design/frontend/base/default/template/emico_tweakwise", "app/design/frontend/base/default/template/emico_tweakwise"],
+            ["app/locale/nl_NL/Emico_Tweakwise.csv", "app/locale/nl_NL/Emico_Tweakwise.csv"],
+            ["skin/frontend/base/default/emico_tweakwise", "skin/frontend/base/default/emico_tweakwise"]
+        ]
+    }
+}

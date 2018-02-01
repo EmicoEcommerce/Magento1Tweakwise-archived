@@ -1,0 +1,12 @@
+<?php /** @var $this Emico_Tweakwise_Block_Menu_Subsection */ ?>
+<li class="level1 nav-<?php echo $this->getCounter() ?>">
+    <span class="level1-title"><a><?php echo $this->__($this->getTitle()); ?></a></span>
+    <?php $_navItems = $this->getItems(); ?>
+    <?php if(count($_navItems)): ?>
+        <ul class="level1">
+            <?php foreach($_navItems as $_navItem): ?>
+                <?php echo $_navItem->toHtml(); ?>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+</li>

@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+        <Emico_Tweakwise>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Emico_TweakwiseExport />
+                <Mage_Catalog />
+                <Mage_CatalogSearch />
+
+                <!--
+                Only required when using Magento Enterprise with a theme based on RWD
+                <Enterpise_CatalogSearch />
+                -->
+            </depends>
+        </Emico_Tweakwise>
+        <Mage_ConfigurableSwatches>
+            <depends>
+                <Emico_Tweakwise/>
+            </depends>
+        </Mage_ConfigurableSwatches>
+        <!-- Only required when using Magento 1.9.1 or higher -->
+	</modules>
+</config>

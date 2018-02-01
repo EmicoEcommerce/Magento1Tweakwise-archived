@@ -1,0 +1,8 @@
+<p class="block-subtitle block-subtitle--filter"><?php echo $this->__('Filter') ?></p>
+<dl id="narrow-by-list">
+    <?php $_facets = $this->getFacetBlocks() ?>
+    <?php foreach ($_facets as $_facet): ?>
+        <?php echo $_facet->toHtml(); ?>
+    <?php endforeach; ?>
+</dl>
+<script type="text/javascript">decorateDataList('narrow-by-list')</script>

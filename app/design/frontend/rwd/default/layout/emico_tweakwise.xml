@@ -1,0 +1,240 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addItem" ifconfig="emico_tweakwise/autocomplete/enabled">
+                <type>skin_js</type>
+                <name>emico_tweakwise/js/AutoComplete.js</name>
+            </action>
+
+            <action method="addItem" ifconfig="emico_tweakwise/recommendations/ajax">
+                <type>skin_js</type>
+                <name>emico_tweakwise/js/Recommendations.js</name>
+            </action>
+
+            <action method="addCss" ifconfig="emico_tweakwise/autocomplete/enabled">
+                <stylesheet>emico_tweakwise/css/autocomplete.css</stylesheet>
+            </action>
+
+            <action method="addItem" ifconfig="emico_tweakwise/menu/enabled">
+                <type>skin_js</type>
+                <name>emico_tweakwise/js/menu.js</name>
+            </action>
+            <action method="addCss" ifconfig="emico_tweakwise/menu/enabled">
+                <stylesheet>emico_tweakwise/css/menu.css</stylesheet>
+            </action>
+        </reference>
+
+        <reference name="top.menu">
+            <action method="unsetChild" ifconfig="emico_tweakwise/menu/enabled">
+                <name>catalog.topnav</name>
+            </action>
+            <block type="emico_tweakwise/menu" name="emico_tweakwise.menu" template="emico_tweakwise/menu.phtml"
+                   ifconfig="emico_tweakwise/menu/enabled"/>
+        </reference>
+
+        <reference name="before_body_end">
+            <block type="emico_tweakwise/beforebodyend" name="emico_tweakwise_end"
+                   template="emico_tweakwise/beforebodyend.phtml" after="-"
+                   ifconfig="emico_tweakwise/autocomplete/enabled"/>
+        </reference>
+    </default>
+
+    <tweakwise_layered_nav>
+        <block type="emico_tweakwise/catalog_layer_ajax" name="emico_tweakwise.catalog.layer.ajax"
+               template="emico_tweakwise/catalog/layer/ajax.phtml" after="-"/>
+
+        <reference name="head">
+            <action method="addItem" ifconfig="emico_tweakwise/navigation/enabled">
+                <type>skin_js</type>
+                <name>emico_tweakwise/js/AttributeSlider.js</name>
+            </action>
+            <action method="addItem" ifconfig="emico_tweakwise/navigation/enabled">
+                <type>skin_js</type>
+                <name>emico_tweakwise/js/filter_collapse.js</name>
+            </action>
+            <action method="addItem" ifconfig="emico_tweakwise/navigation/enabled_ajax">
+                <type>skin_js</type>
+                <name>emico_tweakwise/js/filter_ajax.js</name>
+            </action>
+            <action method="addCss" ifconfig="emico_tweakwise/navigation/enabled">
+                <stylesheet>emico_tweakwise/css/navigation.css</stylesheet>
+            </action>
+        </reference>
+
+        <reference name="before_body_end">
+            <action method="append" ifconfig="emico_tweakwise/navigation/enabled_ajax">
+                <block>emico_tweakwise.catalog.layer.ajax</block>
+            </action>
+        </reference>
+    </tweakwise_layered_nav>
+
+    <tweakwise_catalogsearch_layered_nav>
+        <label>Tweakwise Layered Search Results</label>
+
+        <update handle="tweakwise_layered_nav"/>
+
+        <reference name="left_first">
+            <action ifconfig="emico_tweakwise/navigation/enabled" method="unsetChild">
+                <name>catalogsearch.leftnav</name>
+            </action>
+            <action ifconfig="emico_tweakwise/navigation/enabled" method="unsetChild">
+                <name>enterprisesearch.leftnav</name>
+            </action>
+
+            <block type="emico_tweakwise/catalogsearch_layer_view" name="tweakwise.catalogsearch.leftnav"
+                   after="currency" template="emico_tweakwise/catalog/layer/view.phtml">
+                <block type="emico_tweakwise/catalog_layer_state" name="tweakwise.layer.state" as="state"
+                       template="emico_tweakwise/catalog/layer/state.phtml"/>
+                <block type="emico_tweakwise/catalog_layer_facets" name="tweakwise.layer.facets" as="facets"
+                       template="emico_tweakwise/catalog/layer/facets.phtml"/>
+            </block>
+        </reference>
+
+        <reference name="content">
+            <action ifconfig="emico_tweakwise/search/enabled" method="unsetChild">
+                <name>search.result</name>
+            </action>
+            <action ifconfig="emico_tweakwise/search/enabled" method="unsetChild">
+                <name>enterprisesearch.result</name>
+            </action>
+
+            <block name="tweakwise.category.products.wrapper" type="core/template" template="emico_tweakwise/catalog/category/wrapper.phtml">
+                <block type="emico_tweakwise/catalogsearch_result" name="tweakwise.search.result"
+                       template="emico_tweakwise/catalogsearch/result.phtml">
+                    <block type="emico_tweakwise/catalog_product_list" name="search_result_list"
+                           template="catalog/product/list.phtml">
+                        <block type="core/text_list" name="product_list.name.after" as="name.after"/>
+                        <block type="core/text_list" name="product_list.after" as="after"/>
+
+                        <block type="emico_tweakwise/catalog_product_list_toolbar" name="tweakwise.toolbar"
+                               template="emico_tweakwise/catalog/product/list/toolbar.phtml">
+                            <block type="emico_tweakwise/catalog_product_list_toolbar_pager"
+                                   name="product_list_toolbar_pager"/>
+                        </block>
+                        <action method="addColumnCountLayoutDepend">
+                            <layout>empty</layout>
+                            <count>6</count>
+                        </action>
+                        <action method="addColumnCountLayoutDepend">
+                            <layout>one_column</layout>
+                            <count>5</count>
+                        </action>
+                        <action method="addColumnCountLayoutDepend">
+                            <layout>two_columns_left</layout>
+                            <count>4</count>
+                        </action>
+                        <action method="addColumnCountLayoutDepend">
+                            <layout>two_columns_right</layout>
+                            <count>4</count>
+                        </action>
+                        <action method="addColumnCountLayoutDepend">
+                            <layout>three_columns</layout>
+                            <count>3</count>
+                        </action>
+                        <action method="setToolbarBlockName">
+                            <name>product_list_toolbar</name>
+                        </action>
+                    </block>
+                </block>
+            </block>
+        </reference>
+    </tweakwise_catalogsearch_layered_nav>
+
+    <tweakwise_catalogsearch_result_index>
+        <update handle="tweakwise_catalogsearch_layered_nav"/>
+        <update handle="product_list"/>
+
+        <reference name="emico_tweakwise.catalog.layer.ajax">
+            <action method="addBlockSelector"><name>tweakwise.catalogsearch.leftnav</name><selector>.block-layered-nav</selector></action>
+            <action method="addBlockSelector"><name>tweakwise.category.products.wrapper</name><selector>.category-products-container</selector></action>
+            <action method="setLayoutHandle"><handle>tweakwise_catalogsearch_result_index</handle></action>
+            <action method="setLinkSelector"><selector>.block-layered-nav a</selector></action>
+        </reference>
+    </tweakwise_catalogsearch_result_index>
+
+    <tweakwise_catalog_layered_nav>
+        <update handle="tweakwise_layered_nav"/>
+
+        <reference name="left_first">
+            <action ifconfig="emico_tweakwise/navigation/enabled" method="unsetChild">
+                <name>catalog.leftnav</name>
+            </action>
+            <action ifconfig="emico_tweakwise/navigation/enabled" method="unsetChild">
+                <name>enterprisecatalog.leftnav</name>
+            </action>
+
+            <block type="emico_tweakwise/catalog_layer_view" name="tweakwise.catalog.leftnav" after="currency"
+                   template="emico_tweakwise/catalog/layer/view.phtml">
+                <block type="emico_tweakwise/catalog_layer_state" name="tweakwise.layer.state" as="state"
+                       template="emico_tweakwise/catalog/layer/state.phtml"/>
+                <block type="emico_tweakwise/catalog_layer_facets" name="tweakwise.layer.facets" as="facets"
+                       template="emico_tweakwise/catalog/layer/facets.phtml"/>
+            </block>
+        </reference>
+
+        <reference name="content">
+            <action ifconfig="emico_tweakwise/navigation/enabled" method="unsetChild">
+                <name>category.products</name>
+            </action>
+
+            <block name="tweakwise.category.products.wrapper" type="core/template" template="emico_tweakwise/catalog/category/wrapper.phtml">
+                <block type="emico_tweakwise/catalog_category_view" name="tweakwise.category.products"
+                       template="catalog/category/view.phtml">
+                    <block type="emico_tweakwise/catalog_product_list" name="product_list"
+                           template="catalog/product/list.phtml">
+                        <block type="core/text_list" name="product_list.name.after" as="name.after"/>
+                        <block type="core/text_list" name="product_list.after" as="after"/>
+
+                        <block type="emico_tweakwise/catalog_product_list_toolbar" name="tweakwise.toolbar"
+                               template="emico_tweakwise/catalog/product/list/toolbar.phtml">
+                            <block type="emico_tweakwise/catalog_product_list_toolbar_pager"
+                                   name="product_list_toolbar_pager"/>
+                        </block>
+                        <action method="addColumnCountLayoutDepend">
+                            <layout>empty</layout>
+                            <count>6</count>
+                        </action>
+                        <action method="addColumnCountLayoutDepend">
+                            <layout>one_column</layout>
+                            <count>5</count>
+                        </action>
+                        <action method="addColumnCountLayoutDepend">
+                            <layout>two_columns_left</layout>
+                            <count>4</count>
+                        </action>
+                        <action method="addColumnCountLayoutDepend">
+                            <layout>two_columns_right</layout>
+                            <count>4</count>
+                        </action>
+                        <action method="addColumnCountLayoutDepend">
+                            <layout>three_columns</layout>
+                            <count>3</count>
+                        </action>
+                        <action method="setToolbarBlockName">
+                            <name>product_list_toolbar</name>
+                        </action>
+                    </block>
+                </block>
+            </block>
+        </reference>
+
+        <reference name="emico_tweakwise.catalog.layer.ajax">
+            <action method="addBlockSelector"><name>tweakwise.catalog.leftnav</name><selector>.block-layered-nav</selector></action>
+            <action method="addBlockSelector"><name>tweakwise.category.products.wrapper</name><selector>.category-products-container</selector></action>
+            <action method="setLayoutHandle"><handle>tweakwise_catalog_layered_nav</handle></action>
+            <action method="setLinkSelector"><selector>.block-layered-nav a</selector></action>
+        </reference>
+    </tweakwise_catalog_layered_nav>
+
+    <catalog_category_layered>
+        <update handle="tweakwise_catalog_layered_nav"/>
+    </catalog_category_layered>
+
+    <emico_tweakwise_recommendation_index>
+        <update handle="page_empty"/>
+        <block type="emico_tweakwise/catalog_category_featured" name="recommendations" />
+    </emico_tweakwise_recommendation_index>
+</layout>
+
+

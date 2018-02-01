@@ -1,0 +1,20 @@
+<?php if($this->isActive()) : ?>
+    <script>
+        Event.observe(window, 'load', function() {
+            setTimeout(function(){
+                var js, fjs = document.getElementsByTagName('script')[0];
+                var id = 'tweakwise-dynamic-search-script';
+                if (document.getElementById(id)) return;
+                js = document.createElement('script');
+                js.id = id;
+                js.src = "//tweakwise.com/dynamic-search-javascript/DynamicSearch.js";
+                js.src = "/js/emico_tweakwise/DynamicSearch.js";
+                js.onload = function() {
+                    var tweakwiseDynamicSearch = new TweakwiseDynamicSearch('<?php echo $this->getKey(); ?>', 'search_mini_form', 'search', '<?php echo $this->__('Search entire store here...') ?>');
+                    tweakwiseDynamicSearch.initAutocomplete('search_autocomplete');
+                };
+                fjs.parentNode.insertBefore(js, fjs);
+            }, 500);
+        });
+    </script>
+<?php endif; ?>

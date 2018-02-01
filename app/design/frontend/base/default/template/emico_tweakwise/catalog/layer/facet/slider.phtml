@@ -1,0 +1,54 @@
+<?php /** @var $this Emico_Tweakwise_Block_Catalog_Layer_Facet_Slider */ ?>
+<?php if($this->isVisible()): ?>
+    <?php $_settings = $this->getFacetSettings(); ?>
+    <dt class="<?php echo $_settings->getIsCollapsible() ? 'collapsible' : ''; echo $_settings->getIsCollapsed() ? ' collapsed' : ''; ?>">
+        <?php if($_settings->getIsCollapsible()): ?>
+            <div class="arrow"></div>
+        <?php endif; ?>
+        <?php echo $this->__($_settings->getTitle()) ?>
+    </dt>
+    <dd<?php echo $_settings->getIsCollapsed() ? ' class="hidden"' : ''; ?>>
+        <?php if($_settings->getIsInfoVisible() && $_settings->getInfoText()): ?>
+            <span class="helptext"><?php echo $this->__($_settings->getInfoText()); ?></span>
+        <?php endif; ?>
+
+        <ol>
+            <?php
+                $_sliderId = $this->getFacetSettings()->getFacetId();
+                $_isPrice = $this->getFacetSettings()->isPrice();
+                $_currency = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode());
+                list($_minValue, $_maxValue) = $this->getBounds();
+                if($this->getFacet()->isActive())
+                {
+                    list($_lowerValue, $_upperValue) = $this->getFacet()->getValue();
+                }
+                else
+                {
+                    $_lowerValue = $_minValue;
+                    $_upperValue = $_maxValue;
+                }
+            ?>
+
+            <div class="slider-container"
+                 data-url-key="<?php echo $this->getFacetSettings()->getUrlKey(); ?>"
+                 data-min-value="<?php echo $_minValue; ?>"
+                 data-max-value="<?php echo $_maxValue; ?>"
+                 data-lower-value="<?php echo $_lowerValue; ?>"
+                 data-upper-value="<?php echo $_upperValue; ?>"
+                >
+                <div class="slider">
+                    <div class="handle handle-min left">&gt;&gt;</div>
+                    <div class="handle handle-max right">&lt;&lt;</div>
+                </div>
+                <div class="slider-input">
+                    <?php if($_isPrice) echo $_currency->getSymbol() ?: $_currency->getShortName(); ?>
+                    <input type="text" class="slider-min input-min" />
+                    <?php if($_isPrice) echo $_currency->getSymbol() ?: $_currency->getShortName(); ?>
+                    <input type="text" class="slider-max input-max" />
+                </div>
+                <a href="<?php echo $this->getPriceUrl(); ?>" class="update-link"><?php echo $this->__('Update'); ?></a>
+            </div>
+        </ol>
+
+    </dd>
+<?php endif; ?>

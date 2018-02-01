@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config>
+    <tweakwise_recommendation type="emico_tweakwise/widget_recommendation_featured" translate="name description" module="emico_tweakwise">
+        <name>Tweakwise featured products</name>
+        <description>List of Products from Tweakwise Recommendations</description>
+        <parameters>
+            <rule_id>
+                <required>1</required>
+                <visible>1</visible>
+                <label>Template</label>
+                <type>select</type>
+                <source_model>emico_tweakwise/system_config_source_recommendationFeatured</source_model>
+            </rule_id>
+        </parameters>
+    </tweakwise_recommendation>
+</config>

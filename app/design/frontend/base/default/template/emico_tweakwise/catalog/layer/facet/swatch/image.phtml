@@ -1,0 +1,70 @@
+<?php
+/** @var $this Emico_Tweakwise_Block_Catalog_Layer_Facet_Color */ ?>
+<?php if($this->isVisible()): ?>
+    <?php $_settings = $this->getFacetSettings(); ?>
+    <dt class="<?php echo $_settings->getIsCollapsible() ? 'collapsible' : ''; echo $_settings->getIsCollapsed() ? ' collapsed' : ''; ?>">
+        <?php if($_settings->getIsCollapsible()): ?>
+            <div class="arrow"></div>
+        <?php endif; ?>
+        <?php echo $this->__($_settings->getTitle()) ?>
+    </dt>
+    <dd class="<?php echo $_settings->getIsCollapsed() ? 'hidden' : ''; ?><?php echo $_settings->getNumberOfColumns() > 0 ? ' columns-' . $_settings->getNumberOfColumns() : ''; ?>">
+        <?php if($_settings->getIsInfoVisible() && $_settings->getInfoText()): ?>
+            <span class="helptext"><?php echo $this->__($_settings->getInfoText()); ?></span>
+        <?php endif; ?>
+        <?php
+        $_attributes = $this->getAttributes();
+
+        $_dimHelper = Mage::helper('configurableswatches/swatchdimensions');
+
+        $_swatchInnerWidth = $_dimHelper->getInnerWidth(Mage_ConfigurableSwatches_Helper_Swatchdimensions::AREA_LAYER);
+        $_swatchInnerHeight = $_dimHelper->getInnerHeight(Mage_ConfigurableSwatches_Helper_Swatchdimensions::AREA_LAYER);
+        $_swatchOuterWidth = $_dimHelper->getOuterWidth(Mage_ConfigurableSwatches_Helper_Swatchdimensions::AREA_LAYER);
+        $_swatchOuterHeight = $_dimHelper->getOuterHeight(Mage_ConfigurableSwatches_Helper_Swatchdimensions::AREA_LAYER);
+        ?>
+
+        <ol class="swatches">
+            <?php foreach ($_attributes as $_item):
+
+                $_hasItems = ($_item->getNumberOfResults() > 0);
+                $_label = $_item->getLabel();
+                $_swatchUrl = Mage::helper('configurableswatches/productimg')->getGlobalSwatchUrl(null, $_item->getTitle(), $_swatchInnerWidth, $_swatchInnerHeight);
+                $_showLink = !$_item->getIsSelected() || $this->isCheckbox();
+
+                $_hasImage = (!empty($_swatchUrl));
+                $_linkClass = 'swatch-link' . (($_hasImage) ? ' has-image' : '');
+                $_linkCss = 'height:' . $_swatchOuterHeight . 'px; ' . ((!$_hasImage) ? 'min-' : '') . 'width:' . $_swatchOuterWidth . 'px;';
+                $_lineHeight = $_swatchOuterHeight + 2; ?>
+
+                <li<?php if ($_hasImage){ echo ' style="line-height: ' . $_lineHeight . 'px;"'; } ?>>
+                    <?php if ($_hasItems): ?>
+                        <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>" class="<?php echo $_linkClass ?>" title="<?=$this->escapeHtml($_item->getTitle())?>"<?php endif; ?>>
+                    <?php else: ?>
+                        <span class="<?php echo $_linkClass ?>">
+                    <?php endif; ?>
+                    <span class="swatch-label"<?php if ($_hasImage){ echo ' style="' . $_linkCss . '"'; } ?>>
+                        <?php if ($_hasImage): ?>
+                            <img src="<?php echo $_swatchUrl; ?>" alt="<?php echo $_label; ?>" title="<?php echo $_label ?>" width="<?php echo $_swatchInnerWidth ?>" height="<?php echo $_swatchInnerHeight ?>" />
+                        <?php else: ?>
+                            <?php echo $_item->getTitle(); ?>
+                        <?php endif; ?>
+                    </span>
+                    <?php if ($_settings->getIsNumberOfResultVisible()): ?>
+                        <span class="count">(<?php echo $_item->getNumberOfResults() ?>)</span>
+                    <?php endif; ?>
+                    <?php if ($_hasItems): ?>
+                        </a>
+                    <?php else: ?>
+                        </span>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach ?>
+            <?php if($this->showMoreText()): ?>
+                <li class="more-less-links">
+                    <a href="#" class="more-link"><?php echo $this->__($_settings->getExpandText()); ?></a>
+                    <a href="#" class="less-link hidden"><?php echo $this->__($_settings->getCollapseText()); ?></a>
+                </li>
+            <?php endif; ?>
+        </ol>
+    </dd>
+<?php endif; ?>
