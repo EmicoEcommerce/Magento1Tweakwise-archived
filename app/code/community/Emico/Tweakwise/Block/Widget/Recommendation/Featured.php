@@ -10,7 +10,7 @@
  * @method $this setRuleId(int $ruleId);
  * @method int getRuleId();
  */
-class Emico_Tweakwise_Block_Widget_Recommendation_Featured extends Mage_Core_Block_Template implements Mage_Widget_Block_Interface
+class Emico_Tweakwise_Block_Widget_Recommendation_Featured extends Mage_Catalog_Block_Product_Abstract implements Mage_Widget_Block_Interface
 {
     /**
      * @var Emico_Tweakwise_Model_Data_Recommendation_Collection|Mage_Catalog_Model_Product[]
