@@ -235,7 +235,6 @@
                         </in_category>
                         <max_result translate="label" module="emico_tweakwise">
                             <label>Max results</label>
-                            <comment>Maximum number of results to show, 0 to disable</comment>
                             <frontend_type>text</frontend_type>
                             <validate>validate-digits</validate>
                             <sort_order>50</sort_order>
@@ -244,6 +243,16 @@
                             <show_in_store>1</show_in_store>
                             <comment>Maximum number of results to show in auto complete.</comment>
                         </max_result>
+                        <min_search_chars translate="label" module="emico_tweakwise">
+                            <label>Minimal search characters to start autocomplete search</label>
+                            <comment>Minimal search characters to start autocomplete search</comment>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-not-negative-number</validate>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </min_search_chars>
                     </fields>
                 </autocomplete>
                 <dynamicsearch translate="label" module="emico_tweakwise">

@@ -1,5 +1,6 @@
 <script type="text/javascript">
-    searchForm.setCategory(<?=$this->getTweakwiseCategoryId();?>);
+    searchForm.setCategory(<?=$this->getTweakwiseCategoryId()?>);
+    searchForm.setMinSearchChars(<?=$this->getMinSearchChars()?>)
     searchForm.initAutocompleteDelayed();
 
     if($('search')) {

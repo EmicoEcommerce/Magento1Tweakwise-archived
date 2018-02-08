@@ -1,8 +1,13 @@
 Varien.searchForm.prototype = Object.extend(Varien.searchForm.prototype, {
 
-    initAutocomplete : function(url, destinationElement) {
+    initAutocomplete : function(url, destinationElement, minSearchChars) {
         this.url = url;
         this.destinationElement = destinationElement;
+        this.minSearchChars = minSearchChars || 2;
+    },
+
+    setMinSearchChars : function(chars) {
+        this.minSearchChars = chars;
     },
 
     getRequestUrl : function() {
@@ -26,7 +31,7 @@ Varien.searchForm.prototype = Object.extend(Varien.searchForm.prototype, {
             {
                 paramName: this.field.name,
                 method: 'get',
-                minChars: 2,
+                minChars: this.minSearchChars || 2,
                 updateElement: this._selectAutocompleteItem.bind(this),
                 onShow : function(element, update) {
                     if(!update.style.position || update.style.position=='absolute') {

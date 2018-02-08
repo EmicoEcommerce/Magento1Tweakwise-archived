@@ -62,6 +62,7 @@
                 <suggestions>1</suggestions>
                 <in_category>1</in_category>
                 <max_result>0</max_result>
+                <min_search_chars>2</min_search_chars>
             </autocomplete>
             <search>
                 <enabled>0</enabled>

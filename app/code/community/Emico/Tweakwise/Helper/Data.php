@@ -217,6 +217,17 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Minimal chars to start autocomplete search
+     *
+     * @param int|string|Mage_Core_Model_Store $store
+     * @return int
+     */
+    public function getMinSearchChars($store = null)
+    {
+        return (int) Mage::getStoreConfig('emico_tweakwise/autocomplete/min_search_chars', $store);
+    }
+
+    /**
      * Temporarily disable Tweakwise for this request
      */
     public function tempDisable()

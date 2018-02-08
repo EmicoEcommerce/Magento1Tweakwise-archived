@@ -27,6 +27,14 @@ class Emico_Tweakwise_Block_Beforebodyend extends Mage_Core_Block_Template
     }
 
     /**
+     * @return int
+     */
+    protected function getMinSearchChars()
+    {
+        return Mage::helper('emico_tweakwise')->getMinSearchChars();
+    }
+
+    /**
      * Get currently set category
      *
      * @return int
