@@ -113,4 +113,17 @@ class Emico_Tweakwise_Model_Observer
             $this->redirect($controller);
         }
     }
+
+    /**
+     * @param Varien_Event_Observer $observer
+     */
+    public function setNoIndexNoFollow(Varien_Event_Observer $observer)
+    {
+        if (Mage::helper('emico_tweakwise/seo')->shouldApplyNoIndexNoFollow()) {
+            $layout = Mage::app()->getLayout();
+            /** @var Mage_Page_Block_Html_Head $head */
+            $head = $layout->getBlock('head');
+            $head->setData('robots', 'NOINDEX,NOFOLLOW');
+        }
+    }
 }

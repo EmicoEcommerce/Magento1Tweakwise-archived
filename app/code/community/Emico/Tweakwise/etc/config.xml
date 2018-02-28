@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Emico_Tweakwise>
-            <version>1.11.0</version>
+            <version>1.12.0</version>
         </Emico_Tweakwise>
     </modules>
     <global>
@@ -124,6 +124,10 @@
                         <class>emico_tweakwise/observer</class>
                         <method>handleAjaxRequest</method>
                     </emico_tweakwise>
+                    <emico_tweakwise_nofollow>
+                        <class>emico_tweakwise/observer</class>
+                        <method>setNoIndexNoFollow</method>
+                    </emico_tweakwise_nofollow>
                 </observers>
             </controller_action_layout_render_before_catalog_category_view>
             <controller_action_layout_render_before_catalogsearch_result_index>

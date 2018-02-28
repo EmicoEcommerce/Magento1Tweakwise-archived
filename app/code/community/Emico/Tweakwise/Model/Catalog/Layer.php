@@ -398,4 +398,36 @@ class Emico_Tweakwise_Model_Catalog_Layer
     {
         return $this->getTweakwiseResponse()->getFacets();
     }
+
+    /**
+     * @return Emico_Tweakwise_Model_Bus_Type_Attribute[]
+     */
+    public function getSelectedAttributes()
+    {
+        $selectedAttributes = [];
+        foreach ($this->getFacets() as $facet) {
+            foreach ($facet->getAttributes() as $attribute) {
+                if ($attribute->getIsSelected()) {
+                    $selectedAttributes[] = $attribute;
+                }
+            }
+        }
+        return $selectedAttributes;
+    }
+
+    /**
+     * @return Emico_Tweakwise_Model_Bus_Type_Facet[]
+     */
+    public function getSelectedFacets()
+    {
+        $selectedFacets = [];
+        foreach ($this->getFacets() as $facet) {
+            foreach ($facet->getAttributes() as $attribute) {
+                if ($attribute->getIsSelected()) {
+                    $selectedFacets[] = $facet;
+                }
+            }
+        }
+        return $selectedFacets;
+    }
 }
