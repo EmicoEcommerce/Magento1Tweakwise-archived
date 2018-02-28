@@ -208,6 +208,26 @@ class Emico_Tweakwise_Block_Catalog_Layer_Facet_Attribute extends Mage_Core_Bloc
     /**
      * @return string
      */
+    public function getHrefAttributes()
+    {
+        $attributes = [];
+        if (Mage::helper('emico_tweakwise/seo')->shouldApplyNoIndexNoFollow($this->getFacet())) {
+            $attributes['rel'] = 'nofollow';
+        }
+
+        return implode(' ',
+            array_map(
+                function ($key, $val) {
+                    return sprintf('%s="%s"', $key, $val);
+                },
+                array_keys($attributes), array_values($attributes)
+            )
+        );
+    }
+
+    /**
+     * @return string
+     */
     protected function _toHtml()
     {
         $helper = Mage::helper('emico_tweakwise');

@@ -40,10 +40,6 @@ class Emico_Tweakwise_Model_Observer
             return;
         }
 
-        $urlModel = Mage::getSingleton('core/url');
-        $app = Mage::app();
-        $app->setUseSessionVar(false);
-
         $blocks = array_keys($ajaxBlock->getBlockSelectors());
         $blocksHtml = [];
         foreach ($blocks as $nameInLayout) {
@@ -52,14 +48,12 @@ class Emico_Tweakwise_Model_Observer
                 continue;
             }
 
-            $html = $block->toHtml();
-            $html = $urlModel->sessionUrlVar($html);
-            $blocksHtml[$nameInLayout] = $html;
+            $blocksHtml[$nameInLayout] = $block->toHtml();
         }
 
         $responseBody = Mage::helper('core')->jsonEncode(['blocks' => $blocksHtml]);
 
-        /** @var Mage_Core_Block_Text $newRoot */
+        /** @var Mage_Core_BLock_Text $newRoot */
         $newRoot = $layout->createBlock('core/text', 'root');
         $newRoot->setText($responseBody);
 
@@ -111,6 +105,19 @@ class Emico_Tweakwise_Model_Observer
             $this->redirect($controller);
         } elseif (!$request->isXmlHttpRequest() && ($request->getParam('json') || $request->getParam('ajax'))) {
             $this->redirect($controller);
+        }
+    }
+
+    /**
+     * @param Varien_Event_Observer $observer
+     */
+    public function setNoIndexNoFollow(Varien_Event_Observer $observer)
+    {
+        if (Mage::helper('emico_tweakwise/seo')->shouldApplyNoIndexNoFollow()) {
+            $layout = Mage::app()->getLayout();
+            /** @var Mage_Page_Block_Html_Head $head */
+            $head = $layout->getBlock('head');
+            $head->setData('robots', 'NOINDEX,NOFOLLOW');
         }
     }
 }

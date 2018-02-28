@@ -1,0 +1,292 @@
+###########################################
+## Version: 1.12.0 Date: 28 - 02 - 2018 ##
+###########################################
+- Add options for SEO purposes. For example add a noindex/nofollow when more than 2 facets are selected.
+
+###########################################
+## Version: 1.10.10 Date: 17 - 01 - 2018 ##
+###########################################
+- Work around for Enterprise full page cache issue. Exclude Tweakwise ajax filter requests from full page cache.
+
+###########################################
+## Version: 1.10.9  Date: 08 - 01 - 2018 ##
+###########################################
+- Fixed Navigation issue where if the current category was selected a link to the parent category was rendered
+- Code issue fixed, unnecessary code execution in app/design/frontend/base/default/template/emico_tweakwise/catalog/layer/facet/tree/items.phtml
+
+###########################################
+## Version: 1.10.8  Date: 16 - 11 - 2017 ##
+###########################################
+- Fixed not functioning CMS widget for featured products with ajax enabled.
+
+###########################################
+## Version: 1.10.7  Date: 28 - 09 - 2017 ##
+###########################################
+- FIX #40747, Made sure ajax requests from tweakwise are redirected to non ajax versions if the request was not an actual ajax
+request. This prevents ajax requests being cached as non ajax request and the other way around.
+
+###########################################
+## Version: 1.10.6  Date: 28 - 09 - 2017 ##
+###########################################
+- Adding tweakwise upsell template and tweakwise crosssell template attributes to catalog category edit screens
+- Moved all tweakwise category attributes to tab "Tweakwise"
+
+###########################################
+## Version: 1.10.5  Date: 28 - 09 - 2017 ##
+###########################################
+- Category load replaced by collection, in EE we don't have the url_key when loading a category. We have the option of adding
+the url key when loading a collection.
+
+###########################################
+## Version: 1.10.4  Date: 28 - 09 - 2017 ##
+###########################################
+- JS error fix when ajax navigation is disabled (don't render ajax block when ajax navigation is disabled)
+
+###########################################
+## Version: 1.10.3  Date: 07 - 07 - 2017 ##
+###########################################
+- Strict notice fix with declaration of Emico_Tweakwise_Model_Data_Recommendation_Collection::loadData() method.
+
+###########################################
+## Version: 1.10.2  Date: 22 - 06 - 2017 ##
+###########################################
+- Code style cleanup, all code psr-1 & psr-2.
+- Added array option for query parameters ipv multiple values only seperated in single query parameter.
+- Fixed push state with ajax=1 query parameter for ajax update.
+
+###########################################
+## Version: 1.10.1  Date: 18 - 05 - 2017 ##
+###########################################
+- Completed ajax loading of product / filters
+- Changed fetching of request params from param object to allow user defined parameters.
+- Added ajax=1 for ajax filter requests due to FPC implementions expecting every get request to uri to provide the same result.
+
+###########################################
+## Version: 1.10.0  Date: 22 - 03 - 2017 ##
+###########################################
+- Added ajax loading of product's / filters
+- Created composer module
+
+###########################################
+## Version: 1.9.1  Date: 22 - 03 - 2017  ##
+###########################################
+- Fixed issue with not using session sort, and page size parameters. #14371
+
+###########################################
+## Version: 1.9.0  Date: 04 - 01 - 2017  ##
+###########################################
+- Added cache flush event which is triggered after cache clear request from TW side. Event has arguments: request (type Mage_Core_Controller_Request_Http) and transport (type Varien_Object). transport contains key 'flush' => true if set to false no cache flush will be issued.
+
+###########################################
+## Version: 1.8.2  Date: 02 - 03 - 2017  ##
+###########################################
+- Fixed bug with pagination #8420, setting correct collection sizes and using correct pagination actions in pager block
+
+###########################################
+## Version: 1.8.1  Date: 28 - 12 - 2016  ##
+###########################################
+- Fixed bug with pagination #8420
+
+###########################################
+## Version: 1.8.0  Date: 27 - 10 - 2016  ##
+###########################################
+- Fixed bug where empty rule ID was provided
+- Added category and product rule ID selection
+- Added recommendation widget
+
+###########################################
+## Version: 1.7.0  Date: 01 - 09 - 2016  ##
+###########################################
+- Added product suggestions request, cms block, overwrite for upsell / related products. Ajax handling for recommendations
+
+###########################################
+## Version: 1.6.5  Date: 22 - 08 - 2016  ##
+###########################################
+- Fixed bug where category id was undefined in request to Tweakwise due to pages without category.
+
+###########################################
+## Version: 1.6.4  Date: 29 - 02 - 2016  ##
+###########################################
+- Fixed bug #6788: Parent category is no longer a link when child is selected
+- Fixed feature: #6789 Filters with one option is no longer auto hidden, this is now a config option, see: emico_tweakwise/navigation/hide_one_option_facet
+
+###########################################
+## Version: 1.6.3  Date: 23 - 12 - 2015  ##
+###########################################
+- Fixed bug #4428: Category clear all does not clear category url due to invalid url key
+- Fixed bug: Style in default RWD theme did not show remove label on filter remove buttons
+- Fixed bug: Category filter was shown with category as link urls
+
+###########################################
+## Version: 1.6.2  Date: 10 - 12 - 2015  ##
+###########################################
+- Fixed bug: Tweakwise Menu bulknav did not work as expected.
+
+###########################################
+## Version: 1.6.1  Date: 27 - 11 - 2015  ##
+###########################################
+- Fixed bug #5531: Tweakwise auto complete add products / suggestions did not work as expected
+
+###########################################
+## Version: 1.6.0  Date: 26 - 10 - 2015  ##
+###########################################
+- Fixed bug #4428: Not removing catalog query on getClearUrl()
+- Added support option to specify different category as link and dept settings on catalog search page and category page.
+
+###########################################
+## Version: 1.5.12  Date: 09 - 09 - 2015 ##
+###########################################
+- Fixed bug #4433: Autocomplete was broken in TW 1.5.11
+- Added support for Magento Configurable swatches op product card in list or grid view and in search. #4500
+- Added support for new left_first layout handle for RWD theme. #3867
+
+###########################################
+## Version: 1.5.11  Date: 19 - 08 - 2015 ##
+###########################################
+- Fixed feature #3514 Added extra exception to be catched on invalid TW responses
+- Added depencency in comment on Enterpise_CatalogSearch to fix double menu in RWD theme. Fixes #3867
+- Fixed bug #4412 layerd item collection total record count, current page and page size values
+- Show currency short name instead of symbol if no symbol is known
+- Changed export currency and removed convert from for price values
+
+###########################################
+## Version: 1.5.10  Date: 06 - 08 - 2015 ##
+###########################################
+- Fixed feature #3514 Changed behavior when TW request failed. No longer shows error page, now shows empty catalog.
+
+###########################################
+## Version: 1.5.9   Date: 30 - 07 - 2015 ##
+###########################################
+- Fixed bug #3782 Price slider fix when using RWD theme (use https://github.com/McArrow/scriptaculous/commit/4465cdf2939735ea6c34aacce6b5996099534468 for touch support)
+
+###########################################
+## Version: 1.5.8   Date: 08 - 07 - 2015 ##
+###########################################
+- Fixed bug #3886 Category ID send to menu requests
+- Fixed menu rendering column width
+- Fixed feature #3774 Added Filter remove actions to layout for RWD theme
+- Changed code style to default Magento format
+- Removed check on catid and removed filter through catid
+
+###########################################
+## Version: 1.5.7   Date: 07 - 05 - 2015 ##
+###########################################
+- Fixed bug #3774: Stay in category breaks category filter in search.
+- Fixed bug: Category as link in search browses away from search results.
+
+###########################################
+## Version: 1.5.6   Date: 07 - 05 - 2015 ##
+###########################################
+- Fixed bug #2614: XSS bug in facet templates.
+- Fixed bug #3127: Add products setting for autocomplete.
+- Added #2615: Color swatches van 1.9.1 support.
+- Added #3122: Filter templates prefix en suffix implementation.
+
+###########################################
+## Version: 1.5.5   Date: 13 - 03 - 2015 ##
+###########################################
+- Fixed bug #2782: Uncaught TypeError: undefined is not a function, by disabling autocomplete.
+
+###########################################
+## Version: 1.5.4   Date: 04 - 02 - 2015 ##
+###########################################
+- Added option to stay in category by search and autocomplete.
+- Added profiling option.
+
+###########################################
+## Version: 1.5.3   Date: 27 - 01 - 2015 ##
+###########################################
+- Fixed bug #2138 where search was not working with category as link disabled.
+
+###########################################
+## Version: 1.5.2   Date: 29 - 12 - 2014 ##
+###########################################
+- Hide facets by one option.
+
+###########################################
+## Version: 1.5.1   Date: 16 - 12 - 2014 ##
+###########################################
+- Fixed bug where the price slider was not able to select the upper bound value.
+
+###########################################
+## Version: 1.5.0   Date: 02 - 12 - 2014 ##
+###########################################
+- Implementation of a different search template completed.
+- Added the option to define a specific search template by each category.
+- Fixed bug in tree filter with wrong category explode from URL, this could result in the "Item with the same id X already exist" exception.
+
+###########################################
+## Version: 1.4.5   Date: 24 - 11 - 2014 ##
+###########################################
+- Bug special prices in product list where overwritten bij price from flat tables
+- Bug with product slider where prices where still devided by 100
+- Added show only active categories functionality
+- Added Tweakwise toolbar, a fallback scenario can now use the default Magento toolbar.
+
+###########################################
+## Version: 1.4.4   Date: 21 - 11 - 2014 ##
+###########################################
+- Fixed bug by label 3 in directdata labels, removed undesirable type casting to int.
+
+###########################################
+## Version: 1.4.3   Date: 24 - 10 - 2014 ##
+###########################################
+- Disable Tweakwise category view completely if Tweakwise is disabled.
+
+###########################################
+## Version: 1.4.2   Date: 22 - 10 - 2014 ##
+###########################################
+- Strip tags before search command to Tweakwise
+
+###########################################
+## Version: 1.4.1   Date: 6 - 10 - 2014  ##
+###########################################
+- Added directdata functionality
+
+###########################################
+## Version: 1.4.0  Date: 3 - 9 - 2014   ##
+###########################################
+- Added support for Magento Enterprise 1.14
+- Added dynamic search functionality
+
+###########################################
+## Version: 1.3.1   Date: 15 - 07 - 2014 ##
+###########################################
+- Added color swatch functionality
+- Added translation option by CSV + added Dutch translations
+
+###########################################
+## Version: 1.3.0   Date: 11 - 06 - 2014 ##
+###########################################
+- Only show active categories option
+- Magento Enterprise 1.13 support added
+- Added depth by tree filter
+- Added banner functionality by Tweakwise
+- Fix so when TW is disabled you wont make any request to Tweakwise
+
+###########################################
+## Version: 1.2.1   Date: 14 - 4 - 2014  ##
+###########################################
+- Rebuild architecture, without rewrites.
+- Added Tweakwise toolbar
+- Pagination by Tweakwise
+- Sorting update by Tweakwise
+- Clearurl option added
+
+###########################################
+## Version: 1.1.0   Date: 11 - 12 - 2013  ##
+###########################################
+- Deleted vPager module out default package
+- Bug fix for current category url
+- Multistore support
+- Enterprise support for clearing Enterprise FPC
+- Tweakwise by default disabled after install
+
+###########################################
+## Version: 1.0.0   Date: 2 - 10 - 2013  ##
+###########################################
+- Bug fixed for tree rendering
+- Sorting from Tweakwise
+- Added slider functionality
+- Added tree filter
+- URL for cache clearing by Tweakwise added
