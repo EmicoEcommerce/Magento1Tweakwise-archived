@@ -41,6 +41,23 @@
             </emico_tweakwise_setup>
         </resources>
     </global>
+
+    <emico_tweakwise>
+        <urlbuilder_strategies>
+            <category>
+                <class>emico_tweakwise/urlBuilder_strategy_categoryStrategy</class>
+                <active>true</active>
+                <priority>1</priority>
+            </category>
+            <default>
+                <class>emico_tweakwise/urlBuilder_strategy_defaultStrategy</class>
+                <active>true</active>
+                <priority>1</priority>
+            </default>
+        </urlbuilder_strategies>
+    </emico_tweakwise>
+
+
     <default>
         <emico_tweakwise>
             <global>

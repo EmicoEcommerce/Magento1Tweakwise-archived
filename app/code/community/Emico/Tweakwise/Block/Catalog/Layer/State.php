@@ -61,7 +61,7 @@ class Emico_Tweakwise_Block_Catalog_Layer_State extends Emico_Tweakwise_Block_Ca
             if (!$this->showFacetState($facetBlock)) {
                 continue;
             }
-
+-
             $result[] = $facetBlock;
         }
 

@@ -105,41 +105,11 @@ class Emico_Tweakwise_Block_Catalog_Layer_Facet_Attribute extends Mage_Core_Bloc
      * Get magento url based on current url
      *
      * @param Emico_Tweakwise_Model_Bus_Type_Attribute|null $attribute
-     * @param null|string $urlKey
      * @return string
      */
-    public function getFacetUrl(Emico_Tweakwise_Model_Bus_Type_Attribute $attribute, $urlKey = null)
+    public function getFacetUrl(Emico_Tweakwise_Model_Bus_Type_Attribute $attribute)
     {
-        $facet = $this->getFacet();
-        $params = ['_current' => true, '_use_rewrite' => true, '_escape' => false];
-        $query = ['ajax' => null];
-        if ($urlKey === null) {
-            $urlKey = $this->getUrlKey();
-        }
-
-        if ($attribute->getIsSelected()) {
-            $value = [];
-            /** @var $activeAttribute Emico_Tweakwise_Model_Bus_Type_Attribute */
-            foreach ($facet->getActiveAttributes() as $activeAttribute) {
-                if ($activeAttribute == $attribute) {
-                    continue;
-                }
-                $value[] = $activeAttribute->getTitle();
-            }
-
-            $query[$urlKey] = count($value) > 0 ? implode('|', $value) : null;
-        } elseif ($facet->isMultipleSelect()) {
-            $value = $facet->getValue();
-            $value[] = $attribute->getTitle();
-            $query[$urlKey] = implode('|', $value);
-        } else {
-            $query[$urlKey] = $attribute->getTitle();
-        }
-
-        $query['p'] = null;
-        $params['_query'] = $query;
-
-        return Mage::getUrl('*/*/*', $params);
+        return Mage::getModel('emico_tweakwise/urlBuilder_urlBuilder')->buildUrl($this->getFacet(), $attribute);
     }
 
     /**
