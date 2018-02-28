@@ -40,6 +40,10 @@ class Emico_Tweakwise_Model_Observer
             return;
         }
 
+        $urlModel = Mage::getSingleton('core/url');
+        $app = Mage::app();
+        $app->setUseSessionVar(false);
+
         $blocks = array_keys($ajaxBlock->getBlockSelectors());
         $blocksHtml = [];
         foreach ($blocks as $nameInLayout) {
@@ -48,12 +52,14 @@ class Emico_Tweakwise_Model_Observer
                 continue;
             }
 
-            $blocksHtml[$nameInLayout] = $block->toHtml();
+            $html = $block->toHtml();
+            $html = $urlModel->sessionUrlVar($html);
+            $blocksHtml[$nameInLayout] = $html;
         }
 
         $responseBody = Mage::helper('core')->jsonEncode(['blocks' => $blocksHtml]);
 
-        /** @var Mage_Core_BLock_Text $newRoot */
+        /** @var Mage_Core_Block_Text $newRoot */
         $newRoot = $layout->createBlock('core/text', 'root');
         $newRoot->setText($responseBody);
 
