@@ -113,6 +113,8 @@ class Emico_Tweakwise_Model_Catalog_Layer
      */
     protected function createTweakwiseRequest()
     {
+        $helper = Mage::helper('emico_tweakwise');
+
         $request = Mage::getModel('emico_tweakwise/bus_request_navigation');
 
         $httpRequest = Mage::app()->getRequest();
@@ -123,6 +125,10 @@ class Emico_Tweakwise_Model_Catalog_Layer
 
         if ($httpRequest) {
             $this->applySessionParams($request);
+
+            foreach ($helper->getActiveUrlStrategies() as $strategy) {
+                $request = $strategy->decorateTweakwiseRequest($httpRequest, $request);
+            }
 
             foreach ($httpRequest->getParams() as $key => $value) {
                 if (!is_scalar($value) && !is_array($value)) {

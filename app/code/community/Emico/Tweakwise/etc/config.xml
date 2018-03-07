@@ -181,4 +181,14 @@
             </emico_tweakwise_handle_ajax_request_after>
         </events>
     </frontend>
+    <default>
+        <web>
+            <routers>
+                <emico_tweakwise>
+                    <area>frontend</area>
+                    <class>Emico_Tweakwise_Controller_Router</class>
+                </emico_tweakwise>
+            </routers>
+        </web>
+    </default>
 </config>

@@ -65,4 +65,13 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_CategoryStrategy implements Emic
 
         return $url;
     }
+
+    /**
+     * @param Zend_Controller_Request_Http $request
+     * @return Emico_Tweakwise_Model_Bus_Request_Navigation
+     */
+    public function decorateTweakwiseRequest(Zend_Controller_Request_Http $httpRequest, Emico_Tweakwise_Model_Bus_Request_Navigation $tweakwiseRequest)
+    {
+        return $tweakwiseRequest;
+    }
 }
