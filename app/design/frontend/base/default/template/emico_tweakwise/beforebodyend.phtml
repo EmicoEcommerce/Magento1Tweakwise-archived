@@ -1,11 +1,13 @@
 <script type="text/javascript">
-    searchForm.setCategory(<?=$this->getTweakwiseCategoryId()?>);
-    searchForm.setMinSearchChars(<?=$this->getMinSearchChars()?>)
-    searchForm.initAutocompleteDelayed();
+    if (typeof searchForm !== 'undefined') {
+        searchForm.setCategory(<?=$this->getTweakwiseCategoryId()?>);
+        searchForm.setMinSearchChars(<?=$this->getMinSearchChars()?>)
+        searchForm.initAutocompleteDelayed();
 
-    if($('search')) {
-        $('search').insert({
-            after: new Element('input', {type: 'hidden', name: 'catid', value: 'hidden', value: <?=$this->getCategoryId();?>})
-        });
+        if ($('search')) {
+            $('search').insert({
+                after: new Element('input', {type: 'hidden', name: 'catid', value: 'hidden', value: <?=$this->getCategoryId();?>})
+            });
+        }
     }
 </script>
