@@ -14,10 +14,10 @@ class Emico_Tweakwise_Model_UrlBuilder_UrlBuilder
      */
     public function buildUrl(Emico_Tweakwise_Model_Bus_Type_Facet $facet, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute)
     {
-        $helper = Mage::helper('emico_tweakwise');
+        $helper = Mage::helper('emico_tweakwise/uriStrategy');
 
         $state = Mage::getSingleton('emico_tweakwise/catalog_layer');
-        foreach ($helper->getActiveUrlStrategies() as $strategy) {
+        foreach ($helper->getActiveStrategies() as $strategy) {
             $url = $strategy->buildUrl($state, $facet, $attribute);
             if ($url !== null) {
                 return $url;

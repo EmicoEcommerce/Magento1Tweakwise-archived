@@ -4,8 +4,10 @@
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
  */
-class Emico_Tweakwise_Model_UrlBuilder_Strategy_QueryParamStrategy extends Emico_Tweakwise_Model_UrlBuilder_Strategy_AbstractStrategy
+class Emico_Tweakwise_Model_UrlBuilder_Strategy_QueryParamStrategy implements Emico_Tweakwise_Model_UrlBuilder_Strategy_StrategyInterface
 {
+    public const MULTIVALUE_SEPARATOR = '|';
+
     /**
      * Builds the URL for a facet attribute
      *
@@ -15,11 +17,20 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_QueryParamStrategy extends Emico
      */
     public function buildUrl(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute)
     {
-        $params = ['_current' => true, '_use_rewrite' => true, '_escape' => false];
-        $query = ['ajax' => null];
+        $query = array_merge(
+            [
+                'ajax' => null,
+                'p' => null
+            ],
+            $this->getUrlKeyValPairs($facet, $attribute)
+        );
 
-        $query['p'] = null;
-        $params['_query'] = $this->getUrlKeyValPairs($facet, $attribute);
+        $params = [
+            '_current' => true,
+            '_use_rewrite' => true,
+            '_escape' => false,
+            '_query' => $query
+        ];
 
         return Mage::getUrl('*/*/*', $params);
     }
@@ -30,14 +41,38 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_QueryParamStrategy extends Emico
      */
     public function decorateTweakwiseRequest(Zend_Controller_Request_Http $httpRequest, Emico_Tweakwise_Model_Bus_Request_Navigation $tweakwiseRequest)
     {
-        foreach ($request->getParams() as $key => $value) {
-            if (!is_scalar($value) && !is_array($value)) {
-                continue;
+        return $tweakwiseRequest;
+    }
+
+    /**
+     * @param Emico_Tweakwise_Model_Bus_Type_Facet $facet
+     * @param Emico_Tweakwise_Model_Bus_Type_Attribute $attribute
+     * @return mixed
+     */
+    protected function getUrlKeyValPairs(Emico_Tweakwise_Model_Bus_Type_Facet $facet, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute)
+    {
+        $urlKey = $facet->getFacetSettings()->getUrlKey();
+
+        if ($attribute->getIsSelected()) {
+            $value = [];
+            /** @var $activeAttribute Emico_Tweakwise_Model_Bus_Type_Attribute */
+            foreach ($facet->getActiveAttributes() as $activeAttribute) {
+                if ($activeAttribute === $attribute) {
+                    continue;
+                }
+                $value[] = $activeAttribute->getTitle();
             }
 
-            if (!$this->applyQueryParam($request, $httpRequest, $key, $value)) {
-                $tweakwiseRequest->addFacetKey($key, $value);
-            }
+            $pairs[$urlKey] = $value;
+        } elseif ($facet->isMultipleSelect()) {
+            $value = $facet->getValue();
+            $value[] = $attribute->getTitle();
+            $pairs[$urlKey] = $value;
+        } else {
+            $pairs[$urlKey] = [$attribute->getTitle()];
         }
+
+        return $pairs;
     }
+
 }

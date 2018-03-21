@@ -361,20 +361,4 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
         ksort($params);
         return sha1(strtolower(http_build_query($params)) . $key);
     }
-
-    /**
-     * @return Emico_Tweakwise_Model_UrlBuilder_Strategy_StrategyInterface[]
-     */
-    public function getActiveUrlStrategies()
-    {
-        $strategies = Mage::getConfig()->loadModulesConfiguration('config.xml')
-            ->getNode('emico_tweakwise/urlbuilder_strategies')->asXML();
-
-        $strategies = [];
-
-        $strategies[] = Mage::getModel('emico_tweakwise/urlBuilder_strategy_categoryStrategy');
-        $strategies[] = Mage::getModel('emico_tweakwise/urlBuilder_strategy_pathStrategy');
-        //$strategies[] = Mage::getModel('emico_tweakwise/urlBuilder_strategy_queryParamStrategy');
-        return $strategies;
-    }
 }
