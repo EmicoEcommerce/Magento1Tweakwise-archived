@@ -6,7 +6,7 @@
  */
 class Emico_Tweakwise_Model_UrlBuilder_Strategy_QueryParamStrategy implements Emico_Tweakwise_Model_UrlBuilder_Strategy_StrategyInterface
 {
-    public const MULTIVALUE_SEPARATOR = '|';
+    const MULTIVALUE_SEPARATOR = '|';
 
     /**
      * Builds the URL for a facet attribute
@@ -15,15 +15,18 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_QueryParamStrategy implements Em
      * @param Emico_Tweakwise_Model_Bus_Type_Attribute $attribute
      * @return null|string
      */
-    public function buildUrl(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute)
+    public function buildUrl(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet = null, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute = null)
     {
-        $query = array_merge(
-            [
-                'ajax' => null,
-                'p' => null
-            ],
-            $this->getUrlKeyValPairs($facet, $attribute)
-        );
+        $query = [
+            'ajax' => null,
+            'p' => null
+        ];
+        if ($facet !== null && $attribute !== null) {
+            $query = array_merge(
+                $query,
+                $this->getUrlKeyValPairs($facet, $attribute)
+            );
+        }
 
         $params = [
             '_current' => true,

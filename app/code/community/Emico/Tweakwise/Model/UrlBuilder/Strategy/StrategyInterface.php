@@ -13,7 +13,7 @@ interface Emico_Tweakwise_Model_UrlBuilder_Strategy_StrategyInterface
      * @param Emico_Tweakwise_Model_Bus_Type_Attribute $attribute
      * @return null|string
      */
-    public function buildUrl(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute);
+    public function buildUrl(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet = null, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute = null);
 
     /**
      * @param Zend_Controller_Request_Http $request

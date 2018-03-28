@@ -164,6 +164,10 @@
                         <class>emico_tweakwise/observer</class>
                         <method>setNoIndexNoFollow</method>
                     </emico_tweakwise_nofollow>
+                    <emico_tweakwise_canonical>
+                        <class>emico_tweakwise/observer</class>
+                        <method>setRelCanonical</method>
+                    </emico_tweakwise_canonical>
                 </observers>
             </controller_action_layout_render_before_catalog_category_view>
             <controller_action_layout_render_before_catalogsearch_result_index>

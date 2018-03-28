@@ -18,9 +18,9 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_CategoryStrategy implements Emic
      * @param Emico_Tweakwise_Model_Bus_Type_Attribute $attribute
      * @return null|string
      */
-    public function buildUrl(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute)
+    public function buildUrl(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet = null, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute = null)
     {
-        if (!$facet->isCategory()) {
+        if ($facet === null || !$facet->isCategory()) {
             return null;
         }
 

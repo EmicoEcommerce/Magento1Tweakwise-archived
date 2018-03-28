@@ -12,7 +12,7 @@ class Emico_Tweakwise_Model_UrlBuilder_UrlBuilder
      * @return null|string
      * @throws Exception
      */
-    public function buildUrl(Emico_Tweakwise_Model_Bus_Type_Facet $facet, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute)
+    public function buildUrl(Emico_Tweakwise_Model_Bus_Type_Facet $facet = null, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute = null)
     {
         $helper = Mage::helper('emico_tweakwise/uriStrategy');
 

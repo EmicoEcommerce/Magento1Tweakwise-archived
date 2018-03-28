@@ -4,7 +4,7 @@
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
  */
-class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy extends Emico_Tweakwise_Model_UrlBuilder_Strategy_AbstractStrategy implements
+class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
     Emico_Tweakwise_Model_UrlBuilder_Strategy_StrategyInterface,
     Emico_Tweakwise_Model_UrlBuilder_Strategy_RoutingStrategyInterface
 {
@@ -25,7 +25,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy extends Emico_Tweak
      * @param Emico_Tweakwise_Model_Bus_Type_Attribute $attribute
      * @return null|string
      */
-    public function buildUrl(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute)
+    public function buildUrl(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet = null, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute = null)
     {
         $url = $this->getBaseUrl();
 
@@ -51,7 +51,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy extends Emico_Tweak
      * @param Emico_Tweakwise_Model_Bus_Type_Attribute $attribute
      * @return string
      */
-    protected function buildAttributeUriPath(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute)
+    protected function buildAttributeUriPath(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet = null, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute = null)
     {
         $facetAttributes = [];
         foreach ($state->getSelectedFacets() as $selectedFacet) {
@@ -59,26 +59,30 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy extends Emico_Tweak
                 if ($selectedFacet->isCategory() || $activeAttribute === $attribute) {
                     continue;
                 }
-                $facetAttributes[$selectedFacet->getFacetSettings()->getUrlKey()][] = $activeAttribute;
+                $facetSettings = $selectedFacet->getFacetSettings();
+                $facetAttributes[$facetSettings->getUrlKey()][] = $this->getSlugAttributeMapper()->getSlugForAttribute(
+                    $facetSettings->getTitle(),
+                    $activeAttribute->getTitle()
+                );
             }
         }
 
-        if (!$attribute->getIsSelected()) {
-            $facetAttributes[$facet->getFacetSettings()->getUrlKey()][] = $attribute;
+        if ($facet !== null && $attribute !== null && !$attribute->getIsSelected()) {
+            $facetSettings = $facet->getFacetSettings();
+            $facetAttributes[$facetSettings->getUrlKey()][] = $this->getSlugAttributeMapper()->getSlugForAttribute(
+                $facetSettings->getTitle(),
+                $attribute->getTitle()
+            );
         }
 
         $path = '';
 
         //@todo facets must be sorted a certain way (same as Mana implementation)
 
-        foreach ($facetAttributes as $facetKey => $attributes) {
+        foreach ($facetAttributes as $facetKey => $attributeSlugs) {
             /** @var Emico_Tweakwise_Model_Bus_Type_Attribute $facetAttribute */
-            foreach ($attributes as $facetAttribute) {
-                $valueSlug = $this->getSlugAttributeMapper()->getSlugForAttribute(
-                    $facet->getFacetSettings()->getTitle(),
-                    $facetAttribute->getTitle()
-                );
-                $path .= $facetKey . '/' . $valueSlug . '/';
+            foreach ($attributeSlugs as $slug) {
+                $path .= $facetKey . '/' . $slug . '/';
             }
         }
 
@@ -98,7 +102,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy extends Emico_Tweak
                 $this->_baseUrl = ($queryPosition > 0) ? substr($categoryUrl, 0, $queryPosition) : $categoryUrl;
             }
         }
-        return $this->_baseUrl;
+        return rtrim($this->_baseUrl, '/');
     }
 
     /**
