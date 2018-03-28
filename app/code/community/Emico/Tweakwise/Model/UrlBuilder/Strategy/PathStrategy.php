@@ -76,9 +76,6 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
         }
 
         $path = '';
-
-        //@todo facets must be sorted a certain way (same as Mana implementation)
-
         foreach ($facetAttributes as $facetKey => $attributeSlugs) {
             /** @var Emico_Tweakwise_Model_Bus_Type_Attribute $facetAttribute */
             foreach ($attributeSlugs as $slug) {
