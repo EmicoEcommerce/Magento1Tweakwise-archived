@@ -83,4 +83,13 @@ class Emico_Tweakwise_Model_Bus_Type_Facet_Settings extends Emico_Tweakwise_Mode
     {
         return $this->getUrlKey() == 'price';
     }
+
+    /**
+     * @return string
+     * @todo must not be url key, but the real attribute key. Waiting for TweakWise development
+     */
+    public function getCode()
+    {
+        return $this->getUrlKey();
+    }
 }

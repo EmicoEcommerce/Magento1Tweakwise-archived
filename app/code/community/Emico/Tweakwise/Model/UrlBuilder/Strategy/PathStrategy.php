@@ -61,7 +61,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
                 }
                 $facetSettings = $selectedFacet->getFacetSettings();
                 $facetAttributes[$facetSettings->getUrlKey()][] = $this->getSlugAttributeMapper()->getSlugForAttribute(
-                    $facetSettings->getTitle(),
+                    $facetSettings->getCode(),
                     $activeAttribute->getTitle()
                 );
             }
@@ -70,7 +70,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
         if ($facet !== null && $attribute !== null && !$attribute->getIsSelected()) {
             $facetSettings = $facet->getFacetSettings();
             $facetAttributes[$facetSettings->getUrlKey()][] = $this->getSlugAttributeMapper()->getSlugForAttribute(
-                $facetSettings->getTitle(),
+                $facetSettings->getCode(),
                 $attribute->getTitle()
             );
         }
