@@ -182,11 +182,11 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
     }
 
     /**
-     * @return Emico_Tweakwise_Model_SlugAttributeMapping
+     * @return Emico_TweakwiseExport_Model_SlugAttributeMapping
      */
     protected function getSlugAttributeMapper()
     {
-        return Mage::getModel('emico_tweakwise/slugAttributeMapping');
+        return Mage::getModel('emico_tweakwiseexport/slugAttributeMapping');
     }
 
     /**

@@ -18,8 +18,7 @@ class Emico_Tweakwise_Helper_UriStrategy
     public function getActiveStrategies()
     {
         if (!$this->_activeStrategies) {
-            $strategies = Mage::getConfig()->loadModulesConfiguration('config.xml')
-                ->getNode('emico_tweakwise/urlbuilder_strategies')->children();
+            $strategies = Mage::getConfig()->getNode('global/emico_tweakwise/urlbuilder_strategies')->children();
 
             $selectedStrategy = Mage::getStoreConfig('emico_tweakwise/navigation/uri_strategy');
             if (empty($selectedStrategy)) {
@@ -63,7 +62,7 @@ class Emico_Tweakwise_Helper_UriStrategy
      * @param string $name
      * @throws Emico_Tweakwise_Model_Exception
      */
-    private function registerStrategy(Emico_Tweakwise_Model_UrlBuilder_Strategy_StrategyInterface $strategy, $name): void
+    private function registerStrategy(Emico_Tweakwise_Model_UrlBuilder_Strategy_StrategyInterface $strategy, $name)
     {
         // Path strategy is only implemented for Category pages. Fallback to Query param strategy if not on category page
         if (Mage::registry('current_category') === null && $strategy instanceof Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy) {

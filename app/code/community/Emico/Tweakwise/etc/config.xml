@@ -32,14 +32,6 @@
                 <class>Emico_Tweakwise_Model</class>
                 <resourceModel>emico_tweakwise_resource</resourceModel>
             </emico_tweakwise>
-            <emico_tweakwise_resource>
-                <class>Emico_Tweakwise_Model_Resource</class>
-                <entities>
-                    <slug_attribute_mapping>
-                        <table>emico_tweakwise_slug_attribute_mapping</table>
-                    </slug_attribute_mapping>
-                </entities>
-            </emico_tweakwise_resource>
         </models>
         <resources>
             <emico_tweakwise_setup>
@@ -49,32 +41,32 @@
                 </setup>
             </emico_tweakwise_setup>
         </resources>
-    </global>
 
-    <emico_tweakwise>
-        <urlbuilder_strategies>
-            <category>
-                <class>emico_tweakwise/urlBuilder_strategy_categoryStrategy</class>
-                <active>1</active>
-                <priority>1</priority>
-                <selectable>0</selectable>
-            </category>
-            <queryParam>
-                <class>emico_tweakwise/urlBuilder_strategy_queryParamStrategy</class>
-                <active>0</active>
-                <priority>2</priority>
-                <selectable>1</selectable>
-                <label>Query params</label>
-            </queryParam>
-            <path>
-                <class>emico_tweakwise/urlBuilder_strategy_pathStrategy</class>
-                <active>0</active>
-                <priority>3</priority>
-                <selectable>1</selectable>
-                <label>URL segments</label>
-            </path>
-        </urlbuilder_strategies>
-    </emico_tweakwise>
+        <emico_tweakwise>
+            <urlbuilder_strategies>
+                <category>
+                    <class>emico_tweakwise/urlBuilder_strategy_categoryStrategy</class>
+                    <active>1</active>
+                    <priority>1</priority>
+                    <selectable>0</selectable>
+                </category>
+                <queryParam>
+                    <class>emico_tweakwise/urlBuilder_strategy_queryParamStrategy</class>
+                    <active>0</active>
+                    <priority>2</priority>
+                    <selectable>1</selectable>
+                    <label>Query params</label>
+                </queryParam>
+                <path>
+                    <class>emico_tweakwise/urlBuilder_strategy_pathStrategy</class>
+                    <active>0</active>
+                    <priority>3</priority>
+                    <selectable>1</selectable>
+                    <label>URL segments</label>
+                </path>
+            </urlbuilder_strategies>
+        </emico_tweakwise>
+    </global>
 
     <default>
         <emico_tweakwise>
