@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Emico_Tweakwise>
-            <version>1.12.0</version>
+            <version>1.13.0</version>
         </Emico_Tweakwise>
     </modules>
     <global>
@@ -30,6 +30,7 @@
         <models>
             <emico_tweakwise>
                 <class>Emico_Tweakwise_Model</class>
+                <resourceModel>emico_tweakwise_resource</resourceModel>
             </emico_tweakwise>
         </models>
         <resources>
@@ -40,7 +41,33 @@
                 </setup>
             </emico_tweakwise_setup>
         </resources>
+
+        <emico_tweakwise>
+            <urlbuilder_strategies>
+                <category>
+                    <class>emico_tweakwise/urlBuilder_strategy_categoryStrategy</class>
+                    <active>1</active>
+                    <priority>1</priority>
+                    <selectable>0</selectable>
+                </category>
+                <queryParam>
+                    <class>emico_tweakwise/urlBuilder_strategy_queryParamStrategy</class>
+                    <active>0</active>
+                    <priority>2</priority>
+                    <selectable>1</selectable>
+                    <label>Query params</label>
+                </queryParam>
+                <path>
+                    <class>emico_tweakwise/urlBuilder_strategy_pathStrategy</class>
+                    <active>0</active>
+                    <priority>3</priority>
+                    <selectable>1</selectable>
+                    <label>URL segments</label>
+                </path>
+            </urlbuilder_strategies>
+        </emico_tweakwise>
     </global>
+
     <default>
         <emico_tweakwise>
             <global>
@@ -55,6 +82,7 @@
                 <search_same_as_category>1</search_same_as_category>
                 <category_as_link_search>1</category_as_link_search>
                 <category_tree_start_depth_search>1</category_tree_start_depth_search>
+                <uri_strategy>queryParam</uri_strategy>
             </navigation>
             <autocomplete>
                 <enabled>0</enabled>
@@ -128,6 +156,10 @@
                         <class>emico_tweakwise/observer</class>
                         <method>setNoIndexNoFollow</method>
                     </emico_tweakwise_nofollow>
+                    <emico_tweakwise_canonical>
+                        <class>emico_tweakwise/observer</class>
+                        <method>setRelCanonical</method>
+                    </emico_tweakwise_canonical>
                 </observers>
             </controller_action_layout_render_before_catalog_category_view>
             <controller_action_layout_render_before_catalogsearch_result_index>
@@ -164,4 +196,14 @@
             </emico_tweakwise_handle_ajax_request_after>
         </events>
     </frontend>
+    <default>
+        <web>
+            <routers>
+                <emico_tweakwise>
+                    <area>frontend</area>
+                    <class>Emico_Tweakwise_Controller_Router</class>
+                </emico_tweakwise>
+            </routers>
+        </web>
+    </default>
 </config>

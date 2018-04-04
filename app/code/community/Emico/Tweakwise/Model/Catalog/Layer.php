@@ -113,6 +113,8 @@ class Emico_Tweakwise_Model_Catalog_Layer
      */
     protected function createTweakwiseRequest()
     {
+        $uriStrategyHelper = Mage::helper('emico_tweakwise/uriStrategy');
+
         $request = Mage::getModel('emico_tweakwise/bus_request_navigation');
 
         $httpRequest = Mage::app()->getRequest();
@@ -123,6 +125,10 @@ class Emico_Tweakwise_Model_Catalog_Layer
 
         if ($httpRequest) {
             $this->applySessionParams($request);
+
+            foreach ($uriStrategyHelper->getActiveStrategies() as $strategy) {
+                $request = $strategy->decorateTweakwiseRequest($httpRequest, $request);
+            }
 
             foreach ($httpRequest->getParams() as $key => $value) {
                 if (!is_scalar($value) && !is_array($value)) {
@@ -138,11 +144,6 @@ class Emico_Tweakwise_Model_Catalog_Layer
                 /** @var $block Mage_Catalog_Block_Product_List_Toolbar */
                 $block = Mage::app()->getLayout()->createBlock('catalog/product_list_toolbar');
                 $request->setProductsPerPage($block->getLimit());
-            }
-
-            // Set category
-            if (!$request->hasCategoryParam()) {
-                $this->setDefaultRequestCategory($request);
             }
         }
 
@@ -199,27 +200,23 @@ class Emico_Tweakwise_Model_Catalog_Layer
      */
     protected function applyQueryParam(Emico_Tweakwise_Model_Bus_Request_Navigation $request, Mage_Core_Controller_Request_Http $httpRequest, $param, $value)
     {
-        if ($param == 'cat') {
-            $this->addCategoryQueryParam($request, $value);
+        if ($param == 'order') {
+            if (strtolower($httpRequest->getParam('dir')) == 'desc') {
+                $value = '-' . $value;
+            }
+            $request->setSort($value);
         } else {
-            if ($param == 'order') {
-                if (strtolower($httpRequest->getParam('dir')) == 'desc') {
-                    $value = '-' . $value;
-                }
-                $request->setSort($value);
+            if ($param == 'limit') {
+                $request->setProductsPerPage($value);
             } else {
-                if ($param == 'limit') {
-                    $request->setProductsPerPage($value);
+                if ($param == 'p') {
+                    $request->setPage($value);
                 } else {
-                    if ($param == 'p') {
-                        $request->setPage($value);
+                    if ($param == 'q') {
+                        $request->setSearchQuery($value);
                     } else {
-                        if ($param == 'q') {
-                            $request->setSearchQuery($value);
-                        } else {
-                            if ($param != 'mode' && $param != 'dir') {
-                                return false;
-                            }
+                        if ($param != 'mode' && $param != 'dir') {
+                            return false;
                         }
                     }
                 }
@@ -227,89 +224,6 @@ class Emico_Tweakwise_Model_Catalog_Layer
         }
 
         return true;
-    }
-
-    /**
-     * @param Emico_Tweakwise_Model_Bus_Request_Navigation $request
-     * @param $value
-     * @return Emico_Tweakwise_Model_Catalog_Layer
-     */
-    protected function addCategoryQueryParam(Emico_Tweakwise_Model_Bus_Request_Navigation $request, $value)
-    {
-        $currentCategory = $this->getCurrentCategory();
-
-        $categoryUrlKeys = explode('|', $value);
-        $categories = [$currentCategory];
-
-        // TODO optimize this this is allot of queries for a single category select
-        foreach ($categoryUrlKeys as $categoryKey) {
-            $categoryCollection = Mage::getResourceModel('catalog/category_collection');
-            $categoryCollection->addFieldToFilter('url_key', $categoryKey);
-            $categoryCollection->addIsActiveFilter();
-            $categoryCollection->joinUrlRewrite();
-            $categoryCollection->addFieldToFilter('parent_id', $currentCategory->getId());
-            $categoryCollection->setPageSize(1);
-
-            if ($categoryCollection->count() == 0) {
-                break;
-            }
-
-            $currentCategory = $categoryCollection->getFirstItem();
-            $categories[] = $currentCategory;
-        }
-
-        foreach ($categories as $category) {
-            $request->addCategory($category);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Mage_Catalog_Model_Category
-     */
-    public function getCurrentCategory()
-    {
-        if ($this->_currentCategory === null) {
-            if ($category = Mage::registry('current_category')) {
-                $this->_currentCategory = $category;
-            } else {
-                $categoryId = Mage::app()->getStore()->getRootCategoryId();
-                $this->_currentCategory = Mage::getModel('catalog/category')->load($categoryId);
-            }
-        }
-
-        return $this->_currentCategory;
-    }
-
-    /**
-     * @param Emico_Tweakwise_Model_Bus_Request_Navigation $request
-     * @return Emico_Tweakwise_Model_Catalog_Layer
-     */
-    protected function setDefaultRequestCategory(Emico_Tweakwise_Model_Bus_Request_Navigation $request)
-    {
-        $category = $this->getCurrentCategory();
-        $helper = Mage::helper('emico_tweakwise');
-        if (!$helper->categoryAsLink()) {
-            $request->addCategory($category);
-        } else {
-            $categories = $category->getParentIds();
-            array_push($categories, $category->getId());
-            $startCategory = $helper->getCategoryTreeStartDepth();
-            if ($maxLevels = $helper->getMaxTreeLevels()) {
-                $startCategory = ((count($categories) - $maxLevels) > 1) ? ((count($categories) - $maxLevels)) : 1;
-            }
-            while (count($categories) <= $startCategory) {
-                $startCategory--;
-            }
-
-            $categories = array_splice($categories, $startCategory);
-            foreach ($categories as $category) {
-                $request->addCategory($category);
-            }
-        }
-
-        return $this;
     }
 
     /**
