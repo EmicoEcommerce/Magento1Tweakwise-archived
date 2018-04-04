@@ -20,11 +20,13 @@ class Emico_Tweakwise_Controller_Router extends Mage_Core_Controller_Varien_Rout
         $strategies = $helper->getActiveStrategies();
 
         foreach ($strategies as $strategy) {
-            if ($strategy instanceof Emico_Tweakwise_Model_UrlBuilder_Strategy_RoutingStrategyInterface) {
-                $result = $strategy->matchUrl($request);
-                if ($result) {
-                    return $result;
-                }
+            if (!$strategy instanceof Emico_Tweakwise_Model_UrlBuilder_Strategy_RoutingStrategyInterface) {
+                continue;
+            }
+
+            $result = $strategy->matchUrl($request);
+            if ($result) {
+                return $result;
             }
         }
 
