@@ -132,6 +132,10 @@ class Emico_Tweakwise_Model_Observer
      */
     public function setRelCanonical(Varien_Event_Observer $observer)
     {
+        if (!Mage::helper('emico_tweakwise/seo')->shouldAddCanonicalTag()) {
+            return;
+        }
+
         /** @var Emico_Tweakwise_Model_UrlBuilder_UrlBuilder $urlBuilder */
         $urlBuilder = Mage::getModel('emico_tweakwise/urlBuilder_urlBuilder');
         $canonicalUrl = $urlBuilder->buildUrl();

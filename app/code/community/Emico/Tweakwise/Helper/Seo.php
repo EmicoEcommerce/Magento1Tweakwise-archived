@@ -74,4 +74,12 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
 
         return false;
     }
+
+    /**
+     * @return bool
+     */
+    public function shouldAddCanonicalTag()
+    {
+        return Mage::getStoreConfig('emico_tweakwise/navigation/add_canonical_tag');
+    }
 }
