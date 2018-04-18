@@ -19,6 +19,19 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
     protected $_urlModel;
 
     /**
+     * @var Emico_Tweakwise_Model_UrlBuilder_Strategy_StrategyInterface
+     */
+    protected $_fallbackStrategy;
+
+    /**
+     * Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy constructor.
+     */
+    public function __construct()
+    {
+        $this->_fallbackStrategy = Mage::getModel('emico_tweakwise/urlBuilder_strategy_queryParamStrategy');
+    }
+
+    /**
      * Builds the URL for a facet attribute
      *
      * @param Emico_Tweakwise_Model_Catalog_Layer $state
@@ -27,6 +40,10 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
      */
     public function buildUrl(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet = null, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute = null)
     {
+        if (!$this->isAllowedInCurrentContext()) {
+            return $this->_fallbackStrategy->buildUrl($state, $facet, $attribute);
+        }
+
         $url = $this->getBaseUrl();
 
         // Add the attribute filters to the URL path
@@ -110,6 +127,10 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
      */
     public function decorateTweakwiseRequest(Zend_Controller_Request_Http $httpRequest, Emico_Tweakwise_Model_Bus_Request_Navigation $tweakwiseRequest)
     {
+        if (!$this->isAllowedInCurrentContext()) {
+            return $this->_fallbackStrategy->decorateTweakwiseRequest($httpRequest, $tweakwiseRequest);
+        }
+
         $filterPath = trim($httpRequest->getParam('filter_path'), '/');
         if (empty($filterPath)) {
             return $tweakwiseRequest;
@@ -198,5 +219,13 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
             $this->_urlModel = Mage::getModel('core/url');
         }
         return $this->_urlModel;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isAllowedInCurrentContext()
+    {
+        return (Mage::registry('current_category') !== null);
     }
 }
