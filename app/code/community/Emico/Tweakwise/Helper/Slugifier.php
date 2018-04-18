@@ -12,14 +12,18 @@ class Emico_Tweakwise_Helper_Slugifier
      */
     public function slugify($string)
     {
-        $search = [
-            ' '
+        $replaces = [
+            '-' => '--to-',
+            '/' => '--per-',
+            '+' => '--plus-',
+            "'" => '--qt-',
+            '"' => '--dqt-',
+            '%' => '--per-',
+            '#' => '--no-',
+            '&' => '--and-',
+            ' ' => '-',
         ];
 
-        $replace = [
-            '-'
-        ];
-
-        return strtolower(str_replace($search, $replace, $string));
+        return strtolower(str_replace(array_keys($replaces), array_values($replaces), $string));
     }
 }

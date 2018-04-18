@@ -24,8 +24,7 @@ class Emico_Tweakwise_Model_System_Config_Source_UriStrategy extends Mage_Eav_Mo
     public function getAllOptions()
     {
         $options = [];
-        $strategies = Mage::getConfig()->loadModulesConfiguration('config.xml')
-            ->getNode('emico_tweakwise/urlbuilder_strategies')->children();
+        $strategies = Mage::getConfig()->getNode('global/emico_tweakwise/urlbuilder_strategies')->children();
 
         foreach ($strategies as $name => $strategyNode) {
             if (!(bool) (string) $strategyNode->selectable) {

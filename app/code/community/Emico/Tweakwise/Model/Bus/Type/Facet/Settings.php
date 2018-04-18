@@ -6,6 +6,7 @@
 /**
  * @method int getFacetId();
  * @method boolean getIsVisible();
+ * @method string getAttributeName();
  * @method string getUrlKey();
  * @method string getTitle();
  * @method boolean getIsCollapsible();
@@ -55,6 +56,7 @@ class Emico_Tweakwise_Model_Bus_Type_Facet_Settings extends Emico_Tweakwise_Mode
     {
         $this->setDataFromField($xmlElement, 'facetid', self::DATA_TYPE_INT, self::ELEMENT_COUNT_ONE, 'facet_id');
         $this->setDataFromField($xmlElement, 'isvisible', self::DATA_TYPE_BOOLEAN, self::ELEMENT_COUNT_ONE, 'is_visible');
+        $this->setDataFromField($xmlElement, 'attributename', self::DATA_TYPE_STRING, self::ELEMENT_COUNT_ONE, 'attribute_name');
         $this->setDataFromField($xmlElement, 'urlkey', self::DATA_TYPE_STRING, self::ELEMENT_COUNT_ONE, 'url_key');
         $this->setDataFromField($xmlElement, 'title', self::DATA_TYPE_STRING);
         $this->setDataFromField($xmlElement, 'iscollapsible', self::DATA_TYPE_BOOLEAN, self::ELEMENT_COUNT_ONE, 'is_collapsible');
@@ -86,10 +88,9 @@ class Emico_Tweakwise_Model_Bus_Type_Facet_Settings extends Emico_Tweakwise_Mode
 
     /**
      * @return string
-     * @todo must not be url key, but the real attribute key. Waiting for TweakWise development
      */
     public function getCode()
     {
-        return $this->getUrlKey();
+        return $this->getAttributeName();
     }
 }
