@@ -207,7 +207,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
      */
     protected function getSlugAttributeMapper()
     {
-        return Mage::getModel('emico_tweakwiseexport/slugAttributeMapping');
+        return Mage::getSingleton('emico_tweakwiseexport/slugAttributeMapping');
     }
 
     /**
