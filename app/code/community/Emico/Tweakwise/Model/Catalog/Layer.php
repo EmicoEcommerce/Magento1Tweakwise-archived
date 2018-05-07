@@ -344,4 +344,12 @@ class Emico_Tweakwise_Model_Catalog_Layer
         }
         return $selectedFacets;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasTweakwiseResponse()
+    {
+        return (bool)$this->_tweakwiseResponse;
+    }
 }

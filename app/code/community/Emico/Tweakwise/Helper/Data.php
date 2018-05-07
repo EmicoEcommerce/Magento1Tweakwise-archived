@@ -264,6 +264,26 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * @param Mage_Catalog_Model_Category[] $categories
+     */
+    public function addToCategoryCollection(array $categories)
+    {
+        if (!$this->_categoryCollection) {
+            $this->_categoryCollection = new Varien_Data_Collection();
+        }
+        foreach ($categories as $category) {
+            if (!$category instanceof Mage_Catalog_Model_Category) {
+                continue;
+            }
+            // Item could already exist
+            if ($this->_categoryCollection->getItemById($category->getId())) {
+                continue;
+            }
+            $this->_categoryCollection->addItem($category);
+        }
+    }
+
+    /**
      * @param array $ids
      * @param Emico_Tweakwise_Model_Data_Collection $sortedCollection
      * @return Emico_Tweakwise_Model_Data_Collection
