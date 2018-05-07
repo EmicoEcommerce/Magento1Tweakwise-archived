@@ -35,7 +35,7 @@ class Emico_Tweakwise_Model_Bus_Type_Facet_Settings extends Emico_Tweakwise_Mode
     /**
      * Possible facet sources
      */
-    const FACET_SOURCE_CATEGORY = 'CATEGORIE';
+    const FACET_SOURCE_CATEGORY = 'CATEGORY';
     const FACET_SOURCE_FEED = 'FEED';
     const FACET_SOURCE_DERIVATIVE = 'AFGELEID';
 
