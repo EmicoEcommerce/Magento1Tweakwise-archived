@@ -197,7 +197,7 @@
             <controller_action_layout_render_before>
                 <observers>
                     <emico_tweakwise>
-                        <class>emico_tweakwise/observer</class>
+                        <class>emico_tweakwise/layout_observer</class>
                         <method>loadCategoryData</method>
                     </emico_tweakwise>
                 </observers>
