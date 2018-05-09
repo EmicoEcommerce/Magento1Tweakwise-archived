@@ -127,6 +127,20 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * @param null|int|string|Mage_Core_Model_Store $store
+     * @return array
+     */
+    public function getIgnoredQueryParameters($store = null)
+    {
+        $ignoredQueryParameters = Mage::getStoreConfig('emico_tweakwise/navigation/ignored_query_parameters', $store);
+        if (!$ignoredQueryParameters) {
+            return [];
+        }
+
+        return explode(PHP_EOL, $ignoredQueryParameters);
+    }
+
+    /**
      * True if category link settings for search page should be the same as for catalog pages
      *
      * @param Mage_Core_Model_Store|string|int|null $store

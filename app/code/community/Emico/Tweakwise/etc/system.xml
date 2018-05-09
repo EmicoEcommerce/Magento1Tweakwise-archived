@@ -210,6 +210,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </add_canonical_tag>
+                        <ignored_query_parameters>
+                            <label>Query parameters not considered in navigation urls</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>58</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip>These query params will be stripped when building navigation urls. This is useful for params like utm_source, utm_medium etc. Enter these parameters separated by newline</tooltip>
+                        </ignored_query_parameters>
                         <uri_strategy>
                             <label>URL Strategie</label>
                             <frontend_type>select</frontend_type>
