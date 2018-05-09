@@ -12,6 +12,10 @@ class Emico_Tweakwise_Model_Layout_Observer
      */
     public function loadCategoryData(Varien_Event_Observer $observer)
     {
+        $tweakwiseHelper = Mage::helper('emico_tweakwise');
+        if (!$tweakwiseHelper->isEnabled('navigation', Mage::app()->getStore())) {
+            return;
+        }
         /** @var Emico_Tweakwise_Model_Catalog_Layer $layer */
         $layer = Mage::getSingleton('emico_tweakwise/catalog_layer');
         if (!$layer->hasTweakwiseResponse()) {
@@ -24,8 +28,6 @@ class Emico_Tweakwise_Model_Layout_Observer
             return;
         }
         $categories = $this->getMagentoCategories($categoryFacet);
-
-        $tweakwiseHelper = Mage::helper('emico_tweakwise');
         // Initialise all used categories for faster access in templates
         $tweakwiseHelper->addToCategoryCollection($categories);
     }
