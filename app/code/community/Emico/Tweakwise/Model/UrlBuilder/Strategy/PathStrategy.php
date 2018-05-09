@@ -72,6 +72,10 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
     {
         $facetAttributes = [];
         foreach ($state->getSelectedFacets() as $selectedFacet) {
+            if ($selectedFacet->getFacetSettings()->getSelectionType() === Emico_Tweakwise_Model_Bus_Type_Facet_Settings::SELECTION_TYPE_SLIDER) {
+                continue;
+            }
+
             foreach ($selectedFacet->getActiveAttributes() as $activeAttribute) {
                 if ($selectedFacet->isCategory() || $activeAttribute === $attribute) {
                     continue;
@@ -100,7 +104,14 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
             }
         }
 
-        return rtrim($path, '/');
+        $path = rtrim($path, '/');
+
+        $query = Mage::app()->getRequest()->getQuery();
+        if (count($query)) {
+            $path .= '?' . http_build_query($query);
+        }
+
+        return $path;
     }
 
     /**

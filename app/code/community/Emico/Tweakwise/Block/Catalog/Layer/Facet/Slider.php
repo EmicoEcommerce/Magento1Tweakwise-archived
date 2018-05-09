@@ -37,7 +37,7 @@ class Emico_Tweakwise_Block_Catalog_Layer_Facet_Slider extends Emico_Tweakwise_B
     /**
      * {@inheritDoc}
      */
-    public function getFacetUrl(Emico_Tweakwise_Model_Bus_Type_Attribute $attribute, $urlKey = null)
+    public function getFacetUrl(Emico_Tweakwise_Model_Bus_Type_Attribute $attribute)
     {
         $facetSettings = $this->getFacetSettings();
         $urlKey = $facetSettings->getUrlKey();
