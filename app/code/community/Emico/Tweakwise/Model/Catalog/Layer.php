@@ -338,7 +338,7 @@ class Emico_Tweakwise_Model_Catalog_Layer
         foreach ($this->getFacets() as $facet) {
             foreach ($facet->getAttributes() as $attribute) {
                 if ($attribute->getIsSelected()) {
-                    $selectedFacets[$facet->getId()] = $facet;
+                    $selectedFacets[$facet->getFacetSettings()->getFacetId()] = $facet;
                 }
             }
         }
