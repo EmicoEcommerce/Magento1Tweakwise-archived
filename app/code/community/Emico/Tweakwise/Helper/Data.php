@@ -267,8 +267,9 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
         }
 
         if (!($category = $this->_categoryCollection->getItemById($categoryId))) {
-            $category = Mage::getResourceModel('catalog/category_collection')
-                ->addAttributeToSelect(['*'])
+            $category = Mage::getModel('catalog/category')->getCollection()
+                ->addAttributeToSelect('*')
+                ->joinUrlRewrite()
                 ->addFieldToFilter('entity_id', ['eq' => $categoryId])
                 ->getFirstItem();
             $this->_categoryCollection->addItem($category);
