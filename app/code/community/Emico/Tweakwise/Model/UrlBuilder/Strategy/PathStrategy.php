@@ -187,17 +187,12 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
      */
     protected function getPathsToCheck($fullUriPath)
     {
-        $path = explode('/', $fullUriPath);
-        $paths = [];
-        $lastPath = array_shift($path);
-        $paths[] = $lastPath;
-        foreach ($path as $i => $pathPart) {
-            if ($i % 2 === 1) {
-                continue;
-            }
-
-            $lastPath .= '/' . $pathPart;
-            $paths[] = $lastPath;
+        $pathParts = explode('/', $fullUriPath);
+        $lastPathPart = array_shift($pathParts);
+        $paths[] = $lastPathPart;
+        foreach ($pathParts as $i => $pathPart) {
+            $lastPathPart .= '/' . $pathPart;
+            $paths[] = $lastPathPart;
         }
         return $paths;
     }
