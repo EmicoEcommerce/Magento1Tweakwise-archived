@@ -267,15 +267,24 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
         }
 
         if (!($category = $this->_categoryCollection->getItemById($categoryId))) {
-            $category = Mage::getModel('catalog/category')->getCollection()
-                ->addAttributeToSelect('*')
-                ->joinUrlRewrite()
+            $category = $this->getBareCategoryCollection()
                 ->addFieldToFilter('entity_id', ['eq' => $categoryId])
                 ->getFirstItem();
             $this->_categoryCollection->addItem($category);
         }
 
         return $category;
+    }
+
+    /**
+     * @return Mage_Catalog_Model_Resource_Category_Collection
+     * @throws Mage_Core_Exception
+     */
+    public function getBareCategoryCollection()
+    {
+        return Mage::getModel('catalog/category')->getCollection()
+            ->addAttributeToSelect(['include_in_menu', 'url_key'])
+            ->joinUrlRewrite();
     }
 
     /**
