@@ -111,8 +111,9 @@ class Emico_Tweakwise_Block_Catalog_Layer_Facet_Attribute extends Mage_Core_Bloc
     public function getFacetUrl(Emico_Tweakwise_Model_Bus_Type_Attribute $attribute, $urlKey = null)
     {
         $facet = $this->getFacet();
-        $params = ['_current' => true, '_use_rewrite' => true, '_escape' => false];
-        $query = ['ajax' => null];
+        $query = Mage::helper('emico_tweakwise')->getFilteredQuery();
+        $params = ['_use_rewrite' => true, '_escape' => false];
+        $query['ajax'] = null;
         if ($urlKey === null) {
             $urlKey = $this->getUrlKey();
         }
