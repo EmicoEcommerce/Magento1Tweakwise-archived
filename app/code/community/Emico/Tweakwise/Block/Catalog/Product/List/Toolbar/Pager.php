@@ -167,4 +167,17 @@ class Emico_Tweakwise_Block_Catalog_Product_List_Toolbar_Pager extends Mage_Page
 
         return $this;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPagerUrl($params=array())
+    {
+        $query = Mage::helper('emico_tweakwise')->getFilteredQuery();
+        $urlParams = array();
+        $urlParams['_escape']   = true;
+        $urlParams['_use_rewrite']   = true;
+        $urlParams['_query']    = array_merge($params, $query);
+        return $this->getUrl('*/*/*', $urlParams);
+    }
 }
