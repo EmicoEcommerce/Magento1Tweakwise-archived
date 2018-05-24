@@ -42,14 +42,14 @@ class Emico_Tweakwise_Block_Catalog_Layer_Facet_Slider extends Emico_Tweakwise_B
         $facetSettings = $this->getFacetSettings();
         $urlKey = $facetSettings->getUrlKey();
 
+        $query = Mage::helper('emico_tweakwise')->getFilteredQuery();
+        $query['p'] = null;
+        $query['ajax'] = null;
+        $query[$urlKey] = null;
+
         return Mage::getUrl('*/*/*', [
-            '_current' => true,
             '_use_rewrite' => true,
-            '_query' => [
-                'p' => null,
-                'ajax' => null,
-                $urlKey => null,
-            ],
+            '_query' => $query
         ]);
     }
 
@@ -61,13 +61,13 @@ class Emico_Tweakwise_Block_Catalog_Layer_Facet_Slider extends Emico_Tweakwise_B
         $facetSettings = $this->getFacetSettings();
         $urlKey = $facetSettings->getUrlKey();
 
+        $query = Mage::helper('emico_tweakwise')->getFilteredQuery();
+        $query['p'] = null;
+        $query[$urlKey] = 'from-to';
+
         return Mage::getUrl('*/*/*', [
-            '_current' => true,
             '_use_rewrite' => true,
-            '_query' => [
-                'p' => null,
-                $urlKey => 'from-to',
-            ],
+            '_query' => $query
         ]);
     }
 }
