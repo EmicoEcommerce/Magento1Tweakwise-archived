@@ -58,12 +58,26 @@ class Emico_Tweakwise_Helper_UriStrategy
     }
 
     /**
+     * @param string $name
+     * @return Emico_Tweakwise_Model_UrlBuilder_Strategy_StrategyInterface|null
+     */
+    public function getStrategy($name)
+    {
+        if (!$this->hasActiveStrategy($name)) {
+            return null;
+        }
+
+        return $this->_activeStrategies[$name];
+    }
+
+    /**
      * @param Emico_Tweakwise_Model_UrlBuilder_Strategy_StrategyInterface $strategy
      * @param string $name
      * @throws Emico_Tweakwise_Model_Exception
      */
     private function registerStrategy(Emico_Tweakwise_Model_UrlBuilder_Strategy_StrategyInterface $strategy, $name)
     {
+        Mage::dispatchEvent('tweakwise_urlbuilder_strategy_registered', ['strategy' => $strategy]);
         $this->_activeStrategies[$name] = $strategy;
     }
 }

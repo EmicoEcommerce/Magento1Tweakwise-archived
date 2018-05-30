@@ -131,6 +131,14 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
     }
 
     /**
+     * @param string $baseUrl
+     */
+    public function setBaseUrl($baseUrl)
+    {
+        $this->_baseUrl = $baseUrl;
+    }
+
+    /**
      * @param Zend_Controller_Request_Http $httpRequest
      * @param Emico_Tweakwise_Model_Bus_Request_Navigation $tweakwiseRequest
      * @return Emico_Tweakwise_Model_Bus_Request_Navigation
@@ -228,10 +236,15 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
     }
 
     /**
+     * The pathStrategy is only working correctly for standard category pages
+     * Fallback to queryParam strategy for attribute landing pages, free search etc.
+     *
      * @return bool
+     * @throws Mage_Core_Model_Store_Exception
      */
     protected function isAllowedInCurrentContext()
     {
-        return (Mage::registry('current_category') !== null);
+        $currentCategory = Mage::registry('current_category');
+        return ($currentCategory !== null && $currentCategory->getId() !== Mage::app()->getStore()->getRootCategoryId());
     }
 }
