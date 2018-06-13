@@ -50,13 +50,10 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
         $url .= '/' . $this->buildAttributeUriPath($state, $facet, $attribute);
 
         // Apply query params
-        $urlModel = $this->getUrlModel();
-        $urlModel->setQueryParam('p', null);
-        $urlModel->setQueryParam('ajax', null);
-        $query = $urlModel->getQuery(false);
-        if ($query) {
-            $mark = (strpos($url, '?') === false) ? '?' : '&';
-            $url .= $mark . $query;
+        $query = Mage::app()->getRequest()->getQuery();
+        unset($query['ajax'], $query['p']);
+        if (count($query)) {
+            $url .= '?' . http_build_query($query);
         }
 
         return $url;
@@ -105,11 +102,6 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
         }
 
         $path = rtrim($path, '/');
-
-        $query = Mage::app()->getRequest()->getQuery();
-        if (count($query)) {
-            $path .= '?' . http_build_query($query);
-        }
 
         return $path;
     }
