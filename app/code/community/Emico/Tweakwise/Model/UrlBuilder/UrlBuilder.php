@@ -20,7 +20,9 @@ class Emico_Tweakwise_Model_UrlBuilder_UrlBuilder
         foreach ($helper->getActiveStrategies() as $strategy) {
             $url = $strategy->buildUrl($state, $facet, $attribute);
             if ($url !== null) {
-                return $url;
+                $url = new Varien_Object(['url' => $url]);
+                Mage::dispatchEvent('tweakwise_urlbuilder_buildurl', ['strategy' => $strategy, 'url' => $url]);
+                return $url->getData('url');
             }
         }
         throw new \Exception('No strategy was able to generate a URL');
