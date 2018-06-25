@@ -24,6 +24,16 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
     protected $_fallbackStrategy;
 
     /**
+     * @var bool
+     */
+    protected $_isAllowedInCurrentContext;
+
+    /**
+     * @var Mage_Catalog_Model_Category
+     */
+    protected $_currentCategory;
+
+    /**
      * Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy constructor.
      */
     public function __construct()
@@ -48,13 +58,6 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
 
         // Add the attribute filters to the URL path
         $url .= '/' . $this->buildAttributeUriPath($state, $facet, $attribute);
-
-        // Apply query params
-        $query = Mage::app()->getRequest()->getQuery();
-        unset($query['ajax'], $query['p']);
-        if (count($query)) {
-            $url .= '?' . http_build_query($query);
-        }
 
         return $url;
     }
@@ -103,16 +106,14 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
 
     /**
      * @return string
+     * @throws Mage_Core_Model_Store_Exception
      */
     protected function getBaseUrl()
     {
         if ($this->_baseUrl === null) {
-
-            if (Mage::registry('current_category')) {
-                $categoryUrl = Mage::registry('current_category')->getUrl();
-                $queryPosition = strpos($categoryUrl, '?');
-                $this->_baseUrl = ($queryPosition > 0) ? substr($categoryUrl, 0, $queryPosition) : $categoryUrl;
-            }
+            $categoryUrl = $this->getCurrentCategory()->getUrl();
+            $queryPosition = strpos($categoryUrl, '?');
+            $this->_baseUrl = ($queryPosition > 0) ? substr($categoryUrl, 0, $queryPosition) : $categoryUrl;
         }
         return rtrim($this->_baseUrl, '/');
     }
@@ -123,6 +124,24 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
     public function setBaseUrl($baseUrl)
     {
         $this->_baseUrl = $baseUrl;
+    }
+
+    /**
+     * @return Mage_Catalog_Model_Category
+     * @throws Mage_Core_Model_Store_Exception
+     */
+    public function getCurrentCategory()
+    {
+        if ($this->_currentCategory === null) {
+            if ($category = Mage::registry('current_category')) {
+                $this->_currentCategory = $category;
+            } else {
+                $categoryId = Mage::app()->getStore()->getRootCategoryId();
+                $this->_currentCategory = Mage::getModel('catalog/category')->load($categoryId);
+            }
+        }
+
+        return $this->_currentCategory;
     }
 
     /**
@@ -227,6 +246,14 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
     }
 
     /**
+     * @param bool $allowed
+     */
+    public function setIsAllowedInCurrentContext(bool $allowed)
+    {
+        $this->_isAllowedInCurrentContext = $allowed;
+    }
+
+    /**
      * The pathStrategy is only working correctly for standard category pages
      * Fallback to queryParam strategy for attribute landing pages, free search etc.
      *
@@ -235,6 +262,9 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
      */
     protected function isAllowedInCurrentContext()
     {
+        if ($this->_isAllowedInCurrentContext !== null) {
+            return $this->_isAllowedInCurrentContext;
+        }
         $currentCategory = Mage::registry('current_category');
         return ($currentCategory !== null && $currentCategory->getId() !== Mage::app()->getStore()->getRootCategoryId());
     }
