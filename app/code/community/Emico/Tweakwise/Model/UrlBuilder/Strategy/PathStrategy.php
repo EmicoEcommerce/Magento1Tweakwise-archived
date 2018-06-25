@@ -68,6 +68,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
     protected function buildAttributeUriPath(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet = null, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute = null)
     {
         $facetAttributes = [];
+        $slugMapper = $this->getSlugAttributeMapper();
         foreach ($state->getSelectedFacets() as $selectedFacet) {
             if ($selectedFacet->getFacetSettings()->getSelectionType() === Emico_Tweakwise_Model_Bus_Type_Facet_Settings::SELECTION_TYPE_SLIDER) {
                 continue;
@@ -78,19 +79,13 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
                     continue;
                 }
                 $facetSettings = $selectedFacet->getFacetSettings();
-                $facetAttributes[$facetSettings->getUrlKey()][] = $this->getSlugAttributeMapper()->getSlugForAttribute(
-                    $facetSettings->getCode(),
-                    $activeAttribute->getTitle()
-                );
+                $facetAttributes[$facetSettings->getUrlKey()][] = $slugMapper->getSlugForAttributeValue($activeAttribute->getTitle());
             }
         }
 
         if ($facet !== null && $attribute !== null && !$attribute->getIsSelected()) {
             $facetSettings = $facet->getFacetSettings();
-            $facetAttributes[$facetSettings->getUrlKey()][] = $this->getSlugAttributeMapper()->getSlugForAttribute(
-                $facetSettings->getCode(),
-                $attribute->getTitle()
-            );
+            $facetAttributes[$facetSettings->getUrlKey()][] = $slugMapper->getSlugForAttributeValue($attribute->getTitle());
         }
 
         $path = '';
@@ -151,13 +146,17 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
 
         $facetKey = $filterParts[0];
         foreach ($filterParts as $i => $part) {
-            if ($i % 2 === 0) {
-                $facetKey = $part;
-            } else {
-                $facetValue = $this->getSlugAttributeMapper()->getAttributeValueBySlug($facetKey, $part);
-                if (!empty($facetKey)) {
-                    $tweakwiseRequest->addFacetKey($facetKey, $facetValue);
+            try {
+                if ($i % 2 === 0) {
+                    $facetKey = $part;
+                } else {
+                    $facetValue = $this->getSlugAttributeMapper()->getAttributeValueBySlug($facetKey, $part);
+                    if (!empty($facetKey)) {
+                        $tweakwiseRequest->addFacetKey($facetKey, $facetValue);
+                    }
                 }
+            } catch (Emico_TweakwiseExport_Model_Exception_SlugMappingException $exception) {
+                continue;
             }
         }
 
