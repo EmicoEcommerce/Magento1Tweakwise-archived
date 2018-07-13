@@ -3,10 +3,10 @@ div.slider {
     height: 7px;
     position: relative;
 
-    background: #fff;
-    -moz-box-shadow: inset 0 1px 2px 1px #ccc;
-    -webkit-box-shadow: inset 0 1px 2px 1px #ccc;
-    box-shadow: inset 0 1px 2px 1px #ccc;
+    background: #ffffff;
+    -moz-box-shadow: inset 0 1px 2px 1px #cccccc;
+    -webkit-box-shadow: inset 0 1px 2px 1px #cccccc;
+    box-shadow: inset 0 1px 2px 1px #cccccc;
 }
 
 div.slider div.handle {
@@ -65,38 +65,63 @@ div .slider .right {
     text-decoration: none;
 }
 
-#narrow-by-list .checkbox a{
-    padding-left: 20px;
-}
-
 #narrow-by-list .checkbox a {
+    padding-left: 25px;
     cursor: pointer;
-    background: url(../images/verfijning-checkbox.png) 0 0 no-repeat;
+    position: relative;
+    line-height: 16px;
 }
 
-#narrow-by-list .checkbox.inactive a {
-	background-position: 0 -19px;
+#narrow-by-list .checkbox a:after {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #ccc;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 8px);
+}
+
+#narrow-by-list .checkbox a:before {
+    content: '✓';
+    display: block;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    line-height: 16px;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 8px);
+    font-family: monospace;
+    opacity: 0;
+    transition: opacity .15s ease-out;
+}
+
+#narrow-by-list .checkbox.active a:before {
+    opacity: 1;
 }
 
 .block-layered-nav .arrow {
-	float: left;
-	width: 0px;
-	height: 0px;
-	border-style: solid;
-	border-width: 5px 4.5px 0 4.5px;
-	border-color: #000000 transparent transparent transparent;
-	margin-right: 3px;
-	margin-top: 5px;
+    float: left;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 5px 4.5px 0 4.5px;
+    border-color: #000000 transparent transparent transparent;
+    margin-right: 3px;
+    margin-top: 5px;
 }
+
 .block-layered-nav .collapsed .arrow {
-	
-	width: 0px;
-	height: 0px;
-	border-style: solid;
-	border-width: 4.5px 0 4.5px 5px;
-	border-color: transparent transparent transparent #000000;
-	margin-right: 6px;
-	margin-top: 3px;
+
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 4.5px 0 4.5px 5px;
+    border-color: transparent transparent transparent #000000;
+    margin-right: 6px;
+    margin-top: 3px;
 }
 
 .block-layered-nav .currently ol {
@@ -138,6 +163,7 @@ div .slider .right {
     padding-right: 15px;
     text-decoration: none;
 }
+
 .block-layered-nav .currently ol li a:hover {
     text-decoration: none;
 }
