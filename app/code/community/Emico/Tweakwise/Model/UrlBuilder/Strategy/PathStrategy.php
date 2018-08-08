@@ -70,7 +70,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
      */
     protected function buildAttributeUriPath(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet = null, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute = null)
     {
-        $facetAttributes = [];
+        $slugs = [];
         $slugMapper = $this->getSlugAttributeMapper();
         foreach ($state->getSelectedFacets() as $selectedFacet) {
             if ($selectedFacet->getFacetSettings()->getSelectionType() === Emico_Tweakwise_Model_Bus_Type_Facet_Settings::SELECTION_TYPE_SLIDER) {
@@ -82,26 +82,59 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
                     continue;
                 }
                 $facetSettings = $selectedFacet->getFacetSettings();
-                $facetAttributes[$facetSettings->getUrlKey()][] = $slugMapper->getSlugForAttributeValue($activeAttribute->getTitle());
+                $slugs[] = [
+                    'facet' => $facetSettings->getUrlKey(),
+                    'value' => $slugMapper->getSlugForAttributeValue($activeAttribute->getTitle())
+                ];
             }
         }
 
         if ($facet !== null && $attribute !== null && !$attribute->getIsSelected()) {
             $facetSettings = $facet->getFacetSettings();
-            $facetAttributes[$facetSettings->getUrlKey()][] = $slugMapper->getSlugForAttributeValue($attribute->getTitle());
+            $slugs[] = [
+                'facet' => $facetSettings->getUrlKey(),
+                'value' => $slugMapper->getSlugForAttributeValue($attribute->getTitle())
+            ];
         }
 
+        // Sort facets so we get canonical URL's for certain filter combinations
+        $this->sortSlugs($slugs, $state);
+
         $path = '';
-        foreach ($facetAttributes as $facetKey => $attributeSlugs) {
-            /** @var Emico_Tweakwise_Model_Bus_Type_Attribute $facetAttribute */
-            foreach ($attributeSlugs as $slug) {
-                $path .= $facetKey . '/' . $slug . '/';
-            }
+        foreach ($slugs as $slug) {
+            $path .= $slug['facet'] . '/' . $slug['value'] . '/';
         }
 
         $path = rtrim($path, '/');
 
         return $path;
+    }
+
+    /**
+     * @param array $slugA
+     * @param array $slugB
+     * @return int|null
+     */
+    protected function sortSlugs(array &$slugs, Emico_Tweakwise_Model_Catalog_Layer $state)
+    {
+        $facetSortList = [];
+        foreach ($state->getFacets() as $facet) {
+            $facetSortList[] = $facet->getFacetSettings()->getUrlKey();
+        }
+
+        usort($slugs, function($slugA, $slugB) use ($facetSortList) {
+            if ($slugA['facet'] == $slugB['facet']) {
+                // Sort values alphabetical
+                if ($slugA['value'] == $slugB['value']) {
+                    return null;
+                }
+                return ($slugA['value'] < $slugB['value']) ? -1 : 1;
+            }
+
+            $slugAKey = array_search($slugA['facet'], $facetSortList);
+            $slugBKey = array_search($slugB['facet'], $facetSortList);
+            return ($slugAKey < $slugBKey) ? -1 : 1;
+        });
     }
 
     /**
