@@ -201,6 +201,15 @@
                             <show_in_store>1</show_in_store>
                             <comment></comment>
                         </nofollow_facets>
+                        <filter_combination_indexable>
+                            <label>Filter combinations allowed for indexing</label>
+                            <frontend_model>emico_tweakwise/adminhtml_config_form_field_followWhitelist</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>61</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </filter_combination_indexable>
                         <add_canonical_tag>
                             <label>Add canonical tag to category page</label>
                             <frontend_type>select</frontend_type>
