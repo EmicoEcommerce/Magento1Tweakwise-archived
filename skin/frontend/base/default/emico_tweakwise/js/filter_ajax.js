@@ -5,7 +5,7 @@ var TweakwiseAjaxFilter;
     };
 
     TweakwiseAjaxFilter.prototype = {
-        initialize: function (options) {
+        initialize: function(options) {
             this.options = {
                 blocks: {},
                 linkSelector: '.block-layered-nav a',
@@ -19,19 +19,19 @@ var TweakwiseAjaxFilter;
             this.history = {};
         },
 
-        hookEvents: function () {
+        hookEvents: function() {
             document.on('click', this.options.linkSelector, this.handleLinkClick.bind(this));
             window.onpopstate = this.handlePopState.bind(this);
         },
 
-        handleLinkClick: function (event, element) {
+        handleLinkClick: function(event, element) {
             event.stop();
 
             var link = element.readAttribute('href');
             this.updateLink(link);
         },
 
-        handlePopState: function (event) {
+        handlePopState: function(event) {
             if (event.state) {
                 this.updateLink(event.state, false);
             } else {
@@ -39,7 +39,7 @@ var TweakwiseAjaxFilter;
             }
         },
 
-        updateLink: function (link, pushState) {
+        updateLink: function(link, pushState) {
             pushState = typeof pushState === 'undefined' ? true : pushState;
 
             var result = this.history[link];
@@ -57,7 +57,7 @@ var TweakwiseAjaxFilter;
             }
         },
 
-        handleAjaxResponse: function (link, data) {
+        handleAjaxResponse: function(link, data) {
             this.history[link] = data;
             this.updateLink(link);
         },
@@ -72,7 +72,7 @@ var TweakwiseAjaxFilter;
             return link;
         },
 
-        sendAjaxRequest: function (originalLink) {
+        sendAjaxRequest: function(originalLink) {
             this.setBlocksLoading();
             if (this.runningRequest) {
                 this.runningRequest.transport.abort();
@@ -90,17 +90,17 @@ var TweakwiseAjaxFilter;
                         window.location.href = originalLink;
                     }
                 }.bind(this),
-                onFailure: function () {
+                onFailure: function() {
                     window.location.href = originalLink;
                 }.bind(this),
-                onComplete: function () {
+                onComplete: function() {
                     this.runningRequest = null;
                     this.hideBlocksLoading();
                 }.bind(this)
             });
         },
 
-        forEachBlock: function (callback) {
+        forEachBlock: function(callback) {
             $H(this.options.blocks).each(function (pair) {
                 var name = pair.key;
                 var selector = pair.value;
@@ -111,7 +111,7 @@ var TweakwiseAjaxFilter;
             });
         },
 
-        getElementOverlay: function (element) {
+        getElementOverlay: function(element) {
             var overlayClass = this.options.cssLoaderOverlayClass;
             if (!overlayClass) {
                 return null;
@@ -127,39 +127,39 @@ var TweakwiseAjaxFilter;
             return overlayElement;
         },
 
-        hideElementOverlay: function (element) {
+        hideElementOverlay: function(element) {
             var overlay = this.getElementOverlay(element);
             if (overlay) {
                 overlay.hide();
             }
         },
 
-        showElementOverlay: function (element) {
+        showElementOverlay: function(element) {
             var overlay = this.getElementOverlay(element);
             if (overlay) {
                 overlay.show();
             }
         },
 
-        setBlocksLoading: function () {
+        setBlocksLoading: function() {
             this.forEachBlock(function (element) {
                 element.addClassName(this.options.cssLoadingClass);
                 this.showElementOverlay(element);
             }.bind(this));
         },
 
-        hideBlocksLoading: function () {
+        hideBlocksLoading: function() {
             this.forEachBlock(function (element) {
                 element.removeClassName(this.options.cssLoadingClass);
                 this.hideElementOverlay(element);
             }.bind(this));
         },
 
-        triggerUpdateEvent: function () {
+        triggerUpdateEvent: function() {
             document.fire('list:loaded');
         },
 
-        updateBlocks: function (blocks) {
+        updateBlocks: function(blocks) {
             this.forEachBlock(function (element, name) {
                 if (blocks[name]) {
                     element.replace(blocks[name]);
