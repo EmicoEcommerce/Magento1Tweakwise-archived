@@ -32,7 +32,11 @@ var TweakwiseAjaxFilter;
         },
 
         handlePopState: function(event) {
-            this.updateLink(event.state, false);
+            if (event.state) {
+                this.updateLink(event.state, false);
+            } else {
+                this.updateLink(document.location.href, false);
+            }
         },
 
         updateLink: function(link, pushState) {
@@ -59,7 +63,12 @@ var TweakwiseAjaxFilter;
         },
 
         addAjaxParam: function(link) {
-            link += (link.split('?')[1] ? '&' : '?') + 'ajax=1';
+            if (link.indexOf('?') > -1) {
+                link += (link.split('?')[1] ? '&' : '?') + 'ajax=1';
+            } else {
+                link += '?ajax=1';
+            }
+
             return link;
         },
 
