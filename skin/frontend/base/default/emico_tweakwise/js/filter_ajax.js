@@ -1,11 +1,11 @@
 var TweakwiseAjaxFilter;
-(function() {
-    TweakwiseAjaxFilter = function(options) {
+(function () {
+    TweakwiseAjaxFilter = function (options) {
         this.initialize(options);
     };
 
     TweakwiseAjaxFilter.prototype = {
-        initialize: function(options) {
+        initialize: function (options) {
             this.options = {
                 blocks: {},
                 linkSelector: '.block-layered-nav a',
@@ -19,25 +19,27 @@ var TweakwiseAjaxFilter;
             this.history = {};
         },
 
-        hookEvents: function() {
+        hookEvents: function () {
             document.on('click', this.options.linkSelector, this.handleLinkClick.bind(this));
             window.onpopstate = this.handlePopState.bind(this);
         },
 
-        handleLinkClick: function(event, element) {
+        handleLinkClick: function (event, element) {
             event.stop();
 
             var link = element.readAttribute('href');
             this.updateLink(link);
         },
 
-        handlePopState: function(event) {
+        handlePopState: function (event) {
             if (event.state) {
                 this.updateLink(event.state, false);
+            } else {
+                this.updateLink(document.location.href, false);
             }
         },
 
-        updateLink: function(link, pushState) {
+        updateLink: function (link, pushState) {
             pushState = typeof pushState === 'undefined' ? true : pushState;
 
             var result = this.history[link];
@@ -55,22 +57,22 @@ var TweakwiseAjaxFilter;
             }
         },
 
-        handleAjaxResponse: function(link, data) {
+        handleAjaxResponse: function (link, data) {
             this.history[link] = data;
             this.updateLink(link);
         },
 
-        addAjaxParam: function(link) {
+        addAjaxParam: function (link) {
             if (link.indexOf('?') > -1) {
                 link += (link.split('?')[1] ? '&' : '?') + 'ajax=1';
             } else {
                 link += '?ajax=1';
             }
-            
+
             return link;
         },
 
-        sendAjaxRequest: function(originalLink) {
+        sendAjaxRequest: function (originalLink) {
             this.setBlocksLoading();
             if (this.runningRequest) {
                 this.runningRequest.transport.abort();
@@ -80,7 +82,7 @@ var TweakwiseAjaxFilter;
 
             this.runningRequest = new Ajax.Request(ajaxLink, {
                 method: 'get',
-                onSuccess: function(response) {
+                onSuccess: function (response) {
                     var data = response.responseJSON;
                     if (data.blocks) {
                         this.handleAjaxResponse(originalLink, data);
@@ -88,28 +90,28 @@ var TweakwiseAjaxFilter;
                         window.location.href = originalLink;
                     }
                 }.bind(this),
-                onFailure: function() {
+                onFailure: function () {
                     window.location.href = originalLink;
                 }.bind(this),
-                onComplete: function() {
+                onComplete: function () {
                     this.runningRequest = null;
                     this.hideBlocksLoading();
                 }.bind(this)
             });
         },
 
-        forEachBlock: function(callback) {
-            $H(this.options.blocks).each(function(pair) {
+        forEachBlock: function (callback) {
+            $H(this.options.blocks).each(function (pair) {
                 var name = pair.key;
                 var selector = pair.value;
 
-                $$(selector).each(function(element) {
+                $$(selector).each(function (element) {
                     callback(element, name, selector);
                 });
             });
         },
 
-        getElementOverlay: function(element) {
+        getElementOverlay: function (element) {
             var overlayClass = this.options.cssLoaderOverlayClass;
             if (!overlayClass) {
                 return null;
@@ -125,40 +127,40 @@ var TweakwiseAjaxFilter;
             return overlayElement;
         },
 
-        hideElementOverlay: function(element) {
+        hideElementOverlay: function (element) {
             var overlay = this.getElementOverlay(element);
             if (overlay) {
                 overlay.hide();
             }
         },
 
-        showElementOverlay: function(element) {
+        showElementOverlay: function (element) {
             var overlay = this.getElementOverlay(element);
             if (overlay) {
                 overlay.show();
             }
         },
 
-        setBlocksLoading: function() {
-            this.forEachBlock(function(element) {
+        setBlocksLoading: function () {
+            this.forEachBlock(function (element) {
                 element.addClassName(this.options.cssLoadingClass);
                 this.showElementOverlay(element);
             }.bind(this));
         },
 
-        hideBlocksLoading: function() {
-            this.forEachBlock(function(element) {
+        hideBlocksLoading: function () {
+            this.forEachBlock(function (element) {
                 element.removeClassName(this.options.cssLoadingClass);
                 this.hideElementOverlay(element);
             }.bind(this));
         },
 
-        triggerUpdateEvent: function() {
+        triggerUpdateEvent: function () {
             document.fire('list:loaded');
         },
 
-        updateBlocks: function(blocks) {
-            this.forEachBlock(function(element, name) {
+        updateBlocks: function (blocks) {
+            this.forEachBlock(function (element, name) {
                 if (blocks[name]) {
                     element.replace(blocks[name]);
                 }
