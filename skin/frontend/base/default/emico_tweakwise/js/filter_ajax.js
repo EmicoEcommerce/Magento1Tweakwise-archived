@@ -1,5 +1,5 @@
 var TweakwiseAjaxFilter;
-(function () {
+(function() {
     TweakwiseAjaxFilter = function(options) {
         this.initialize(options);
     };
