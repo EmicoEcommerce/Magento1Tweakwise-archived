@@ -1,6 +1,6 @@
 var TweakwiseAjaxFilter;
 (function () {
-    TweakwiseAjaxFilter = function (options) {
+    TweakwiseAjaxFilter = function(options) {
         this.initialize(options);
     };
 
@@ -62,7 +62,7 @@ var TweakwiseAjaxFilter;
             this.updateLink(link);
         },
 
-        addAjaxParam: function (link) {
+        addAjaxParam: function(link) {
             if (link.indexOf('?') > -1) {
                 link += (link.split('?')[1] ? '&' : '?') + 'ajax=1';
             } else {
@@ -82,7 +82,7 @@ var TweakwiseAjaxFilter;
 
             this.runningRequest = new Ajax.Request(ajaxLink, {
                 method: 'get',
-                onSuccess: function (response) {
+                onSuccess: function(response) {
                     var data = response.responseJSON;
                     if (data.blocks) {
                         this.handleAjaxResponse(originalLink, data);
@@ -101,11 +101,11 @@ var TweakwiseAjaxFilter;
         },
 
         forEachBlock: function(callback) {
-            $H(this.options.blocks).each(function (pair) {
+            $H(this.options.blocks).each(function(pair) {
                 var name = pair.key;
                 var selector = pair.value;
 
-                $$(selector).each(function (element) {
+                $$(selector).each(function(element) {
                     callback(element, name, selector);
                 });
             });
@@ -142,14 +142,14 @@ var TweakwiseAjaxFilter;
         },
 
         setBlocksLoading: function() {
-            this.forEachBlock(function (element) {
+            this.forEachBlock(function(element) {
                 element.addClassName(this.options.cssLoadingClass);
                 this.showElementOverlay(element);
             }.bind(this));
         },
 
         hideBlocksLoading: function() {
-            this.forEachBlock(function (element) {
+            this.forEachBlock(function(element) {
                 element.removeClassName(this.options.cssLoadingClass);
                 this.hideElementOverlay(element);
             }.bind(this));
@@ -160,7 +160,7 @@ var TweakwiseAjaxFilter;
         },
 
         updateBlocks: function(blocks) {
-            this.forEachBlock(function (element, name) {
+            this.forEachBlock(function(element, name) {
                 if (blocks[name]) {
                     element.replace(blocks[name]);
                 }
