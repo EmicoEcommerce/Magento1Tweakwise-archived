@@ -28,6 +28,10 @@ var TweakwiseAjaxFilter;
             event.stop();
 
             var link = element.readAttribute('href');
+            if (link.length === 0) {
+                return false;
+            }
+
             this.updateLink(link);
         },
 
