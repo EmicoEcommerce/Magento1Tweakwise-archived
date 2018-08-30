@@ -35,7 +35,7 @@ class Emico_Tweakwise_Model_UrlBuilder_UrlBuilder
     {
         $currentCategory = Mage::registry('current_category');
         if ($currentCategory instanceof Mage_Catalog_Model_Category) {
-            return $currentCategory->getUrl();
+            return $currentCategory->getUrl() . '#no-ajax';
         }
         
         $state = Mage::getSingleton('emico_tweakwise/catalog_layer');
@@ -51,6 +51,6 @@ class Emico_Tweakwise_Model_UrlBuilder_UrlBuilder
         $params['_query'] = $filterState;
         $params['_escape'] = true;
 
-        return Mage::getUrl('*/*/*', $params);
+        return Mage::getUrl('*/*/*', $params) . '#no-ajax';
     }
 }
