@@ -27,4 +27,30 @@ class Emico_Tweakwise_Model_UrlBuilder_UrlBuilder
         }
         throw new \Exception('No strategy was able to generate a URL');
     }
+
+    /**
+     * Get URL to clear all filters
+     */
+    public function getClearUrl()
+    {
+        $currentCategory = Mage::registry('current_category');
+        if ($currentCategory instanceof Mage_Catalog_Model_Category) {
+            return $currentCategory->getUrl();
+        }
+        
+        $state = Mage::getSingleton('emico_tweakwise/catalog_layer');
+        $filterState = [];
+
+        $facetsBlocks = $state->getSelectedFacets();
+        foreach ($facetsBlocks as $facetBlock) /** @var $_facetBlock Emico_Tweakwise_Block_Catalog_Layer_Facet_Attribute */ {
+            $filterState[$facetBlock->getUrlKey()] = $facetBlock->getCleanValue();
+        }
+
+        $params['_current'] = true;
+        $params['_use_rewrite'] = true;
+        $params['_query'] = $filterState;
+        $params['_escape'] = true;
+
+        return Mage::getUrl('*/*/*', $params);
+    }
 }

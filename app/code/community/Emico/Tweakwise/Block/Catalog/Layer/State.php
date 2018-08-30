@@ -25,25 +25,16 @@ class Emico_Tweakwise_Block_Catalog_Layer_State extends Emico_Tweakwise_Block_Ca
         $this->_facets = $facets;
     }
 
-    /** Retrieve Clear Filters URL
+    /**
+     * Retrieve Clear Filters URL
      *
      * @return string
      */
     public function getClearUrl()
     {
-        $filterState = [];
-
-        $facetsBlocks = $this->getActiveFacets();
-        foreach ($facetsBlocks as $facetBlock) /** @var $_facetBlock Emico_Tweakwise_Block_Catalog_Layer_Facet_Attribute */ {
-            $filterState[$facetBlock->getUrlKey()] = $facetBlock->getCleanValue();
-        }
-
-        $params['_current'] = true;
-        $params['_use_rewrite'] = true;
-        $params['_query'] = $filterState;
-        $params['_escape'] = true;
-
-        return Mage::getUrl('*/*/*', $params);
+        /** @var Emico_Tweakwise_Model_UrlBuilder_UrlBuilder $urlBuilder */
+        $urlBuilder = Mage::getModel('emico_tweakwise/urlBuilder_urlBuilder');
+        return $urlBuilder->getClearUrl();
     }
 
     /**
