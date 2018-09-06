@@ -78,7 +78,13 @@ var TweakwiseAjaxFilter;
             this.runningRequest = new Ajax.Request(ajaxLink, {
                 method: 'get',
                 onSuccess: function(response) {
-                    var data = response.responseJSON;
+                    var data;
+                    if (response.responseJSON) {
+                        data = response.responseJSON;
+                    } else {
+                        data = JSON.parse(response.responseText);
+                    }
+
                     if (data.blocks) {
                         this.handleAjaxResponse(originalLink, data);
                     } else {
