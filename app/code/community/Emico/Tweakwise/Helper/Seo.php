@@ -18,19 +18,36 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
     public function shouldApplyNoIndexNoFollow(Emico_Tweakwise_Model_Bus_Type_Facet $facetLinkedTo = null)
     {
         // Certain filter combinations are allowed for indexing
+        $this->debugLog('Check combination');
         if ($this->isInCombinationWhitelist($facetLinkedTo)) {
+            $this->debugLog('Combination is whitelisted');
             return false;
         }
 
+        $this->debugLog('Check number of filters');
         if ($this->exceedsAttributeLimit($facetLinkedTo)) {
+            $this->debugLog('Number of filters exceeded');
             return true;
         }
 
+        $this->debugLog('Check blacklist');
         if ($this->isInFacetBlacklist($facetLinkedTo)) {
+            $this->debugLog('In blacklist');
             return true;
         }
 
+        $this->debugLog('Apply index/follow');
         return false;
+    }
+
+    /**
+     * @param string $message
+     */
+    protected function debugLog(string $message)
+    {
+        if (isset($_GET['debug'])) {
+            Mage::log($message, Zend_Log::DEBUG, 'tweakwise_seo_debug.log');
+        }
     }
 
     /**
@@ -72,7 +89,13 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
         }
 
         foreach ($selectedFacets as $facet) {
-            if (in_array($facet->getFacetSettings()->getUrlKey(), $noFollowFacets)) {
+            $attributeCode = $facet->getFacetSettings()->getAttributeName();
+
+            if (strpos($attributeCode, 'ae-') !== false) {
+                return true;
+            }
+
+            if (in_array($attributeCode, $noFollowFacets, true)) {
                 return true;
             }
         }
