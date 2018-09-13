@@ -100,14 +100,20 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
             return false;
         }
 
-        $combinationWhitelist = unserialize($combinationWhitelist);
-
         $facets = [];
         if ($facetLinkedTo !== null) {
             $facets[] = $facetLinkedTo;
         }
 
         $facets = array_merge($facets, $layer->getSelectedFacets());
+
+        // Only check filter combination when the URL contains exactly two filters
+        if (\count($facets) !== 2) {
+            return false;
+        }
+
+        $combinationWhitelist = unserialize($combinationWhitelist);
+
         $facetsCodes = array_unique(array_map(function(Emico_Tweakwise_Model_Bus_Type_Facet $facet) {
             return $facet->getFacetSettings()->getCode();
         }, $facets));
