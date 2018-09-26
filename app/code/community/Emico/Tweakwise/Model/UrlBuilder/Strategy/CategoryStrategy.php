@@ -186,4 +186,13 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_CategoryStrategy implements Emic
             ->getIgnoredQueryParameters($store);
         return array_diff_key($query, array_flip($ignoredQueryParameters));
     }
+
+    /**
+     * @param Emico_Tweakwise_Model_Catalog_Layer $state
+     * @return mixed
+     */
+    public function buildCanonicalUrl(Emico_Tweakwise_Model_Catalog_Layer $state)
+    {
+        return $this->buildUrl($state);
+    }
 }

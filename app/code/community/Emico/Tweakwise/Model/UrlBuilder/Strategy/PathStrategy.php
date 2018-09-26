@@ -97,6 +97,16 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
             ];
         }
 
+        return $this->getPathFromSlugs($slugs, $state);
+    }
+
+    /**
+     * @param array $slugs
+     * @param Emico_Tweakwise_Model_Catalog_Layer $state
+     * @return string
+     */
+    protected function getPathFromSlugs(array $slugs, Emico_Tweakwise_Model_Catalog_Layer $state)
+    {
         // Sort facets so we get canonical URL's for certain filter combinations
         $this->sortSlugs($slugs, $state);
 
@@ -300,5 +310,33 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
         }
         $currentCategory = Mage::registry('current_category');
         return ($currentCategory !== null && $currentCategory->getId() !== Mage::app()->getStore()->getRootCategoryId());
+    }
+
+    /**
+     * @param Emico_Tweakwise_Model_Catalog_Layer $state
+     * @return mixed
+     */
+    public function buildCanonicalUrl(Emico_Tweakwise_Model_Catalog_Layer $state)
+    {
+        if (!$this->isAllowedInCurrentContext()) {
+            return $this->_fallbackStrategy->buildCanonicalUrl($state);
+        }
+
+        $url = $this->getBaseUrl();
+
+        // Add the attribute filters to the URL path
+        $url .= '/' . $this->buildIndexableAttributePath($state);
+    }
+
+    /**
+     * @param Emico_Tweakwise_Model_Catalog_Layer $state
+     */
+    protected function buildIndexableAttributePath(Emico_Tweakwise_Model_Catalog_Layer $state)
+    {
+        $slugs = [];
+        $slugMapper = $this->getSlugAttributeMapper();
+        $selectedFacets = $state->getSelectedFacets();
+
+        return $this->getPathFromSlugs($slugs, $state);
     }
 }

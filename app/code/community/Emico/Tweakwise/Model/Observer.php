@@ -138,7 +138,7 @@ class Emico_Tweakwise_Model_Observer
 
         /** @var Emico_Tweakwise_Model_UrlBuilder_UrlBuilder $urlBuilder */
         $urlBuilder = Mage::getModel('emico_tweakwise/urlBuilder_urlBuilder');
-        $canonicalUrl = $urlBuilder->buildUrl();
+        $canonicalUrl = $urlBuilder->buildCanonicalUrl();
 
         /** @var Mage_Page_Block_Html_Head $head */
         $head = Mage::app()->getLayout()->getBlock('head');

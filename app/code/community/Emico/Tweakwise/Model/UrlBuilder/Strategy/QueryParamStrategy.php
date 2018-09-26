@@ -78,4 +78,12 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_QueryParamStrategy implements Em
         return $pairs;
     }
 
+    /**
+     * @param Emico_Tweakwise_Model_Catalog_Layer $state
+     * @return mixed
+     */
+    public function buildCanonicalUrl(Emico_Tweakwise_Model_Catalog_Layer $state)
+    {
+        return $this->buildUrl($state);
+    }
 }

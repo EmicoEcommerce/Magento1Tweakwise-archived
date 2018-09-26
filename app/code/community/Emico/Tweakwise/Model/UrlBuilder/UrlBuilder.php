@@ -53,4 +53,20 @@ class Emico_Tweakwise_Model_UrlBuilder_UrlBuilder
 
         return Mage::getUrl('*/*/*', $params) . '#no-ajax';
     }
+
+    public function buildCanonicalUrl()
+    {
+        $helper = Mage::helper('emico_tweakwise/uriStrategy');
+
+        $state = Mage::getSingleton('emico_tweakwise/catalog_layer');
+        foreach ($helper->getActiveStrategies() as $strategy) {
+            $url = $strategy->buildUrlCanonicalUrl($state);
+            if ($url !== null) {
+                $url = new Varien_Object(['url' => $url]);
+                Mage::dispatchEvent('tweakwise_urlbuilder_buildurl', ['strategy' => $strategy, 'url' => $url]);
+                return $url->getData('url');
+            }
+        }
+        throw new \Exception('No strategy was able to generate a URL');
+    }
 }
