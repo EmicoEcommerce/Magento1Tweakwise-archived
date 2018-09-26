@@ -50,7 +50,7 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
 
         $selectedAttributes = $layer->getSelectedAttributes();
         $selectedAttributesCount = count($selectedAttributes);
-        if ($facetLinkedTo !== null) {
+        if ($facetLinkedTo !== null && !in_array($facetLinkedTo, $layer->getSelectedFacets())) {
             $selectedAttributesCount++;
         }
 
@@ -67,7 +67,7 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
         $layer = Mage::getSingleton('emico_tweakwise/catalog_layer');
         $noFollowFacets = explode(',', Mage::getStoreConfig('emico_tweakwise/navigation/nofollow_facets'));
         $selectedFacets = $layer->getSelectedFacets();
-        if ($facetLinkedTo !== null) {
+        if ($facetLinkedTo !== null && !in_array($facetLinkedTo, $selectedFacets)) {
             $selectedFacets[] = $facetLinkedTo;
         }
 
@@ -100,12 +100,11 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
             return false;
         }
 
-        $facets = [];
-        if ($facetLinkedTo !== null) {
-            $facets[] = $facetLinkedTo;
-        }
 
-        $facets = array_merge($facets, $layer->getSelectedFacets());
+        $facets = $layer->getSelectedFacets();
+        if ($facetLinkedTo !== null && !in_array($facetLinkedTo, $facets, true)) {
+            $facets = array_merge($facets, [$facetLinkedTo]);
+        }
 
         // Only check filter combination when the URL contains exactly two filters
         if (\count($facets) !== 2) {

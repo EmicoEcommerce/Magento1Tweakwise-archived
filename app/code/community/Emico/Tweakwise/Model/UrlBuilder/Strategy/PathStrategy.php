@@ -326,6 +326,8 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
 
         // Add the attribute filters to the URL path
         $url .= '/' . $this->buildIndexableAttributePath($state);
+
+        return $url;
     }
 
     /**
@@ -333,9 +335,29 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
      */
     protected function buildIndexableAttributePath(Emico_Tweakwise_Model_Catalog_Layer $state)
     {
+        /** @var Emico_Tweakwise_Helper_Seo $seoHelper */
+        $seoHelper = Mage::helper('emico_tweakwise/seo');
+        $selectedFacets = $state->getSelectedFacets();
+
         $slugs = [];
         $slugMapper = $this->getSlugAttributeMapper();
-        $selectedFacets = $state->getSelectedFacets();
+        foreach ($selectedFacets as $selectedFacet) {
+            if ($seoHelper->shouldApplyNoIndexNoFollow($selectedFacet)) {
+                continue;
+            }
+
+            foreach ($selectedFacet->getActiveAttributes() as $activeAttribute) {
+                if ($selectedFacet->isCategory()) {
+                    continue;
+                }
+                $facetSettings = $selectedFacet->getFacetSettings();
+                $slugs[$selectedFacet->getFacetSettings()->getFacetId()] = [
+                    'facet' => $facetSettings->getUrlKey(),
+                    'value' => $slugMapper->getSlugForAttributeValue($activeAttribute->getTitle())
+                ];
+            }
+
+        }
 
         return $this->getPathFromSlugs($slugs, $state);
     }

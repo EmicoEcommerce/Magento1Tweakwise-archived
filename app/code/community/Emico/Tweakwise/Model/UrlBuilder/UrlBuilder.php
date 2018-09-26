@@ -56,11 +56,12 @@ class Emico_Tweakwise_Model_UrlBuilder_UrlBuilder
 
     public function buildCanonicalUrl()
     {
+        /** @var Emico_Tweakwise_Helper_UriStrategy $helper */
         $helper = Mage::helper('emico_tweakwise/uriStrategy');
-
+        /** @var Emico_Tweakwise_Model_Catalog_Layer $state */
         $state = Mage::getSingleton('emico_tweakwise/catalog_layer');
         foreach ($helper->getActiveStrategies() as $strategy) {
-            $url = $strategy->buildUrlCanonicalUrl($state);
+            $url = $strategy->buildCanonicalUrl($state);
             if ($url !== null) {
                 $url = new Varien_Object(['url' => $url]);
                 Mage::dispatchEvent('tweakwise_urlbuilder_buildurl', ['strategy' => $strategy, 'url' => $url]);
