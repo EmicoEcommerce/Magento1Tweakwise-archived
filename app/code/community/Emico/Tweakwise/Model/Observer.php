@@ -148,11 +148,13 @@ class Emico_Tweakwise_Model_Observer
 
         /** @var Emico_Tweakwise_Block_Catalog_Product_List_Toolbar_Pager $pager */
         $pager = Mage::app()->getLayout()->getBlock('product_list_toolbar_pager');
-        if ($pager->getCurrentPage() > 1) {
-            $head->addLinkRel('prev', $pager->getPreviousPageUrl());
-        }
-        if ($pager->getCurrentPage() < $pager->getLastPageNum()) {
-            $head->addLinkRel('next', $pager->getNextPageUrl());
+        if ($pager->getCollection() !== null) {
+            if ($pager->getCurrentPage() > 1) {
+                $head->addLinkRel('prev', $pager->getPreviousPageUrl());
+            }
+            if ($pager->getCurrentPage() < $pager->getLastPageNum()) {
+                $head->addLinkRel('next', $pager->getNextPageUrl());
+            }
         }
     }
 
