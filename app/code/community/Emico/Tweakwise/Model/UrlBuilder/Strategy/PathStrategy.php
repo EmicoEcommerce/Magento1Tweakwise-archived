@@ -325,7 +325,10 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
         $url = $this->getBaseUrl();
 
         // Add the attribute filters to the URL path
-        $url .= '/' . $this->buildIndexableAttributePath($state);
+        $filterPath = $this->buildIndexableAttributePath($state);
+        if (!empty($filterPath)) {
+            $url .= '/' . $this->buildIndexableAttributePath($state);
+        }
 
         return $url;
     }
