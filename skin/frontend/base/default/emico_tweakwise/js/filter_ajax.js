@@ -45,9 +45,6 @@ var TweakwiseAjaxFilter;
             var result = this.history[link];
             if (result && result.blocks) {
                 this.updateBlocks(result.blocks);
-                if (result.title) {
-                    this.setTitle(title)
-                }
 
                 if (pushState && history && history.pushState) {
                     history.pushState(link, result.title, link);
