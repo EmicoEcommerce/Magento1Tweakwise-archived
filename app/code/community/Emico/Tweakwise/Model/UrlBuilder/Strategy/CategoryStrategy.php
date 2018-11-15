@@ -82,7 +82,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_CategoryStrategy implements Emic
             $this->setDefaultRequestCategory($tweakwiseRequest);
         }
 
-        if ($httpRequest->getParam('cat') !== null) {
+        if (!empty($httpRequest->getParam('cat'))) {
             $this->addCategoryQueryParam($tweakwiseRequest, $httpRequest->getParam('cat'));
         }
 
