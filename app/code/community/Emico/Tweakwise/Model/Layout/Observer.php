@@ -73,10 +73,8 @@ class Emico_Tweakwise_Model_Layout_Observer
             $tweakwiseCategoryIds
         );
 
-        return Mage::getModel('catalog/category')->getCollection()
-            ->addAttributeToSelect('*')
+        return Mage::helper('emico_tweakwise')->getBareCategoryCollection()
             ->addFieldToFilter('entity_id', ['in' => $categoryIds])
-            ->joinUrlRewrite()
             ->getItems();
     }
 
