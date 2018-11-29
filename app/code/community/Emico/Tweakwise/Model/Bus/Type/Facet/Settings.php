@@ -23,6 +23,7 @@
  * @method int getSource();
  * @method int getPrefix();
  * @method int getPostfix();
+ * @method string getCssClass();
  */
 class Emico_Tweakwise_Model_Bus_Type_Facet_Settings extends Emico_Tweakwise_Model_Bus_Type_Abstract
 {
@@ -72,6 +73,7 @@ class Emico_Tweakwise_Model_Bus_Type_Facet_Settings extends Emico_Tweakwise_Mode
         $this->setDataFromField($xmlElement, 'source', self::DATA_TYPE_STRING);
         $this->setDataFromField($xmlElement, 'prefix', self::DATA_TYPE_STRING, self::ELEMENT_COUNT_NONE_OR_ONE);
         $this->setDataFromField($xmlElement, 'postfix', self::DATA_TYPE_STRING, self::ELEMENT_COUNT_NONE_OR_ONE);
+        $this->setDataFromField($xmlElement, 'cssclass', self::DATA_TYPE_STRING, self::ELEMENT_COUNT_NONE_OR_ONE, 'css_class');
 
         return $this;
     }

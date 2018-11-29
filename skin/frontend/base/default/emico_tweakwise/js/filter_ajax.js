@@ -17,6 +17,7 @@ var TweakwiseAjaxFilter;
             this.hookEvents();
 
             this.history = {};
+            this.originalLink = document.URL;
         },
 
         hookEvents: function() {
@@ -32,7 +33,7 @@ var TweakwiseAjaxFilter;
         },
 
         handlePopState: function(event) {
-            this.updateLink(event.state, false);
+            this.updateLink(event.state || this.originalLink, false);
         },
 
         updateLink: function(link, pushState) {
