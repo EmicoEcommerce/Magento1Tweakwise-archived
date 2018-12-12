@@ -32,6 +32,11 @@ var TweakwiseAjaxFilter;
             if (link.length === 0) {
                 return false;
             }
+            if (link.indexOf('#no-ajax') > -1) {
+                link = link.replace('#no-ajax', '');
+                document.location.href = link;
+                return;
+            }
 
             this.updateLink(link);
         },
