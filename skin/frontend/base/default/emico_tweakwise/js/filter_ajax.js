@@ -17,6 +17,7 @@ var TweakwiseAjaxFilter;
             this.hookEvents();
 
             this.history = {};
+            this.originalLink = document.URL;
         },
 
         hookEvents: function() {
@@ -31,12 +32,17 @@ var TweakwiseAjaxFilter;
             if (link.length === 0) {
                 return false;
             }
+            if (link.indexOf('#no-ajax') > -1) {
+                link = link.replace('#no-ajax', '');
+                document.location.href = link;
+                return;
+            }
 
             this.updateLink(link);
         },
 
         handlePopState: function(event) {
-            this.updateLink(event.state, false);
+            this.updateLink(event.state || this.originalLink, false);
         },
 
         updateLink: function(link, pushState) {

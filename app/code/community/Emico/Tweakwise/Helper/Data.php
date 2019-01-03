@@ -267,15 +267,43 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
         }
 
         if (!($category = $this->_categoryCollection->getItemById($categoryId))) {
-            $category = Mage::getModel('catalog/category')->getCollection()
-                ->addAttributeToSelect('*')
-                ->joinUrlRewrite()
+            $category = $this->getBareCategoryCollection()
                 ->addFieldToFilter('entity_id', ['eq' => $categoryId])
                 ->getFirstItem();
             $this->_categoryCollection->addItem($category);
         }
 
         return $category;
+    }
+
+    /**
+     * @return array
+     * @throws Mage_Core_Model_Store_Exception
+     */
+    public function getFilteredQuery()
+    {
+        $query = Mage::app()->getRequest()->getQuery();
+        if (!$query || empty($query)) {
+            return [];
+        }
+        try {
+            $store = Mage::app()->getStore();
+        } catch (Mage_Core_Model_Store_Exception $e) {
+            $store = null;
+        }
+        $ignoredQueryParameters = $this->getIgnoredQueryParameters($store);
+        return array_diff_key($query, array_flip($ignoredQueryParameters));
+    }
+
+    /**
+     * @return Mage_Catalog_Model_Resource_Category_Collection
+     * @throws Mage_Core_Exception
+     */
+    public function getBareCategoryCollection()
+    {
+        return Mage::getModel('catalog/category')->getCollection()
+            ->addAttributeToSelect(['include_in_menu', 'url_key'])
+            ->joinUrlRewrite();
     }
 
     /**
