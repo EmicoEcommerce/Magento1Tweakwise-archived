@@ -50,7 +50,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_CategoryStrategy implements Emic
             foreach ($categoryIds as $categoryId) {
                 $category = $helper->getFilterCategory($categoryId);
                 if (!$currentCategory || $currentCategory->getId() !== $category->getId()) {
-                    $categories[] = $category->getUrlPath();
+                    $categories[] = $category->getUrlKey();
                 }
             }
 
