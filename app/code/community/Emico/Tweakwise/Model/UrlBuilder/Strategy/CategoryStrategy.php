@@ -157,13 +157,16 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_CategoryStrategy implements Emic
             $categories = $category->getParentIds();
             array_push($categories, $category->getId());
             $startCategory = $helper->getCategoryTreeStartDepth();
+            $categoriesCount = count($categories);
             if ($maxLevels = $helper->getMaxTreeLevels()) {
-                $startCategory = ((count($categories) - $maxLevels) > 1) ? ((count($categories) - $maxLevels)) : 1;
+                $startCategory = (($categoriesCount - $maxLevels) > 1) ? (($categoriesCount - $maxLevels)) : 1;
             }
-            while (count($categories) <= $startCategory) {
+            while ($categoriesCount <= $startCategory) {
                 $startCategory--;
             }
-
+            if (!$category->getData('children_count') && ($categoriesCount - $startCategory) === 1) {
+                --$startCategory;
+            }
             $categories = array_splice($categories, $startCategory);
             foreach ($categories as $category) {
                 $request->addCategory($category);
