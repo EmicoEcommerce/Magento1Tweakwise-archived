@@ -28,7 +28,7 @@ class Emico_Tweakwise_Block_Catalog_Layer_Facet_Category extends Emico_Tweakwise
     public function getFacetUrl(Emico_Tweakwise_Model_Bus_Type_Attribute $attribute, $urlKey = null)
     {
         $helper = Mage::helper('emico_tweakwise');
-        $query = $this->getFilteredQuery();
+        $query = $helper->getFilteredQuery();
         $category = $helper->getFilterCategory($attribute->getAttributeId());
         $query['p'] = null;
         $query['ajax'] = null;
