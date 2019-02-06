@@ -89,7 +89,7 @@ TweakwiseAttributeSlider.prototype = {
 
     /** Constructor **/
     initialize: function(options) {
-        Object.extend(this.options, options);
+        this.options = options || { };
         this.getSlider();
         this.initInputField(this.getMinInput(), this.setLowerValue.bind(this));
         this.initInputField(this.getMaxInput(), this.setUpperValue.bind(this));
