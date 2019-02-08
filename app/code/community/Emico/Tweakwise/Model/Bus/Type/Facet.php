@@ -48,6 +48,19 @@ class Emico_Tweakwise_Model_Bus_Type_Facet extends Emico_Tweakwise_Model_Bus_Typ
     }
 
     /**
+     * @return bool
+     */
+    public function hasActiveAttributes()
+    {
+        foreach ($this->getAttributes() as $attribute) {
+            if ($attribute->getIsSelected()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * @return Emico_Tweakwise_Model_Bus_Type_Attribute[]
      */
     public function getActiveAttributes()
