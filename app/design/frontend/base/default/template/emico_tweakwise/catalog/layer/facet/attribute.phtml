@@ -14,10 +14,11 @@
 
 
         <?php $_attributes = $this->getAttributes(); ?>
+        <?php $_numberOfShownAttributes = 0; ?>
         <ol>
             <?php foreach ($_attributes as $_item): ?>
                 <?php $_showLink = !$_item->getIsSelected() || $this->isCheckbox(); ?>
-                <li class="<?php echo $_item->getIsSelected() ? 'active' : 'inactive'; echo $this->isMoreItem($_item) ? ' hidden' : ''; echo $this->isCheckbox() ? ' checkbox' : ''; ?>">
+                <li class="<?php echo $_item->getIsSelected() ? 'active' : 'inactive'; echo ($_numberOfShownAttributes >= $_settings->getNumberOfShownAttributes()) ? ' hidden' : ''; echo $this->isCheckbox() ? ' checkbox' : ''; ?>">
                     <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>"<?php endif; ?> title="<?=$this->escapeHtml($this->getItemTitle($_item))?>"<?=$this->getHrefAttributes()?>>
                         <?php echo $this->escapeHtml($this->getItemTitle($_item)); ?>
                         <?php if ($_settings->getIsNumberOfResultVisible()): ?>
@@ -25,6 +26,7 @@
                         <?php endif; ?>
                     </a>
                 </li>
+                <?php $_numberOfShownAttributes += 1 ?>
             <?php endforeach ?>
             <?php if($this->showMoreText()): ?>
                 <li class="more-less-links">
