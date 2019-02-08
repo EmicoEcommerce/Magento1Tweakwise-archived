@@ -14,11 +14,12 @@
 
 
         <?php $_attributes = $this->getAttributes(); ?>
+        <?php $_hrefAttributes = $this->getHrefAttributes(); ?>
         <ol>
             <?php foreach ($_attributes as $_item): ?>
                 <?php $_showLink = !$_item->getIsSelected() || $this->isCheckbox(); ?>
                 <li class="<?php echo $_item->getIsSelected() ? 'active' : 'inactive'; echo $this->isMoreItem($_item) ? ' hidden' : ''; echo $this->isCheckbox() ? ' checkbox' : ''; ?>">
-                    <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>"<?php endif; ?> title="<?=$this->escapeHtml($this->getItemTitle($_item))?>"<?=$this->getHrefAttributes()?>>
+                    <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>"<?php endif; ?> title="<?=$this->escapeHtml($this->getItemTitle($_item))?>"<?=$_hrefAttributes?>>
                         <?php echo $this->escapeHtml($this->getItemTitle($_item)); ?>
                         <?php if ($_settings->getIsNumberOfResultVisible()): ?>
                             (<?php echo $_item->getNumberOfResults() ?>)
