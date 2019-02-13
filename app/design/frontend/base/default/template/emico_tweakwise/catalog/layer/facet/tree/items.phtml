@@ -1,6 +1,7 @@
 <?php /** @var $this Emico_Tweakwise_Block_Catalog_Layer_Facet_Tree_Items */ ?>
 <?php $_attributes = $this->getAttributes(); ?>
 <?php $_settings = $this->getFacetSettings(); ?>
+<?php $_numberOfShownAttributes = 0; ?>
 <ol>
     <?php foreach ($_attributes as $_item): /** @var $_item Emico_Tweakwise_Model_Bus_Type_Attribute */ ?>
         <?php $_showLink = $this->isShowLink($_item);
@@ -11,7 +12,7 @@
         }
 
         ?>
-        <li class="<?php echo $_item->getIsSelected() ? 'active' : 'inactive'; echo $this->isMoreItem($_item) ? ' hidden' : ''; echo $this->isCheckbox() ? ' checkbox' : ''; ?>">
+        <li class="<?php echo $_item->getIsSelected() ? 'active' : 'inactive'; echo ($_numberOfShownAttributes >= $_settings->getNumberOfShownAttributes()) ? ' hidden' : ''; echo $this->isCheckbox() ? ' checkbox' : ''; ?>">
             <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>"<?php endif; ?>>
                 <?php echo $this->getItemTitle($_item); ?>
                 <?php if ($_settings->getIsNumberOfResultVisible()): ?>
@@ -23,5 +24,6 @@
                 <?php echo $this->getChildrenTreeHtml($_item); ?>
             <?php endif; ?>
         </li>
+        <?php $_numberOfShownAttributes += 1 ?>
     <?php endforeach ?>
 </ol>
