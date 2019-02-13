@@ -195,6 +195,7 @@
                             <label>Attributes which will have a noindex/nofollow</label>
                             <frontend_type>multiselect</frontend_type>
                             <source_model>emico_tweakwiseexport/system_config_source_productattributes</source_model>
+                            <can_be_empty>1</can_be_empty>
                             <sort_order>55</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
