@@ -80,13 +80,7 @@ class Emico_Tweakwise_Block_Catalog_Layer_Facet_Attribute extends Mage_Core_Bloc
      */
     public function showMoreText()
     {
-        foreach ($this->getAttributes() as $item) {
-            if ($this->isMoreItem($item)) {
-                return true;
-            }
-        }
-
-        return false;
+        return \count($this->getAttributes()) > $this->getFacetSettings()->getNumberOfShownAttributes();
     }
 
     /**
