@@ -25,7 +25,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_CategoryStrategy implements Emic
         }
 
         $helper = Mage::helper('emico_tweakwise');
-        $query = $this->getFilteredQuery();
+        $query = $helper->getFilteredQuery();
         $category = $helper->getFilterCategory($attribute->getAttributeId());
         $query['p'] = null;
         $query['ajax'] = null;
