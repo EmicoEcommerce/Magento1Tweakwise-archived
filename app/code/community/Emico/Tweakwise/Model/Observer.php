@@ -119,6 +119,12 @@ class Emico_Tweakwise_Model_Observer
      */
     public function setNoIndexNoFollow(Varien_Event_Observer $observer)
     {
+        /** @var Emico_Tweakwise_Helper_Data $helper */
+        $helper = Mage::helper('emico_tweakwise/data');
+        if (!$helper->isEnabled('navigation')) {
+            return;
+        }
+
         if (Mage::helper('emico_tweakwise/seo')->shouldApplyNoIndexNoFollow()) {
             $layout = Mage::app()->getLayout();
             /** @var Mage_Page_Block_Html_Head $head */
