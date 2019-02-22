@@ -59,7 +59,7 @@ class Emico_Tweakwise_Block_Catalog_Product_List_Toolbar extends Mage_Catalog_Bl
         $urlParams = [];
         $urlParams['_escape'] = true;
         $urlParams['_use_rewrite'] = true;
-        $urlParams['_query']  = array_merge(Mage::helper('emico_tweakwise')->getFilteredQuery(), $params);
+        $urlParams['_query'] = array_merge(Mage::helper('emico_tweakwise')->getFilteredQuery(), $params);
         return $this->getUrl('*/*/*', $urlParams);
     }
 } 
