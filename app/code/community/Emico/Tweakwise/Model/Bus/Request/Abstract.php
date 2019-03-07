@@ -164,7 +164,7 @@ abstract class Emico_Tweakwise_Model_Bus_Request_Abstract
 
         if (!isset($this->_clients[$store->getId()])) {
             $this->_clients[$store->getId()] = new Zend_Http_Client(null, [
-                'timeout' => Mage::getStoreConfig('emico_tweakwise/global/timeout')
+                'timeout' => Mage::helper('emico_tweakwise')->getClientTimeout($store)
             ]);
             $this->setClientUrl();
         }
