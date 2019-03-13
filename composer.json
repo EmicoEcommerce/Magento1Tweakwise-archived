@@ -9,6 +9,9 @@
             "email":"info@emico.nl"
         }
     ],
+    "require": {
+        "emico/magento1-tweakwise-export": "^3.0"
+    },
     "extra": {
         "map": [
             ["app/code/community/Emico/Tweakwise", "app/code/community/Emico/Tweakwise"],
