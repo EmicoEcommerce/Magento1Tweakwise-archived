@@ -212,7 +212,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
                 if ($i % 2 === 0) {
                     $facetKey = $part;
                 } else {
-                    $facetValue = $this->getSlugAttributeMapper()->getAttributeValueBySlug($facetKey, $part);
+                    $facetValue = $this->getSlugAttributeMapper()->getAttributeValueBySlug($part);
                     if (!empty($facetKey)) {
                         $tweakwiseRequest->addFacetKey($facetKey, $facetValue);
                     }
