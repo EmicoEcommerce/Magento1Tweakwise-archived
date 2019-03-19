@@ -14,10 +14,11 @@
         <?php endif; ?>
 
         <?php $_attributes = $this->getAttributes(); ?>
+        <?php $_numberOfShownAttributes = 0; ?>
         <ol class="swatches">
             <?php foreach ($_attributes as $_item): ?>
                 <?php $_showLink = !$_item->getIsSelected() || $this->isCheckbox(); ?>
-                <li class="<?php echo $_item->getIsSelected() ? 'active' : 'inactive'; echo $this->isMoreItem($_item) ? ' hidden' : ''; echo $this->isCheckbox() ? ' checkbox' : ''; ?>">
+                <li class="<?php echo $_item->getIsSelected() ? 'active' : 'inactive'; echo ($_numberOfShownAttributes >= $_settings->getNumberOfShownAttributes()) ? ' hidden' : ''; echo $this->isCheckbox() ? ' checkbox' : ''; ?>">
                     <span class="color-holder color-<?=strtolower($this->escapeHtml($_item->getTitle()));?>">
                         <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>" title="<?=$this->escapeHtml($_item->getTitle())?>"<?php endif; ?>><span class="color">&nbsp;</span></a>
                     </span>
@@ -28,6 +29,7 @@
                         <?php endif; ?>
                     </a>
                 </li>
+                <?php $_numberOfShownAttributes += 1 ?>
             <?php endforeach ?>
             <?php if($this->showMoreText()): ?>
                 <li class="more-less-links">

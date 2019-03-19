@@ -111,7 +111,9 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function isNavigationAjax($store = null)
     {
-        return Mage::getStoreConfig('emico_tweakwise/navigation/enabled_ajax', $store);
+        return
+            $this->isEnabled('navigation', $store) &&
+            Mage::getStoreConfig('emico_tweakwise/navigation/enabled_ajax', $store);
     }
 
     /**
