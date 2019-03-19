@@ -18,8 +18,10 @@ class Emico_Tweakwise_Helper_UriStrategy
     public function getActiveStrategies()
     {
         if (!$this->_activeStrategies) {
-            $strategies = Mage::getConfig()->getNode('global/emico_tweakwise/urlbuilder_strategies')->children();
-
+            $strategies = (array) Mage::getConfig()->getNode('global/emico_tweakwise/urlbuilder_strategies')->children();
+            uasort($strategies, function ($a, $b) {
+                return (int) $a->priority - (int) $b->priority;
+            });
             $selectedStrategy = Mage::getStoreConfig('emico_tweakwise/navigation/uri_strategy');
             if (empty($selectedStrategy)) {
                 $selectedStrategy = 'queryParam';
