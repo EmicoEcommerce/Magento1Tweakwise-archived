@@ -26,6 +26,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </server_url>
+                        <timeout translate="label" module="emico_tweakwise">
+                            <label>Timeout</label>
+                            <comment>Default: 20 seconds/</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </timeout>
                     </fields>
                 </global>
                 <navigation translate="label" module="emico_tweakwise">
