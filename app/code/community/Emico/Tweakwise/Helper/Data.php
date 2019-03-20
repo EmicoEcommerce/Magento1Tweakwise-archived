@@ -426,4 +426,15 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
         ksort($params);
         return sha1(strtolower(http_build_query($params)) . $key);
     }
+
+    /**
+     * Get timeout in seconds
+     *
+     * @param Mage_Core_Model_Store|string|int|null $store
+     * @return int
+     */
+    public function getClientTimeout($store = null)
+    {
+        return (int) Mage::getStoreConfig('emico_tweakwise/global/timeout', $store);
+    }
 }
