@@ -132,4 +132,49 @@ class Emico_Tweakwise_Model_Observer
             $head->setData('robots', 'NOINDEX,NOFOLLOW');
         }
     }
+
+    /**
+     * @param Varien_Event_Observer $observer
+     */
+    public function setRelCanonical(Varien_Event_Observer $observer)
+    {
+        if (!Mage::helper('emico_tweakwise/seo')->shouldAddCanonicalTag()) {
+            return;
+        }
+
+        /** @var Emico_Tweakwise_Model_UrlBuilder_UrlBuilder $urlBuilder */
+        $urlBuilder = Mage::getModel('emico_tweakwise/urlBuilder_urlBuilder');
+        $canonicalUrl = $urlBuilder->buildCanonicalUrl();
+
+        /** @var Mage_Page_Block_Html_Head $head */
+        $head = Mage::app()->getLayout()->getBlock('head');
+
+        $this->removeExistingCanonicalUrl($head);
+        $head->addLinkRel('canonical', $canonicalUrl);
+
+        /** @var Emico_Tweakwise_Block_Catalog_Product_List_Toolbar_Pager $pager */
+        $pager = Mage::app()->getLayout()->getBlock('product_list_toolbar_pager');
+        if ($pager->getCollection() !== null) {
+            if ($pager->getCurrentPage() > 1) {
+                $head->addLinkRel('prev', $pager->getPreviousPageUrl());
+            }
+            if ($pager->getCurrentPage() < $pager->getLastPageNum()) {
+                $head->addLinkRel('next', $pager->getNextPageUrl());
+            }
+        }
+    }
+
+    /**
+     * @param Mage_Page_Block_Html_Head $head
+     */
+    protected function removeExistingCanonicalUrl(Mage_Page_Block_Html_Head $head)
+    {
+        $headItems = $head->getData('items');
+        foreach ($headItems as $item) {
+            if ($item['type'] !== 'link_rel' || $item['params'] !== 'rel="canonical"') {
+                continue;
+            }
+            $head->removeItem($item['type'], $item['name']);
+        }
+    }
 }

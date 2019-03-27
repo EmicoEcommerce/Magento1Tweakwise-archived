@@ -36,7 +36,14 @@ class Emico_Tweakwise_Model_Bus_Request_Navigation extends Emico_Tweakwise_Model
         }
 
         $helper = Mage::helper('emico_tweakwiseexport');
-        $this->addParameter('tn_cid', $helper->toStoreId($store, $category), '-');
+
+        $tweakwiseCategory = $helper->toStoreId($store, $category);
+
+        $requestCategories = explode('-', $this->getParameter('tn_cid'));
+        // Prevent duplicate addition of same category
+        if (!in_array($tweakwiseCategory, $requestCategories)) {
+            $this->addParameter('tn_cid', $tweakwiseCategory, '-');
+        }
 
         return $this;
     }
