@@ -229,7 +229,7 @@ class Emico_Tweakwise_Model_Catalog_Layer
     /**
      * @return Mage_Catalog_Model_Category
      */
-    public function getCurrentCategory(): Mage_Catalog_Model_Category
+    public function getCurrentCategory()
     {
         if ($this->_currentCategory === null) {
             if ($category = Mage::registry('current_category')) {

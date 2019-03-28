@@ -111,7 +111,9 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function isNavigationAjax($store = null)
     {
-        return Mage::getStoreConfig('emico_tweakwise/navigation/enabled_ajax', $store);
+        return
+            $this->isEnabled('navigation', $store) &&
+            Mage::getStoreConfig('emico_tweakwise/navigation/enabled_ajax', $store);
     }
 
     /**
@@ -423,5 +425,16 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
 
         ksort($params);
         return sha1(strtolower(http_build_query($params)) . $key);
+    }
+
+    /**
+     * Get timeout in seconds
+     *
+     * @param Mage_Core_Model_Store|string|int|null $store
+     * @return int
+     */
+    public function getClientTimeout($store = null)
+    {
+        return (int) Mage::getStoreConfig('emico_tweakwise/global/timeout', $store);
     }
 }

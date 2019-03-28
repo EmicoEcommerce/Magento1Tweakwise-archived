@@ -9,6 +9,9 @@
             "email":"info@emico.nl"
         }
     ],
+    "require": {
+        "emico/magento1-tweakwise-export": "^3.0.0"
+    },
     "extra": {
         "map": [
             ["app/code/community/Emico/Tweakwise", "app/code/community/Emico/Tweakwise"],
@@ -19,5 +22,8 @@
             ["app/locale/nl_NL/Emico_Tweakwise.csv", "app/locale/nl_NL/Emico_Tweakwise.csv"],
             ["skin/frontend/base/default/emico_tweakwise", "skin/frontend/base/default/emico_tweakwise"]
         ]
+    },
+    "suggest": {
+        "emico/magento1-attribute-landing": "Landingspages compatible with Tweakwise navigator"
     }
 }
