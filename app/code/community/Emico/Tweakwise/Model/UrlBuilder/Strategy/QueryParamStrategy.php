@@ -52,7 +52,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_QueryParamStrategy implements Em
      * @param Emico_Tweakwise_Model_Bus_Type_Attribute $attribute
      * @return mixed
      */
-    protected function getUrlKeyValPairs(Emico_Tweakwise_Model_Bus_Type_Facet $facet, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute)
+    public function getUrlKeyValPairs(Emico_Tweakwise_Model_Bus_Type_Facet $facet, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute)
     {
         $urlKey = $facet->getFacetSettings()->getUrlKey();
 
