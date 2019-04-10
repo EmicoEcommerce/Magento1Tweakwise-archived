@@ -175,25 +175,6 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_CategoryStrategy implements Emic
     }
 
     /**
-     * @return array
-     */
-    protected function getFilteredQuery()
-    {
-        $query = Mage::app()->getRequest()->getQuery();
-        if (!$query || empty($query)) {
-            return [];
-        }
-        try {
-            $store = Mage::app()->getStore();
-        } catch (Mage_Core_Model_Store_Exception $e) {
-            $store = null;
-        }
-        $ignoredQueryParameters = Mage::helper('emico_tweakwise')
-            ->getIgnoredQueryParameters($store);
-        return array_diff_key($query, array_flip($ignoredQueryParameters));
-    }
-
-    /**
      * @param Emico_Tweakwise_Model_Catalog_Layer $state
      * @return mixed
      */

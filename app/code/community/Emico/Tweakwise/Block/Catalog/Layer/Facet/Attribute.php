@@ -96,6 +96,19 @@ class Emico_Tweakwise_Block_Catalog_Layer_Facet_Attribute extends Mage_Core_Bloc
     }
 
     /**
+     * @return bool
+     */
+    public function hasAlternateSort()
+    {
+        $filter = function (Emico_Tweakwise_Model_Bus_Type_Attribute $item) {
+            return is_numeric($item->getAlternateSortOrder());
+        };
+
+        $itemsWithAlternateOrder = array_filter($this->getAttributes(), $filter);
+        return \count($this->getAttributes()) === \count($itemsWithAlternateOrder);
+    }
+
+    /**
      * Get magento url based on current url
      *
      * @param Emico_Tweakwise_Model_Bus_Type_Attribute|null $attribute

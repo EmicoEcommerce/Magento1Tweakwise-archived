@@ -9,6 +9,7 @@
  * @method int getNumberOfResults();
  * @method int getAttributeId();
  * @method string getUrl();
+ * @method int getAlternateSortOrder();
  * @method Emico_Tweakwise_Model_Bus_Type_Attribute[] getChildren();
  */
 class Emico_Tweakwise_Model_Bus_Type_Attribute extends Emico_Tweakwise_Model_Bus_Type_Abstract
@@ -24,6 +25,9 @@ class Emico_Tweakwise_Model_Bus_Type_Attribute extends Emico_Tweakwise_Model_Bus
         $this->setDataFromField($xmlElement, 'attributeid', self::DATA_TYPE_INT, self::ELEMENT_COUNT_ONE, 'attribute_id');
         $this->setDataFromField($xmlElement, 'url', self::DATA_TYPE_STRING);
         $this->setDataFromField($xmlElement, 'children', 'attribute', self::ELEMENT_COUNT_NONE_OR_MORE);
+
+        $this->setDataFromAttribute($xmlElement, 'alternatesortorder', self::DATA_TYPE_INT, 'alternate_sort_order');
+
         if ($parent = $xmlElement->xpath("parent::*")) {
             if ($parentLevel = $parent[0]->xpath("parent::*")) {
                 if ($parentLevel[0]->isselected) {
