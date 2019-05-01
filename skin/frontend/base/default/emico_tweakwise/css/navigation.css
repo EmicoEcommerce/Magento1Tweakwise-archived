@@ -178,6 +178,16 @@ div .slider .right {
     color: inherit;
 }
 
+.block-layered-nav .checkbox {
+    display: block;
+}
+
+.block-layered-nav li.hidden,
+.block-layered-nav .more-link.hidden,
+.block-layered-nav .less-link.hidden {
+    display: none;
+}
+
 @media only screen and (max-width: 770px) {
     .block-layered-nav .arrow {
         display: none;

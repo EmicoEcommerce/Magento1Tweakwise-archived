@@ -99,4 +99,25 @@ abstract class Emico_Tweakwise_Model_Bus_Type_Abstract extends Varien_Object
                 return $helper->getTypeModel($type, $xmlElement);
         }
     }
+
+    /**
+     * @param SimpleXMLElement $element
+     * @param string $attribute
+     * @param string DataType
+     * @param string $dataKey
+     */
+    protected function setDataFromAttribute(SimpleXMLElement $element, $attribute, $dataType, $dataKey = null)
+    {
+        foreach ($element->attributes() as $attributeName => $value) {
+            if ($attributeName !== $attribute) {
+                continue;
+            }
+
+            $value = $this->elementToType($value, $dataType);
+            if (!$dataKey) {
+                $dataKey = $attribute;
+            }
+            $this->setData($dataKey, $value);
+        }
+    }
 }
