@@ -219,6 +219,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <comment>When there is a combination of filters that matches these settings then their urls will be allowed for indexation, this supersedes the "Max allowed facets for indexing" and "Attributes which will have a noindex/nofollow" settings</comment>
                         </filter_combination_indexable>
                         <add_canonical_tag>
                             <label>Add canonical tag to category page</label>
