@@ -41,7 +41,7 @@ class Emico_Tweakwise_Model_Catalog_Layer
     /**
      * @var array
      */
-    protected $_selectedFacets = [];
+    protected $_selectedFacets;
 
     /**
      * @return Mage_Catalog_Model_Product[]|Mage_Catalog_Model_Resource_Product_Collection
@@ -355,7 +355,8 @@ class Emico_Tweakwise_Model_Catalog_Layer
      */
     public function getSelectedFacets()
     {
-        if (empty($this->_selectedFacets)) {
+        if ($this->_selectedFacets === null) {
+            $this->_selectedFacets = [];
             foreach ($this->getFacets() as $facet) {
                 foreach ($facet->getAttributes() as $attribute) {
                     if ($attribute->getIsSelected()) {
