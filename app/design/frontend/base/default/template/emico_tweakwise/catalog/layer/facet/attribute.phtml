@@ -26,7 +26,7 @@
                         data-alternate-sort="<?=$_item->getAlternateSortOrder()?>"
                     <?php endif;?>
                 >
-                    <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>"<?php endif; ?> title="<?=$this->escapeHtml($this->getItemTitle($_item))?>"<?=$this->getHrefAttributes()?>>
+                    <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>"<?php endif; ?> title="<?=$this->escapeHtml($this->getItemTitle($_item))?>"<?=$this->getHrefAttributes($_item)?>>
                         <?php echo $this->escapeHtml($this->getItemTitle($_item)); ?>
                         <?php if ($_settings->getIsNumberOfResultVisible()): ?>
                             (<?php echo $_item->getNumberOfResults() ?>)
