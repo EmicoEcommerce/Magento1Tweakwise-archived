@@ -50,7 +50,7 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
 
         $selectedAttributes = $layer->getSelectedAttributes();
         $selectedAttributesCount = count($selectedAttributes);
-        if ($facetLinkedTo !== null && !in_array($facetLinkedTo, $layer->getSelectedFacets())) {
+        if ($facetLinkedTo !== null) {
             $selectedAttributesCount++;
         }
 
@@ -60,16 +60,17 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
     /**
      * Check if the given facet is not in the blacklist for indexing by robots
      *
+     * @param Emico_Tweakwise_Model_Bus_Type_Facet|null $facetLinkedTo
      * @return bool
      */
     protected function isInFacetBlacklist(Emico_Tweakwise_Model_Bus_Type_Facet $facetLinkedTo = null)
     {
-        $layer = Mage::getSingleton('emico_tweakwise/catalog_layer');
-        $noFollowFacets = explode(',', Mage::getStoreConfig('emico_tweakwise/navigation/nofollow_facets'));
-        $selectedFacets = $layer->getSelectedFacets();
-        if ($facetLinkedTo !== null && !in_array($facetLinkedTo, $selectedFacets)) {
-            $selectedFacets[] = $facetLinkedTo;
+        $noFollowFacets = array_filter(explode(',', Mage::getStoreConfig('emico_tweakwise/navigation/nofollow_facets')));
+        if ($facetLinkedTo !== null && in_array($facetLinkedTo->getFacetSettings()->getUrlKey(), $noFollowFacets, true)) {
+            return true;
         }
+        $layer = Mage::getSingleton('emico_tweakwise/catalog_layer');
+        $selectedFacets = $layer->getSelectedFacets();
 
         foreach ($selectedFacets as $facet) {
             $attributeCode = $facet->getFacetSettings()->getAttributeName();
@@ -90,6 +91,7 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
     /**
      * Check if the combination of 2 filters is allowed for indexing
      *
+     * @param Emico_Tweakwise_Model_Bus_Type_Facet|null $facetLinkedTo
      * @return bool
      */
     protected function isInCombinationWhitelist(Emico_Tweakwise_Model_Bus_Type_Facet $facetLinkedTo = null)

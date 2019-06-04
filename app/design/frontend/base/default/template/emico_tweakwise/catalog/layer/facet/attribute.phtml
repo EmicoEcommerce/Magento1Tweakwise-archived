@@ -12,9 +12,10 @@
             <span class="helptext"><?php echo $this->__($_settings->getInfoText()); ?></span>
         <?php endif; ?>
 
-
         <?php $_attributes = $this->getAttributes(); ?>
+        <?php $_hrefAttributes = $this->getHrefAttributes(); ?>
         <?php $_numberOfShownAttributes = 0; ?>
+
         <ol <?php if ($this->hasAlternateSort()):?> data-has-alternate-sort="1"<?php endif;?>>
             <?php foreach ($_attributes as $_index => $_item): ?>
                 <?php $_showLink = !$_item->getIsSelected() || $this->isCheckbox(); ?>
@@ -26,7 +27,7 @@
                         data-alternate-sort="<?=$_item->getAlternateSortOrder()?>"
                     <?php endif;?>
                 >
-                    <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>"<?php endif; ?> title="<?=$this->escapeHtml($this->getItemTitle($_item))?>"<?=$this->getHrefAttributes()?>>
+                    <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>"<?php endif; ?> title="<?=$this->escapeHtml($this->getItemTitle($_item))?>"<?=$_hrefAttributes?>>
                         <?php echo $this->escapeHtml($this->getItemTitle($_item)); ?>
                         <?php if ($_settings->getIsNumberOfResultVisible()): ?>
                             (<?php echo $_item->getNumberOfResults() ?>)
