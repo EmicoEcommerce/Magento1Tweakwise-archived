@@ -50,7 +50,7 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
 
         $selectedAttributes = $layer->getSelectedAttributes();
         $selectedAttributesCount = count($selectedAttributes);
-        if ($facetLinkedTo !== null && !in_array($facetLinkedTo, $layer->getSelectedFacets())) {
+        if ($facetLinkedTo !== null) {
             $selectedAttributesCount++;
         }
 
@@ -60,6 +60,7 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
     /**
      * Check if the given facet is not in the blacklist for indexing by robots
      *
+     * @param Emico_Tweakwise_Model_Bus_Type_Facet|null $facetLinkedTo
      * @return bool
      */
     protected function isInFacetBlacklist(Emico_Tweakwise_Model_Bus_Type_Facet $facetLinkedTo = null)
@@ -90,6 +91,7 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
     /**
      * Check if the combination of 2 filters is allowed for indexing
      *
+     * @param Emico_Tweakwise_Model_Bus_Type_Facet|null $facetLinkedTo
      * @return bool
      */
     protected function isInCombinationWhitelist(Emico_Tweakwise_Model_Bus_Type_Facet $facetLinkedTo = null)
