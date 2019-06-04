@@ -183,12 +183,13 @@ class Emico_Tweakwise_Block_Catalog_Layer_Facet_Attribute extends Mage_Core_Bloc
     }
 
     /**
+     * @param Emico_Tweakwise_Model_Bus_Type_Attribute $item
      * @return string
      */
-    public function getHrefAttributes()
+    public function getHrefAttributes(Emico_Tweakwise_Model_Bus_Type_Attribute $item)
     {
         $attributes = [];
-        if (Mage::helper('emico_tweakwise/seo')->shouldApplyNoIndexNoFollow($this->getFacet())) {
+        if (Mage::helper('emico_tweakwise/seo')->shouldApplyNoIndexNoFollow($this->getFacet(), $item)) {
             $attributes['rel'] = 'nofollow';
         }
 

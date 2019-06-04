@@ -15,14 +15,14 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
      * @param Emico_Tweakwise_Model_Bus_Type_Facet|null $facetLinkedTo
      * @return bool
      */
-    public function shouldApplyNoIndexNoFollow(Emico_Tweakwise_Model_Bus_Type_Facet $facetLinkedTo = null)
+    public function shouldApplyNoIndexNoFollow(Emico_Tweakwise_Model_Bus_Type_Facet $facetLinkedTo = null, Emico_Tweakwise_Model_Bus_Type_Attribute $itemLinkedTo = null)
     {
         // Certain filter combinations are allowed for indexing
         if ($this->isInCombinationWhitelist($facetLinkedTo)) {
             return false;
         }
 
-        if ($this->exceedsAttributeLimit($facetLinkedTo)) {
+        if ($this->exceedsAttributeLimit($itemLinkedTo)) {
             return true;
         }
 
@@ -39,7 +39,7 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
      * @param Emico_Tweakwise_Model_Bus_Type_Facet|null $facetLinkedTo
      * @return bool
      */
-    protected function exceedsAttributeLimit(Emico_Tweakwise_Model_Bus_Type_Facet $facetLinkedTo = null)
+    protected function exceedsAttributeLimit(Emico_Tweakwise_Model_Bus_Type_Attribute $itemLinkedTo = null)
     {
         $layer = Mage::getSingleton('emico_tweakwise/catalog_layer');
         $maxFacetsForNoFollow = Mage::getStoreConfig('emico_tweakwise/navigation/nofollow_max_facets');
@@ -50,7 +50,7 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
 
         $selectedAttributes = $layer->getSelectedAttributes();
         $selectedAttributesCount = count($selectedAttributes);
-        if ($facetLinkedTo !== null && !in_array($facetLinkedTo, $layer->getSelectedFacets())) {
+        if ($itemLinkedTo !== null && !in_array($facetLinkedTo, $selectedAttributes)) {
             $selectedAttributesCount++;
         }
 

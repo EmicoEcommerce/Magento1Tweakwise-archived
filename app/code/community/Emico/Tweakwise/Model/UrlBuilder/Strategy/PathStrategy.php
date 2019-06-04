@@ -345,11 +345,11 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
         $slugs = [];
         $slugMapper = $this->getSlugAttributeMapper();
         foreach ($selectedFacets as $selectedFacet) {
-            if ($seoHelper->shouldApplyNoIndexNoFollow($selectedFacet)) {
-                continue;
-            }
-
             foreach ($selectedFacet->getActiveAttributes() as $activeAttribute) {
+                if ($seoHelper->shouldApplyNoIndexNoFollow($selectedFacet, $activeAttribute)) {
+                    continue;
+                }
+
                 if ($selectedFacet->isCategory()) {
                     continue;
                 }
