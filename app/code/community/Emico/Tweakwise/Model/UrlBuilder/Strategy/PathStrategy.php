@@ -335,6 +335,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
 
     /**
      * @param Emico_Tweakwise_Model_Catalog_Layer $state
+     * @return string
      */
     protected function buildIndexableAttributePath(Emico_Tweakwise_Model_Catalog_Layer $state)
     {
