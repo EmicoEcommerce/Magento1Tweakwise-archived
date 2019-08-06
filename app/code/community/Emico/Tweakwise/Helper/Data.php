@@ -129,25 +129,6 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * @return array
-     * @throws Mage_Core_Model_Store_Exception
-     */
-    public function getFilteredQuery()
-    {
-        $query = Mage::app()->getRequest()->getQuery();
-        if (!$query || empty($query)) {
-            return [];
-        }
-        try {
-            $store = Mage::app()->getStore();
-        } catch (Mage_Core_Model_Store_Exception $e) {
-            $store = null;
-        }
-        $ignoredQueryParameters = $this->getIgnoredQueryParameters($store);
-        return array_diff_key($query, array_flip($ignoredQueryParameters));
-    }
-
-    /**
      * @param null|int|string|Mage_Core_Model_Store $store
      * @return array
      */
@@ -298,6 +279,25 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * @return array
+     * @throws Mage_Core_Model_Store_Exception
+     */
+    public function getFilteredQuery()
+    {
+        $query = Mage::app()->getRequest()->getQuery();
+        if (!$query || empty($query)) {
+            return [];
+        }
+        try {
+            $store = Mage::app()->getStore();
+        } catch (Mage_Core_Model_Store_Exception $e) {
+            $store = null;
+        }
+        $ignoredQueryParameters = $this->getIgnoredQueryParameters($store);
+        return array_diff_key($query, array_flip($ignoredQueryParameters));
+    }
+
+    /**
      * @return Mage_Catalog_Model_Resource_Category_Collection
      * @throws Mage_Core_Exception
      */
@@ -425,5 +425,16 @@ class Emico_Tweakwise_Helper_Data extends Mage_Core_Helper_Abstract
 
         ksort($params);
         return sha1(strtolower(http_build_query($params)) . $key);
+    }
+
+    /**
+     * Get timeout in seconds
+     *
+     * @param Mage_Core_Model_Store|string|int|null $store
+     * @return int
+     */
+    public function getClientTimeout($store = null)
+    {
+        return (int) Mage::getStoreConfig('emico_tweakwise/global/timeout', $store);
     }
 }

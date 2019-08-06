@@ -166,18 +166,13 @@ TweakwiseAttributeSlider.prototype = {
                     restricted: true,
                     onSlide: function(value)
                     {
-                        this.setValue(
-                            this.filterAssign(this.filterDisplayLower(value[0])),
-                            this.filterAssign(this.filterDisplayUpper(value[1]))
-                        );
-                        this.updateInputValue();
-                        this.updateLinkValue();
-                        this.setValue.bind(this)
+                        this.updateSlider(value);
                     }.bind(this),
                     onChange: function(value)
                     {
                         if(this.initialized)
                         {
+                            this.updateSlider(value);
                             this.getUpdateLink().simulate('click');
                         }
                     }.bind(this)
@@ -185,6 +180,17 @@ TweakwiseAttributeSlider.prototype = {
             );
         }
         return this.slider;
+    },
+
+    updateSlider: function(value)
+    {
+        this.setValue(
+            this.filterAssign(this.filterDisplayLower(value[0])),
+            this.filterAssign(this.filterDisplayUpper(value[1]))
+        );
+        this.updateInputValue();
+        this.updateLinkValue();
+        this.setValue.bind(this);
     },
 
     /** object methods **/

@@ -12,14 +12,22 @@
             <span class="helptext"><?php echo $this->__($_settings->getInfoText()); ?></span>
         <?php endif; ?>
 
-
         <?php $_attributes = $this->getAttributes(); ?>
+        <?php $_hrefAttributes = $this->getHrefAttributes(); ?>
         <?php $_numberOfShownAttributes = 0; ?>
-        <ol>
-            <?php foreach ($_attributes as $_item): ?>
+
+        <ol <?php if ($this->hasAlternateSort()):?> data-has-alternate-sort="1"<?php endif;?>>
+            <?php foreach ($_attributes as $_index => $_item): ?>
                 <?php $_showLink = !$_item->getIsSelected() || $this->isCheckbox(); ?>
-                <li class="<?php echo $_item->getIsSelected() ? 'active' : 'inactive'; echo ($_numberOfShownAttributes >= $_settings->getNumberOfShownAttributes()) ? ' hidden' : ''; echo $this->isCheckbox() ? ' checkbox' : ''; ?>">
-                    <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>"<?php endif; ?> title="<?=$this->escapeHtml($this->getItemTitle($_item))?>"<?=$this->getHrefAttributes()?>>
+                <li class="<?php echo $_item->getIsSelected() ? 'active' : 'inactive';
+                                echo ($_numberOfShownAttributes >= $_settings->getNumberOfShownAttributes()) ? ' hidden' : '';
+                                echo $this->isCheckbox() ? ' checkbox' : ''; ?>"
+                    <?php if (is_numeric($_item->getAlternateSortOrder())):?>
+                        data-original-sort="<?=$_index?>"
+                        data-alternate-sort="<?=$_item->getAlternateSortOrder()?>"
+                    <?php endif;?>
+                >
+                    <a<?php if($_showLink): ?> href="<?php echo $this->escapeUrl($this->getFacetUrl($_item)) ?>"<?php endif; ?> title="<?=$this->escapeHtml($this->getItemTitle($_item))?>"<?=$_hrefAttributes?>>
                         <?php echo $this->escapeHtml($this->getItemTitle($_item)); ?>
                         <?php if ($_settings->getIsNumberOfResultVisible()): ?>
                             (<?php echo $_item->getNumberOfResults() ?>)
@@ -29,7 +37,12 @@
                 <?php $_numberOfShownAttributes += 1 ?>
             <?php endforeach ?>
             <?php if($this->showMoreText()): ?>
-                <li class="more-less-links">
+                <li class="more-less-links"
+                    <?php if ($this->hasAlternateSort()):?>
+                        data-alternate-sort="99999"
+                        data-original-sort="99999"
+                    <?php endif;?>
+                >
                     <a href="#" class="more-link"><?php echo $this->__($_settings->getExpandText()); ?></a>
                     <a href="#" class="less-link hidden"><?php echo $this->__($_settings->getCollapseText()); ?></a>
                 </li>

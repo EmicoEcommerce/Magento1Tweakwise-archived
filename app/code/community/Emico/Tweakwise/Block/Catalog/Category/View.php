@@ -15,4 +15,12 @@ class Emico_Tweakwise_Block_Catalog_Category_View extends Mage_Catalog_Block_Cat
     {
         return Mage::helper('emico_tweakwise')->isEnabled('navigation') ? parent::_toHtml() : '';
     }
+
+    /**
+     * @return bool
+     */
+    protected function isAjaxRequest()
+    {
+        return Mage::app()->getRequest()->isAjax();
+    }
 }

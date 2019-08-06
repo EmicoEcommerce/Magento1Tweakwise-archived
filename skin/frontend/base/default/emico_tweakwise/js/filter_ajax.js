@@ -29,6 +29,15 @@ var TweakwiseAjaxFilter;
             event.stop();
 
             var link = element.readAttribute('href');
+            if (link.length === 0) {
+                return false;
+            }
+            if (link.indexOf('#no-ajax') > -1) {
+                link = link.replace('#no-ajax', '');
+                document.location.href = link;
+                return;
+            }
+
             this.updateLink(link);
         },
 
@@ -42,9 +51,6 @@ var TweakwiseAjaxFilter;
             var result = this.history[link];
             if (result && result.blocks) {
                 this.updateBlocks(result.blocks);
-                if (result.title) {
-                    this.setTitle(title)
-                }
 
                 if (pushState && history && history.pushState) {
                     history.pushState(link, result.title, link);
@@ -75,7 +81,13 @@ var TweakwiseAjaxFilter;
             this.runningRequest = new Ajax.Request(ajaxLink, {
                 method: 'get',
                 onSuccess: function(response) {
-                    var data = response.responseJSON;
+                    var data;
+                    if (response.responseJSON) {
+                        data = response.responseJSON;
+                    } else {
+                        data = JSON.parse(response.responseText);
+                    }
+
                     if (data.blocks) {
                         this.handleAjaxResponse(originalLink, data);
                     } else {

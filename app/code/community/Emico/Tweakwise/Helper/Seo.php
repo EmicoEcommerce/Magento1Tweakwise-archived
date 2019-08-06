@@ -17,6 +17,11 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
      */
     public function shouldApplyNoIndexNoFollow(Emico_Tweakwise_Model_Bus_Type_Facet $facetLinkedTo = null)
     {
+        // Certain filter combinations are allowed for indexing
+        if ($this->isInCombinationWhitelist($facetLinkedTo)) {
+            return false;
+        }
+
         if ($this->exceedsAttributeLimit($facetLinkedTo)) {
             return true;
         }
@@ -55,23 +60,79 @@ class Emico_Tweakwise_Helper_Seo extends Mage_Core_Helper_Abstract
     /**
      * Check if the given facet is not in the blacklist for indexing by robots
      *
+     * @param Emico_Tweakwise_Model_Bus_Type_Facet|null $facetLinkedTo
      * @return bool
      */
     protected function isInFacetBlacklist(Emico_Tweakwise_Model_Bus_Type_Facet $facetLinkedTo = null)
     {
-        $layer = Mage::getSingleton('emico_tweakwise/catalog_layer');
-        $noFollowFacets = explode(',', Mage::getStoreConfig('emico_tweakwise/navigation/nofollow_facets'));
-        $selectedFacets = $layer->getSelectedFacets();
-        if ($facetLinkedTo !== null) {
-            $selectedFacets[] = $facetLinkedTo;
+        $noFollowFacets = array_filter(explode(',', Mage::getStoreConfig('emico_tweakwise/navigation/nofollow_facets')));
+        if ($facetLinkedTo !== null && in_array($facetLinkedTo->getFacetSettings()->getUrlKey(), $noFollowFacets, true)) {
+            return true;
         }
+        $layer = Mage::getSingleton('emico_tweakwise/catalog_layer');
+        $selectedFacets = $layer->getSelectedFacets();
 
         foreach ($selectedFacets as $facet) {
-            if (in_array($facet->getFacetSettings()->getUrlKey(), $noFollowFacets)) {
+            $attributeCode = $facet->getFacetSettings()->getAttributeName();
+            $source = $facet->getFacetSettings()->getSource();
+
+            if ($source === Emico_Tweakwise_Model_Bus_Type_Facet_Settings::FACET_SOURCE_DERIVATIVE) {
+                return true;
+            }
+
+            if (in_array($attributeCode, $noFollowFacets, true)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * Check if the combination of 2 filters is allowed for indexing
+     *
+     * @param Emico_Tweakwise_Model_Bus_Type_Facet|null $facetLinkedTo
+     * @return bool
+     */
+    protected function isInCombinationWhitelist(Emico_Tweakwise_Model_Bus_Type_Facet $facetLinkedTo = null)
+    {
+        $layer = Mage::getSingleton('emico_tweakwise/catalog_layer');
+        $combinationWhitelist = Mage::getStoreConfig('emico_tweakwise/navigation/filter_combination_indexable');
+        if (empty($combinationWhitelist)) {
+            return false;
+        }
+
+
+        $facets = $layer->getSelectedFacets();
+        if ($facetLinkedTo !== null && !in_array($facetLinkedTo, $facets, true)) {
+            $facets = array_merge($facets, [$facetLinkedTo]);
+        }
+
+        // Only check filter combination when the URL contains exactly two filters
+        if (\count($facets) !== 2) {
+            return false;
+        }
+
+        $combinationWhitelist = unserialize($combinationWhitelist);
+
+        $facetsCodes = array_unique(array_map(function(Emico_Tweakwise_Model_Bus_Type_Facet $facet) {
+            return $facet->getFacetSettings()->getCode();
+        }, $facets));
+
+        foreach ($combinationWhitelist as $filterCombination) {
+            if (in_array($filterCombination['filter1'], $facetsCodes) && in_array($filterCombination['filter2'], $facetsCodes)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function shouldAddCanonicalTag()
+    {
+        return Mage::getStoreConfig('emico_tweakwise/navigation/add_canonical_tag');
     }
 }
