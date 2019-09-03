@@ -21,7 +21,16 @@ class Emico_Tweakwise_Model_UrlBuilder_UrlBuilder
             $url = $strategy->buildUrl($state, $facet, $attribute);
             if ($url !== null) {
                 $url = new Varien_Object(['url' => $url]);
-                Mage::dispatchEvent('tweakwise_urlbuilder_buildurl', ['strategy' => $strategy, 'url' => $url]);
+                Mage::dispatchEvent(
+                    'tweakwise_urlbuilder_buildurl',
+                    [
+                        'url' => $url,
+                        'state' => $state,
+                        'facet' => $facet,
+                        'attribute' => $attribute,
+                        'strategy' => $strategy
+                    ]
+                );
                 return $url->getData('url');
             }
         }
@@ -54,6 +63,10 @@ class Emico_Tweakwise_Model_UrlBuilder_UrlBuilder
         return Mage::getUrl('*/*/*', $params) . '#no-ajax';
     }
 
+    /**
+     * @return mixed
+     * @throws Emico_Tweakwise_Model_Exception
+     */
     public function buildCanonicalUrl()
     {
         /** @var Emico_Tweakwise_Helper_UriStrategy $helper */
@@ -64,7 +77,14 @@ class Emico_Tweakwise_Model_UrlBuilder_UrlBuilder
             $url = $strategy->buildCanonicalUrl($state);
             if ($url !== null) {
                 $url = new Varien_Object(['url' => $url]);
-                Mage::dispatchEvent('tweakwise_urlbuilder_buildurl', ['strategy' => $strategy, 'url' => $url]);
+                Mage::dispatchEvent(
+                    'tweakwise_urlbuilder_build_canonical_url',
+                    [
+                        'url' => $url,
+                        'state' => $state,
+                        'strategy' => $strategy
+                    ]
+                );
                 return $url->getData('url');
             }
         }
