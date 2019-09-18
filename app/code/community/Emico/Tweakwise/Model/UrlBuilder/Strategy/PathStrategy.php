@@ -71,14 +71,15 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
     protected function buildAttributeUriPath(Emico_Tweakwise_Model_Catalog_Layer $state, Emico_Tweakwise_Model_Bus_Type_Facet $facet = null, Emico_Tweakwise_Model_Bus_Type_Attribute $attribute = null)
     {
         $slugs = [];
+        $queryParams = [];
         $slugMapper = $this->getSlugAttributeMapper();
         foreach ($state->getSelectedFacets() as $selectedFacet) {
-            if ($selectedFacet->getFacetSettings()->getSelectionType() === Emico_Tweakwise_Model_Bus_Type_Facet_Settings::SELECTION_TYPE_SLIDER) {
-                continue;
-            }
-
             foreach ($selectedFacet->getActiveAttributes() as $activeAttribute) {
                 if ($selectedFacet->isCategory() || $activeAttribute === $attribute) {
+                    continue;
+                }
+                if ($selectedFacet->isSlider()) {
+                    $queryParams[$selectedFacet->getFacetSettings()->getAttributeName()] = implode('-', $selectedFacet->getValue());
                     continue;
                 }
                 $facetSettings = $selectedFacet->getFacetSettings();
@@ -97,7 +98,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
             ];
         }
 
-        return $this->getPathFromSlugs($slugs, $state);
+        return $this->getPathFromSlugs($slugs, $state, $queryParams);
     }
 
     /**
@@ -105,7 +106,7 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
      * @param Emico_Tweakwise_Model_Catalog_Layer $state
      * @return string
      */
-    protected function getPathFromSlugs(array $slugs, Emico_Tweakwise_Model_Catalog_Layer $state)
+    protected function getPathFromSlugs(array $slugs, Emico_Tweakwise_Model_Catalog_Layer $state, array $queryParams = [])
     {
         // Sort facets so we get canonical URL's for certain filter combinations
         $this->sortSlugs($slugs, $state);
@@ -116,6 +117,9 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
         }
 
         $path = rtrim($path, '/');
+        if( !empty($queryParams) ){
+            $path .= '?'.http_build_query($queryParams);
+        }
 
         return $path;
     }
