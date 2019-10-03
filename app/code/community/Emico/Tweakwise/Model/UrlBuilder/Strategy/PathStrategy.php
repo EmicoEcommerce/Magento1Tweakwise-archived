@@ -59,9 +59,24 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
         // Add the attribute filters to the URL path
         $url .= '/' . $this->buildAttributeUriPath($state, $facet, $attribute);
 
+        // Make sorter work
+        $url = $this->addSorterParam($url);
+        
         return $url;
     }
 
+    protected function addSorterParam($url)
+    {
+        $direction = Mage::app()->getRequest()->getParam('dir');
+        $order = Mage::app()->getRequest()->getParam('order');
+        $helper = Mage::helper('core');
+        if ($direction && $order) {
+            $url .= '?dir=' . urlencode($helper->stripTags($direction)) . '&order=' . urlencode($helper->stripTags($order));
+        }
+
+        return $url;
+    }
+        
     /**
      * @param Emico_Tweakwise_Model_Catalog_Layer $state
      * @param Emico_Tweakwise_Model_Bus_Type_Facet $facet
