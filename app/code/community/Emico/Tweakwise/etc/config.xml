@@ -71,7 +71,7 @@
     <default>
         <emico_tweakwise>
             <global>
-                <server_url>http://navigator-bus2.tweakwise.com/</server_url>
+                <server_url>http://navigator-group1.tweakwise.com/</server_url>
                 <timeout>20</timeout>
             </global>
             <navigation>
