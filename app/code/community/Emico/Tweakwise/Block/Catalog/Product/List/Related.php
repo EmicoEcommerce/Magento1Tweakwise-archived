@@ -51,24 +51,29 @@ class Emico_Tweakwise_Block_Catalog_Product_List_Related extends Mage_Catalog_Bl
     protected function getRuleId()
     {
         $product = $this->getProduct();
-        $crossSellTemplateAttribute = Emico_Tweakwise_Helper_Data::RELATED_TEMPLATE_ATTRIBUTE;
-        $ruleId = (int)$product->getData($crossSellTemplateAttribute);
+        $relatedTemplateAttribute = Emico_Tweakwise_Helper_Data::RELATED_TEMPLATE_ATTRIBUTE;
+        $ruleId = (int)$product->getData($relatedTemplateAttribute);
         if ($ruleId) {
             return $ruleId;
         }
         $category = Mage::registry('current_category');
         if ($category) {
-            $ruleId = (int)$category->getData($crossSellTemplateAttribute);
+            $ruleId = (int)$category->getData($relatedTemplateAttribute);
             while (!$ruleId && $category->getParentId() && $category->getParentId() !== 1) {
                 $category = $category->getParentCategory();
-                $ruleId = (int)$category->getData($crossSellTemplateAttribute);
+                $ruleId = (int)$category->getData($relatedTemplateAttribute);
             }
         }
         if ($ruleId) {
             return $ruleId;
         }
 
-        return (int)Mage::getStoreConfig('emico_tweakwise/recommendations/product_related_template');
+        $defaultRelatedTemplate = (int)Mage::getStoreConfig('emico_tweakwise/recommendations/product_related_template');
+        if ($defaultRelatedTemplate === -1) {
+            return Mage::getStoreConfig('emico_tweakwise/recommendations/related_group_code');
+        }
+
+        return $defaultRelatedTemplate;
     }
 
     /**

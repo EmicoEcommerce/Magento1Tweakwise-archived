@@ -48,8 +48,11 @@ class Emico_Tweakwise_Model_Bus_Request_Recommendations_Product extends Emico_Tw
         $productId = $helper->toStoreId($store, $this->getProductId());
         $ruleId = $this->getRuleId();
 
-        if ($ruleId) {
+        if ($ruleId && is_int($ruleId)) {
             $this->setClientUrl('{baseUrl}/{service}/{key}/{ruleId}/{productId}', ['ruleId' => $ruleId, 'productId' => $productId]);
+        } elseif ($ruleId && is_string($ruleId)) {
+            // Apparently the last two path segments are reversed in tweakwise api when dealing with a grouped request
+            $this->setClientUrl('{baseUrl}/{service}/{key}/{productId}/{ruleId}', ['ruleId' => $ruleId, 'productId' => $productId]);
         } else {
             $this->setClientUrl('{baseUrl}/{service}/{key}/{productId}', ['productId' => $productId]);
         }
@@ -79,7 +82,7 @@ class Emico_Tweakwise_Model_Bus_Request_Recommendations_Product extends Emico_Tw
      */
     public function setRuleId($ruleId)
     {
-        $this->_ruleId = $ruleId ? (int)$ruleId : null;
+        $this->_ruleId = $ruleId;
 
         return $this;
     }
@@ -97,6 +100,6 @@ class Emico_Tweakwise_Model_Bus_Request_Recommendations_Product extends Emico_Tw
      */
     protected function getServiceKey()
     {
-        return 'recommendations/product';
+        return is_int($this->_ruleId) ? 'recommendations/product' : 'recommendations/grouped';
     }
 }

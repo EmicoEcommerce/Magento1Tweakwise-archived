@@ -46,7 +46,7 @@ class Emico_Tweakwise_Model_Data_Recommendation_Collection extends Emico_Tweakwi
         if ($response) {
             $ids = [];
 
-            $items = $response->getItems();
+            $items = $response->getItems() ?: [];
             /** @var Emico_TweakwiseExport_Helper_Data $exportHelper */
             $exportHelper = Mage::helper('emico_tweakwiseexport');
             foreach ($items as $recommendation) {
