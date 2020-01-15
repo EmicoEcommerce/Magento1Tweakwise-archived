@@ -40,8 +40,7 @@ class Emico_Tweakwise_Model_Bus_Request_Recommendations_Featured extends Emico_T
      */
     public function setRuleId($ruleId)
     {
-        $this->_ruleId = $ruleId ? (int)$ruleId : null;
-
+        $this->_ruleId = $ruleId;
         return $this;
     }
 
@@ -58,6 +57,6 @@ class Emico_Tweakwise_Model_Bus_Request_Recommendations_Featured extends Emico_T
      */
     protected function getServiceKey()
     {
-        return 'recommendations/featured';
+        return is_int($this->_ruleId) ? 'recommendations/featured' : 'recommendations/grouped';
     }
 }

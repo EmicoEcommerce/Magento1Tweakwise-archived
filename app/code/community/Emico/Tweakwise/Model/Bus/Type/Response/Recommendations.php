@@ -15,7 +15,11 @@ class Emico_Tweakwise_Model_Bus_Type_Response_Recommendations extends Emico_Twea
      */
     public function setDataFromXMLElement(SimpleXMLElement $xmlElement)
     {
-        $this->setDataFromField($xmlElement, 'items', 'item', self::ELEMENT_COUNT_NONE_OR_MORE);
+        if ($xmlElement->recommendation->count()) {
+            $this->setDataFromField($xmlElement->recommendation, 'items', 'item', self::ELEMENT_COUNT_NONE_OR_MORE);
+        } else {
+            $this->setDataFromField($xmlElement, 'items', 'item', self::ELEMENT_COUNT_NONE_OR_MORE);
+        }
 
         return $this;
     }

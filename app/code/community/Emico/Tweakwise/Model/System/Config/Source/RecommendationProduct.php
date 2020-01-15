@@ -9,6 +9,21 @@
 class Emico_Tweakwise_Model_System_Config_Source_RecommendationProduct extends Emico_Tweakwise_Model_System_Config_Source_Options
 {
     /**
+     * @return array
+     * @throws Emico_Tweakwise_Model_Exception
+     */
+    public function toOptionArray()
+    {
+        $options = [
+            [
+                'label' => '- Group Code -',
+                'value' => -1,
+            ]
+        ];
+        return array_merge($this->getAllOptions(), $options);
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function getRequestModel()

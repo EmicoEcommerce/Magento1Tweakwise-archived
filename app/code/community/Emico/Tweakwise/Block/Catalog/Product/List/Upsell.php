@@ -84,7 +84,12 @@ class Emico_Tweakwise_Block_Catalog_Product_List_Upsell extends Mage_Catalog_Blo
             return $ruleId;
         }
 
-        return (int)Mage::getStoreConfig('emico_tweakwise/recommendations/product_upsell_template');
+        $defaultUpsellTemplate = (int)Mage::getStoreConfig('emico_tweakwise/recommendations/product_upsell_template');
+        if ($defaultUpsellTemplate === -1) {
+            return Mage::getStoreConfig('emico_tweakwise/recommendations/upsell_group_code');
+        }
+
+        return $defaultUpsellTemplate;
     }
 
     /**
