@@ -50,7 +50,7 @@ abstract class Emico_Tweakwise_Model_Bus_Type_Abstract extends Varien_Object
         $data = $useProvidedAsData ? $xmlElement : $xmlElement->{$field};
 
         if (!is_object($data)) {
-            $this->setData($dataKey, '');
+            $this->setData($dataKey, $this->resolveDefaultValue($count));
 
             return $this;
         }
@@ -74,6 +74,22 @@ abstract class Emico_Tweakwise_Model_Bus_Type_Abstract extends Varien_Object
         $this->setData($dataKey, $value);
 
         return $this;
+    }
+
+    /**
+     * @param $count
+     * @return array|string|null
+     */
+    protected function resolveDefaultValue($count)
+    {
+        switch ($count) {
+            case self::ELEMENT_COUNT_ONE:
+            case self::ELEMENT_COUNT_NONE_OR_ONE:
+                return '';
+            case self::ELEMENT_COUNT_NONE_OR_MORE:
+            case self::ELEMENT_COUNT_ONE_OR_MORE:
+                return [];
+        }
     }
 
     /**
