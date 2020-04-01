@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "emico/magento1-tweakwise-export": "^3.0.0"
+        "emico/magento1-tweakwise-export": ">=3.0.0"
     },
     "extra": {
         "map": [
