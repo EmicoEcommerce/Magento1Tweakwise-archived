@@ -86,6 +86,7 @@ TweakwiseAttributeSlider.prototype = {
     enterUpperValue: null,
     enterLowerValue: null,
     initialized: false,
+    inputUpdated: false,
 
     /** Constructor **/
     initialize: function(options) {
@@ -168,10 +169,15 @@ TweakwiseAttributeSlider.prototype = {
                     {
                         this.updateSlider(value);
                     }.bind(this),
-                    onChange: function()
+                    onChange: function(value)
                     {
                         if(this.initialized)
                         {
+                            if(!this.inputUpdated) {
+                                this.updateSlider(value);
+                            }
+                            this.inputUpdated = false;
+
                             this.getUpdateLink().simulate('click');
                         }
                     }.bind(this)
@@ -280,6 +286,7 @@ TweakwiseAttributeSlider.prototype = {
     initInputField: function(field, setAction)
     {
         field.observe('change', function(){
+            this.inputUpdated = true;
             var value = this.intValue($F(field), NaN);
             if(!isNaN(value))
             {
