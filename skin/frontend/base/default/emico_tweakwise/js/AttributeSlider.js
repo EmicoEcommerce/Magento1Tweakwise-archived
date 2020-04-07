@@ -168,11 +168,10 @@ TweakwiseAttributeSlider.prototype = {
                     {
                         this.updateSlider(value);
                     }.bind(this),
-                    onChange: function(value)
+                    onChange: function()
                     {
                         if(this.initialized)
                         {
-                            this.updateSlider(value);
                             this.getUpdateLink().simulate('click');
                         }
                     }.bind(this)
