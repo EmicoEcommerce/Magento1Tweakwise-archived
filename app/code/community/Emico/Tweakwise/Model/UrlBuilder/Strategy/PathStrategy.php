@@ -78,11 +78,11 @@ class Emico_Tweakwise_Model_UrlBuilder_Strategy_PathStrategy implements
                 if ($selectedFacet->isCategory() || $activeAttribute === $attribute) {
                     continue;
                 }
+                $facetSettings = $selectedFacet->getFacetSettings();
                 if ($selectedFacet->isSlider()) {
-                    $queryParams[$selectedFacet->getFacetSettings()->getAttributeName()] = implode('-', $selectedFacet->getValue());
+                    $queryParams[$facetSettings->getUrlKey()] = implode('-', $selectedFacet->getValue());
                     continue;
                 }
-                $facetSettings = $selectedFacet->getFacetSettings();
                 $slugs[] = [
                     'facet' => $facetSettings->getUrlKey(),
                     'value' => $slugMapper->getSlugForAttributeValue($activeAttribute->getTitle())
